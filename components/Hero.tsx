@@ -101,8 +101,6 @@ export default function Hero({ cards = HERO_CARDS, onCardClick }: { cards?: Hero
           </div>
         </div>
       </section>
-
-      <p className="rail-note wrap">// glissez à la souris, au doigt ou au clavier · clic = lecteur avec son</p>
     </header>
   );
 }

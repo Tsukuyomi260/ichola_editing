@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Hero from '@/components/Hero';
 
 export default function Page() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -22,6 +23,7 @@ export default function Page() {
 
     /* Scroll progress bar + Nav shadow on scroll */
     const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
       if (nav) {
         nav.classList.toggle('scrolled', window.scrollY > 8);
       }
@@ -177,27 +179,29 @@ export default function Page() {
 
       {/* ================= NAV ================= */}
       <header className="nav" id="nav" ref={navRef}>
-        <div className="wrap nav-inner">
-          <a href="#" className="brand">
-            ICHOLA<span className="dot">.</span>EDITING
-          </a>
-          <nav className="nav-links">
-            <a href="#accueil">Accueil</a>
-            <a href="#realisations">Réalisations</a>
-            <a href="#apropos">À propos</a>
-          </nav>
-          <div className="nav-right">
-            <span className="status">
-              <span className="live"></span>Disponible
-            </span>
-            <a href="#contact" className="btn btn-primary">
-              Réserver un appel
+        <div className="nav-inner-wrapper" style={{ transition: 'all 0.3s var(--ease)' }}>
+          <div className="wrap nav-inner">
+            <a href="#" className="brand">
+              ICHOLA<span className="dot">.</span>EDITING
             </a>
-            <button className="burger" id="burger" aria-label="Ouvrir le menu">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              </svg>
-            </button>
+            <nav className="nav-links">
+              <a href="#accueil">Accueil</a>
+              <a href="#realisations">Réalisations</a>
+              <a href="#apropos">À propos</a>
+            </nav>
+            <div className="nav-right">
+              <span className="status">
+                <span className="live"></span>Disponible
+              </span>
+              <a href="#contact" className="btn btn-primary">
+                Réserver un appel
+              </a>
+              <button className="burger" id="burger" aria-label="Ouvrir le menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </header>
