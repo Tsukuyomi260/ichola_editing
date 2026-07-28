@@ -37,8 +37,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Handle form submission
-    console.log(formData);
+    // TODO: Handle form submission (email service integration)
   };
 
   return (
