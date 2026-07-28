@@ -19,11 +19,18 @@ export default function Page() {
     const player = playerRef.current;
     const mTitle = mTitleRef.current;
     const mSub = mSubRef.current;
+    const scrollProgress = document.getElementById('scroll-progress');
 
-    /* Nav shadow on scroll */
+    /* Scroll progress bar + Nav shadow on scroll */
     const handleScroll = () => {
       if (nav) {
         nav.classList.toggle('scrolled', window.scrollY > 8);
+      }
+      if (scrollProgress) {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        scrollProgress.style.width = scrolled + '%';
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -148,6 +155,9 @@ export default function Page() {
 
   return (
     <>
+      {/* Scroll progress bar */}
+      <div id="scroll-progress" className="scroll-progress"></div>
+
       {/* ================= NAV ================= */}
       <header className="nav" id="nav" ref={navRef}>
         <div className="wrap nav-inner">

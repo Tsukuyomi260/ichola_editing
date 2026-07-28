@@ -1,5 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* ===== SCROLL PROGRESS ===== */
+@keyframes scrollPulse {
+  0%, 100% { filter: drop-shadow(0 0 14px rgba(53, 208, 126, 0.5)) drop-shadow(0 0 28px rgba(18, 183, 106, 0.25)); }
+  50% { filter: drop-shadow(0 0 18px rgba(53, 208, 126, 0.75)) drop-shadow(0 0 36px rgba(18, 183, 106, 0.35)); }
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3.5px;
+  width: 0%;
+  background: linear-gradient(90deg, #0E9558 0%, #12B76A 30%, #35D07E 70%, #2FCB72 100%);
+  box-shadow:
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.5),
+    0 1px 4px rgba(0, 0, 0, 0.08),
+    0 0 6px rgba(53, 208, 126, 0.35);
+  transition: width 0.08s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 9999;
+  filter: drop-shadow(0 0 14px rgba(53, 208, 126, 0.5)) drop-shadow(0 0 28px rgba(18, 183, 106, 0.25));
+  animation: scrollPulse 3s ease-in-out infinite;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
+  will-change: width;
+}
+
 :root{
   --bg:        #FCFCFA;   /* base quasi blanche, très légère chaleur */
   --bg-2:      #F1F6EF;   /* sections alternées, vert très pâle */
