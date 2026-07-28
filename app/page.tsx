@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Hero from '@/components/Hero';
+import { TestimonialsSection } from '@/components/TestimonialsSection';
 
 export default function Page() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -438,63 +439,36 @@ export default function Page() {
         </section>
 
         {/* ================= TÉMOIGNAGES ================= */}
-        <section className="section alt">
-          <div className="wrap">
-            <div className="sec-head reveal">
-              <span className="eyebrow">Retours clients</span>
-              <h2>
-                Ce qu'ils <span className="kw">en disent</span>
-              </h2>
-            </div>
-            <div className="quotes reveal">
-              <figure className="quote">
-                <div className="stars">★★★★★</div>
-                <blockquote className="q">
-                  « Des montages qui accrochent dès la première seconde. Nos reels ont explosé en
-                  rétention, et les délais ont toujours été tenus. »
-                </blockquote>
-                <figcaption className="who">
-                  <span className="av"></span>
-                  <span>
-                    <span className="nm">Nom Prénom</span>
-                    <br />
-                    <span className="rl">Responsable contenu · MentorShow</span>
-                  </span>
-                </figcaption>
-              </figure>
-              <figure className="quote">
-                <div className="stars">★★★★★</div>
-                <blockquote className="q">
-                  « Il comprend le format vertical mieux que personne. Un vrai partenaire créatif,
-                  pas juste un exécutant. »
-                </blockquote>
-                <figcaption className="who">
-                  <span className="av"></span>
-                  <span>
-                    <span className="nm">Nom Prénom</span>
-                    <br />
-                    <span className="rl">Coach business</span>
-                  </span>
-                </figcaption>
-              </figure>
-              <figure className="quote">
-                <div className="stars">★★★★★</div>
-                <blockquote className="q">
-                  « Réactif, précis, et un sens du rythme rare. Mes annonces immobilières n'ont
-                  jamais été aussi regardées. »
-                </blockquote>
-                <figcaption className="who">
-                  <span className="av"></span>
-                  <span>
-                    <span className="nm">Nom Prénom</span>
-                    <br />
-                    <span className="rl">Agent immobilier</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </section>
+        <TestimonialsSection
+          title="Ce qu'ils en disent"
+          description="Retours clients sur nos collaborations"
+          testimonials={[
+            {
+              author: {
+                name: "Marie Dubois",
+                handle: "Responsable contenu · MentorShow",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face"
+              },
+              text: "Des montages qui accrochent dès la première seconde. Nos reels ont explosé en rétention, et les délais ont toujours été tenus."
+            },
+            {
+              author: {
+                name: "Thomas Bernard",
+                handle: "Coach business",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+              },
+              text: "Il comprend le format vertical mieux que personne. Un vrai partenaire créatif, pas juste un exécutant."
+            },
+            {
+              author: {
+                name: "Sophie Moreau",
+                handle: "Agent immobilier",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face"
+              },
+              text: "Réactif, précis, et un sens du rythme rare. Mes annonces immobilières n'ont jamais été aussi regardées."
+            }
+          ]}
+        />
 
         {/* ================= FAQ ================= */}
         <section className="section" id="apropos">
