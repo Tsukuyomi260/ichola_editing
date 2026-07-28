@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -9,6 +9,22 @@ export default function Contact() {
     email: '',
     message: '',
   });
+  const [isRevealed, setIsRevealed] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsRevealed(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.12 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,11 +44,23 @@ export default function Contact() {
   return (
     <section className="py-21 bg-bg-2" id="contact">
       <div className="wrap">
-        <h2 className="font-display font-bold text-3xl md:text-4xl tracking-tight mb-3">
-          Parlons de <span className="kw">votre projet</span>
-        </h2>
+        <div
+          ref={ref}
+          className={`transition-all duration-700 ${
+            isRevealed ? 'reveal in' : 'reveal'
+          }`}
+        >
+          <span className="eyebrow">Contact</span>
+          <h2 className="font-display font-bold text-3xl md:text-4xl tracking-tight mt-2">
+            Parlons de <span className="kw">votre projet</span>
+          </h2>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-10">
+        <div
+          className={`grid md:grid-cols-2 gap-6 mt-10 transition-all duration-700 ${
+            isRevealed ? 'reveal in' : 'reveal'
+          }`}
+        >
           {/* Form */}
           <form onSubmit={handleSubmit} className="bg-surface border border-line rounded-2xl p-7.5">
             <div className="grid md:grid-cols-2 gap-4 mb-4">

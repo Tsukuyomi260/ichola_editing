@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const faqs = [
   {
@@ -27,18 +27,46 @@ const faqs = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsRevealed(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.12 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="py-21" id="apropos">
       <div className="wrap max-w-2xl">
-        <h2 className="font-display font-bold text-3xl md:text-4xl tracking-tight mb-3">
-          Tout ce qu'on me demande <span className="kw">souvent</span>
-        </h2>
-        <p className="text-muted">
-          Si votre question n'y est pas, écrivez-moi, je réponds vite.
-        </p>
+        <div
+          ref={ref}
+          className={`transition-all duration-700 ${
+            isRevealed ? 'reveal in' : 'reveal'
+          }`}
+        >
+          <span className="eyebrow">Questions fréquentes</span>
+          <h2 className="font-display font-bold text-3xl md:text-4xl tracking-tight mt-2">
+            Tout ce qu'on me demande <span className="kw">souvent</span>
+          </h2>
+          <p className="text-muted mt-3">
+            Si votre question n'y est pas, écrivez-moi, je réponds vite.
+          </p>
+        </div>
 
-        <div className="mt-10 border-t border-line">
+        <div
+          className={`mt-10 border-t border-line transition-all duration-700 ${
+            isRevealed ? 'reveal in' : 'reveal'
+          }`}
+        >
           {faqs.map((faq, idx) => (
             <details
               key={idx}
@@ -46,9 +74,9 @@ export default function FAQ() {
               className="border-b border-line"
               onToggle={() => setOpenIndex(idx)}
             >
-              <summary className="cursor-pointer py-5 flex items-center justify-between gap-5 font-semibold text-lg hover:text-green transition-colors">
+              <summary className="list-none cursor-pointer py-5.5 flex items-center justify-between gap-5 font-semibold text-lg hover:text-green transition-colors select-none">
                 {faq.q}
-                <span className="flex-none w-6 h-6 border border-line rounded-full grid place-items-center text-green transition-transform">
+                <span className="flex-none w-6.5 h-6.5 border border-line rounded-full flex items-center justify-center text-green transition-all duration-280">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -60,7 +88,9 @@ export default function FAQ() {
                   </svg>
                 </span>
               </summary>
-              <div className="pb-6 text-muted text-base max-w-2xl">{faq.a}</div>
+              <div className="pb-6 text-muted text-base max-w-2xl leading-relaxed">
+                {faq.a}
+              </div>
             </details>
           ))}
         </div>

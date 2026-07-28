@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import VerticalWall from './VerticalWall';
 
 export default function Hero() {
   const [isRevealed, setIsRevealed] = useState(false);
@@ -21,7 +22,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="hero pt-14 md:pt-16 pb-5 relative z-0">
+    <section className="pt-14 md:pt-16 pb-5 relative z-0">
       <div
         className="absolute top-[-140px] left-1/2 -translate-x-1/2 w-[min(1200px,130%)] h-96 -z-10 pointer-events-none"
         style={{
@@ -65,7 +66,7 @@ export default function Hero() {
             <a href="#contact" className="btn btn-primary">
               Réserver un appel
             </a>
-            <button className="btn btn-ghost" onClick={() => {}}>
+            <button className="btn btn-ghost">
               <svg
                 viewBox="0 0 24 24"
                 fill="currentColor"
@@ -78,12 +79,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Vertical wall (to be filled with VerticalWall component) */}
+        {/* Vertical wall */}
         <div className="mt-14 md:mt-16">
-          {/* VerticalWall component will go here */}
-          <div className="text-center text-muted py-12">
-            [VerticalWall component]
-          </div>
+          <VerticalWall />
         </div>
       </div>
     </section>
