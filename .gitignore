@@ -7,3 +7,8 @@ build/
 .env.*.local
 *.log
 .DS_Store
+
+# Claude Code
+CLAUDE.md
+.claude/
+.claude-*

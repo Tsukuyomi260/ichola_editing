@@ -1,89 +1,108 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import VerticalWall from './VerticalWall';
+import React from 'react';
 
-export default function Hero() {
-  const [isRevealed, setIsRevealed] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+export type HeroCard = {
+  title: string;
+  sub: string;
+  tag: string;
+  c1: string;
+  c2: string;
+};
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsRevealed(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.12 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+export const HERO_CARDS: HeroCard[] = [
+  { title: 'Ad – coach business', sub: 'Ads · vertical', tag: '9:16', c1: '#0f6b3f', c2: '#2FCB72' },
+  { title: 'Capsule podcast', sub: 'Podcast · vertical', tag: '9:16', c1: '#134e37', c2: '#3fb6a0' },
+  { title: 'Reel immobilier', sub: 'Immobilier · vertical', tag: '9:16', c1: '#1a5e2e', c2: '#7bd94f' },
+  { title: 'Short – English', sub: 'Reel · vertical', tag: '9:16', c1: '#0d5c46', c2: '#34d19a' },
+  { title: 'Ad – MentorShow', sub: 'Ads · vertical', tag: '9:16', c1: '#155e3a', c2: '#57e39a' },
+  { title: 'Reel produit', sub: 'Ad · vertical', tag: '9:16', c1: '#0e6b52', c2: '#2fcbb0' },
+];
 
+const PlayIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M8 5v14l11-7z" />
+  </svg>
+);
+
+const MuteIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z" />
+  </svg>
+);
+
+function CardLayers({ card }: { card: HeroCard }) {
   return (
-    <section className="pt-14 md:pt-16 pb-5 relative z-0">
-      <div
-        className="absolute top-[-140px] left-1/2 -translate-x-1/2 w-[min(1200px,130%)] h-96 -z-10 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(58% 62% at 50% 38%, rgba(18,183,106,.20), rgba(18,183,106,.06) 55%, transparent 72%)',
-        }}
-      />
-
-      <div className="wrap">
-        {/* Hero head */}
-        <div
-          ref={ref}
-          className={`max-w-2xl transition-all duration-700 ${
-            isRevealed ? 'reveal in' : 'reveal'
-          }`}
-        >
-          <span className="eyebrow">Monteur vidéo · Motion designer</span>
-          <h1 className="font-display font-black text-4xl md:text-6xl leading-tight tracking-tight mt-5">
-            Je monte des vidéos{' '}
-            <span className="text-green relative whitespace-nowrap">
-              verticales
-              <span className="absolute left-0 right-0 bottom-1 h-0.5 bg-green-pop opacity-30 rounded" />
-            </span>{' '}
-            qui retiennent l'attention
-          </h1>
-          <p className="text-lg md:text-xl text-muted mt-5 max-w-2xl">
-            Publicités, reels et capsules courtes en 9:16 et 4:5. Le vertical,
-            c'est mon terrain principal.
-          </p>
-
-          {/* Chips */}
-          <div className="flex flex-wrap gap-2 mt-5">
-            <span className="chip">9:16 · reels</span>
-            <span className="chip">4:5 · fil d'actu</span>
-            <span className="chip">Ads &amp; VSL</span>
-            <span className="chip">FR / EN</span>
-          </div>
-
-          {/* CTA */}
-          <div className="flex flex-wrap gap-3 mt-7">
-            <a href="#contact" className="btn btn-primary">
-              Réserver un appel
-            </a>
-            <button className="btn btn-ghost">
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-4 h-4"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-              Voir le showreel
-            </button>
-          </div>
-        </div>
-
-        {/* Vertical wall */}
-        <div className="mt-14 md:mt-16">
-          <VerticalWall />
-        </div>
+    <>
+      <div className="film" />
+      <div className="grain" />
+      <div className="veil" />
+      <span className="tag">{card.tag}</span>
+      <span className="mute"><MuteIcon /></span>
+      <div className="meta">
+        <div className="t">{card.title}</div>
+        <div className="s">{card.sub}</div>
       </div>
-    </section>
+      <div className="bar"><i /></div>
+      <div className="play"><span><PlayIcon /></span></div>
+    </>
+  );
+}
+
+export default function Hero({ cards = HERO_CARDS, onCardClick }: { cards?: HeroCard[]; onCardClick?: (index: number) => void }) {
+  return (
+    <header id="accueil">
+      <section className="hero">
+        <div className="wrap">
+          <div className="hero-head reveal in">
+            <span className="eyebrow">Monteur vidéo · Motion designer</span>
+            <h1>Je monte des vidéos <span className="accent">verticales</span> qui retiennent l&apos;attention</h1>
+            <p className="lede">Publicités, reels et capsules courtes en 9:16 et 4:5. Le vertical, c&apos;est mon terrain principal.</p>
+            <div className="hero-roles">
+              <span className="chip">9:16 · reels</span>
+              <span className="chip">4:5 · fil d&apos;actu</span>
+              <span className="chip">Ads &amp; VSL</span>
+              <span className="chip">FR / EN</span>
+            </div>
+            <div className="hero-cta">
+              <a href="#contact" className="btn btn-primary">Réserver un appel</a>
+              <button type="button" className="btn btn-ghost js-showreel" onClick={() => onCardClick?.(0)}>
+                <PlayIcon /> Voir le showreel
+              </button>
+            </div>
+          </div>
+
+          <div className="wall-head reveal">
+            <div>
+              <h2>Le format que je maîtrise <span className="kw">le mieux</span></h2>
+              <p>Une sélection de mes verticales récentes. Cliquez pour le son.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="hero-stage" id="hero-stage">
+        <div className="hero-stage-pin">
+          <div className="hero-stage-content">
+            <div className="rail" id="hero-rail">
+              {cards.map((card, i) => (
+                <article
+                  key={i}
+                  className="vcard"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => onCardClick?.(i)}
+                  style={{ ['--c1' as string]: card.c1, ['--c2' as string]: card.c2 } as React.CSSProperties}
+                >
+                  <CardLayers card={card} />
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p className="rail-note wrap">// glissez à la souris, au doigt ou au clavier · clic = lecteur avec son</p>
+    </header>
   );
 }

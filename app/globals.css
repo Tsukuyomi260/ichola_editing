@@ -180,6 +180,12 @@ img{max-width:100%;display:block}
 .vcard .play span svg{width:20px;height:20px;color:#0c140f;margin-left:3px}
 .rail-note{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);text-align:center;margin-top:2px}
 
+/* Hero scroll-linked animation */
+.hero-stage{height:230vh;position:relative}
+.hero-stage-pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.hero-stage-content{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#hero-rail .vcard{will-change:transform}
+
 /* ---------- Chiffres ---------- */
 .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:20px}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr)}

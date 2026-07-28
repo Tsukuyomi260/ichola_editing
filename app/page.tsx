@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Hero from '@/components/Hero';
 
 export default function Page() {
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const railRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const mTitleRef = useRef<HTMLDivElement>(null);
@@ -14,7 +14,6 @@ export default function Page() {
   useEffect(() => {
     const nav = navRef.current;
     const mm = mobileMenuRef.current;
-    const rail = railRef.current;
     const modal = modalRef.current;
     const player = playerRef.current;
     const mTitle = mTitleRef.current;
@@ -44,19 +43,6 @@ export default function Page() {
     burgerClose?.addEventListener('click', () => mm?.classList.remove('open'));
     closeMenuLinks?.forEach((a) =>
       a.addEventListener('click', () => mm?.classList.remove('open'))
-    );
-
-    /* Rail scroll */
-    const railNext = document.getElementById('railNext');
-    const railPrev = document.getElementById('railPrev');
-
-    const step = () => Math.min(rail ? rail.clientWidth * 0.8 : 0, 260);
-
-    railNext?.addEventListener('click', () =>
-      rail?.scrollBy({ left: step(), behavior: 'smooth' })
-    );
-    railPrev?.addEventListener('click', () =>
-      rail?.scrollBy({ left: -step(), behavior: 'smooth' })
     );
 
     /* Modal player */
@@ -107,6 +93,42 @@ export default function Page() {
       if (e.key === 'ArrowLeft') openCard(idx - 1);
     });
 
+    /* Hero rail scroll-linked animation (Effet A) */
+    const clamp = (v: number, a: number, b: number) => Math.min(Math.max(v, a), b);
+    const seg = (p: number, s: number, e: number) => clamp((p - s) / (e - s), 0, 1);
+    const progressOf = (sec: HTMLElement) => {
+      const total = sec.offsetHeight - window.innerHeight;
+      if (total <= 0) return 0;
+      return clamp(-sec.getBoundingClientRect().top / total, 0, 1);
+    };
+
+    const heroStage = document.getElementById('hero-stage') as HTMLElement;
+    const heroRail = document.getElementById('hero-rail') as HTMLElement;
+    const heroVcards = heroRail ? Array.from(heroRail.querySelectorAll('.vcard')) as HTMLElement[] : [];
+    const W = 230, G = 16, mid = (heroVcards.length - 1) / 2;
+
+    const applyHeroAnimation = () => {
+      if (!heroStage || heroVcards.length === 0) return;
+      const p = progressOf(heroStage);
+      heroVcards.forEach((el, i) => {
+        const dist = i - mid, absd = Math.abs(dist);
+        const collapsedX = -dist * (W + G);
+        const s = Math.min(0.08 * absd, 0.34), e = Math.min(0.5 + 0.09 * absd, 0.96);
+        const t = seg(p, s, e);
+        const x = collapsedX + (0 - collapsedX) * t;
+        const base = absd === 0 ? 1.12 : 0.82;
+        const sc = base + (1 - base) * t;
+        const op = absd === 0 ? 1 : seg(p, s, Math.min(s + 0.14, 1));
+        el.style.transform = `translateX(${x}px) scale(${sc})`;
+        el.style.opacity = String(op);
+        el.style.zIndex = String(50 - absd);
+      });
+    };
+
+    const handleHeroScroll = () => requestAnimationFrame(applyHeroAnimation);
+    window.addEventListener('scroll', handleHeroScroll, { passive: true });
+    window.addEventListener('resize', handleHeroScroll);
+
     /* Reveal on scroll */
     const io = new IntersectionObserver(
       (es) =>
@@ -122,16 +144,12 @@ export default function Page() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleHeroScroll);
+      window.removeEventListener('resize', handleHeroScroll);
       burger?.removeEventListener('click', () => mm?.classList.add('open'));
       burgerClose?.removeEventListener('click', () => mm?.classList.remove('open'));
       closeMenuLinks?.forEach((a) =>
         a.removeEventListener('click', () => mm?.classList.remove('open'))
-      );
-      railNext?.removeEventListener('click', () =>
-        rail?.scrollBy({ left: step(), behavior: 'smooth' })
-      );
-      railPrev?.removeEventListener('click', () =>
-        rail?.scrollBy({ left: -step(), behavior: 'smooth' })
       );
       cards.forEach((c) =>
         c.removeEventListener('click', () => openCard(0))
@@ -142,7 +160,6 @@ export default function Page() {
       });
       mNext?.removeEventListener('click', () => openCard(idx + 1));
       mPrev?.removeEventListener('click', () => openCard(idx - 1));
-      openShowreel?.removeEventListener('click', () => openCard(0));
       window.removeEventListener('keydown', (e) => {
         if (!modal?.classList.contains('open')) return;
         if (e.key === 'Escape') closeModal();
@@ -216,260 +233,8 @@ export default function Page() {
       </div>
 
       {/* ================= HERO (1b) ================= */}
-      <main id="accueil">
-        <section className="hero">
-          <div className="wrap">
-            <div className="hero-head reveal">
-              <span className="eyebrow">Monteur vidéo · Motion designer</span>
-              <h1>
-                Je monte des vidéos <span className="accent">verticales</span> qui retiennent
-                l'attention
-              </h1>
-              <p className="lede">
-                Publicités, reels et capsules courtes en 9:16 et 4:5. Le vertical, c'est mon
-                terrain principal.
-              </p>
-              <div className="hero-roles">
-                <span className="chip">9:16 · reels</span>
-                <span className="chip">4:5 · fil d'actu</span>
-                <span className="chip">Ads &amp; VSL</span>
-                <span className="chip">FR / EN</span>
-              </div>
-              <div className="hero-cta">
-                <a href="#contact" className="btn btn-primary">
-                  Réserver un appel
-                </a>
-                <button className="btn btn-ghost" id="openShowreel">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                  Voir le showreel
-                </button>
-              </div>
-            </div>
-
-            {/* Le mur vertical EST le hero */}
-            <div className="wall-head reveal">
-              <div>
-                <h2>
-                  Le format que je maîtrise <span className="kw">le mieux</span>
-                </h2>
-                <p>Une sélection de mes verticales récentes. Cliquez pour le son.</p>
-              </div>
-              <div className="wall-nav">
-                <button id="railPrev" aria-label="Précédent">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                    <path d="M15 6l-6 6 6 6" />
-                  </svg>
-                </button>
-                <button id="railNext" aria-label="Suivant">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                    <path d="M9 6l6 6-6 6" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="rail" id="rail" ref={railRef}>
-            {/* cartes générées + statiques */}
-            <article
-              className="vcard"
-              style={
-                { '--c1': '#0f6b3f', '--c2': '#2FCB72' } as React.CSSProperties
-              }
-              data-title="Ad — coach business"
-              data-sub="Ads · 9:16 · FR"
-            >
-              <div className="film"></div>
-              <div className="grain"></div>
-              <div className="veil"></div>
-              <span className="tag">9:16</span>
-              <span className="mute">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z" />
-                </svg>
-              </span>
-              <div className="meta">
-                <div className="t">Ad — coach business</div>
-                <div className="s">Ads · vertical</div>
-              </div>
-              <div className="bar">
-                <i></i>
-              </div>
-              <div className="play">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </div>
-            </article>
-            <article
-              className="vcard"
-              style={
-                { '--c1': '#134e37', '--c2': '#3fb6a0' } as React.CSSProperties
-              }
-              data-title="Capsule podcast"
-              data-sub="Podcast · 9:16"
-            >
-              <div className="film"></div>
-              <div className="grain"></div>
-              <div className="veil"></div>
-              <span className="tag">9:16</span>
-              <span className="mute">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z" />
-                </svg>
-              </span>
-              <div className="meta">
-                <div className="t">Capsule podcast</div>
-                <div className="s">Podcast · vertical</div>
-              </div>
-              <div className="bar">
-                <i style={{ animationDelay: '-2s' }}></i>
-              </div>
-              <div className="play">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </div>
-            </article>
-            <article
-              className="vcard"
-              style={
-                { '--c1': '#1a5e2e', '--c2': '#7bd94f' } as React.CSSProperties
-              }
-              data-title="Reel immobilier"
-              data-sub="Immobilier · 9:16"
-            >
-              <div className="film"></div>
-              <div className="grain"></div>
-              <div className="veil"></div>
-              <span className="tag">9:16</span>
-              <span className="mute">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z" />
-                </svg>
-              </span>
-              <div className="meta">
-                <div className="t">Reel immobilier</div>
-                <div className="s">Immobilier · vertical</div>
-              </div>
-              <div className="bar">
-                <i style={{ animationDelay: '-3.5s' }}></i>
-              </div>
-              <div className="play">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </div>
-            </article>
-            <article
-              className="vcard"
-              style={
-                { '--c1': '#0d5c46', '--c2': '#34d19a' } as React.CSSProperties
-              }
-              data-title="Short — English"
-              data-sub="Short · 9:16 · EN"
-            >
-              <div className="film"></div>
-              <div className="grain"></div>
-              <div className="veil"></div>
-              <span className="tag">9:16</span>
-              <span className="mute">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z" />
-                </svg>
-              </span>
-              <div className="meta">
-                <div className="t">Short — English</div>
-                <div className="s">Reel · vertical</div>
-              </div>
-              <div className="bar">
-                <i style={{ animationDelay: '-1s' }}></i>
-              </div>
-              <div className="play">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </div>
-            </article>
-            <article
-              className="vcard"
-              style={
-                { '--c1': '#155e3a', '--c2': '#57e39a' } as React.CSSProperties
-              }
-              data-title="Ad — MentorShow"
-              data-sub="Ads · 9:16 · FR/EN"
-            >
-              <div className="film"></div>
-              <div className="grain"></div>
-              <div className="veil"></div>
-              <span className="tag">9:16</span>
-              <span className="mute">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z" />
-                </svg>
-              </span>
-              <div className="meta">
-                <div className="t">Ad — MentorShow</div>
-                <div className="s">Ads · vertical</div>
-              </div>
-              <div className="bar">
-                <i style={{ animationDelay: '-4s' }}></i>
-              </div>
-              <div className="play">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </div>
-            </article>
-            <article
-              className="vcard"
-              style={
-                { '--c1': '#0e6b52', '--c2': '#2fcbb0' } as React.CSSProperties
-              }
-              data-title="Reel produit"
-              data-sub="Produit · 9:16"
-            >
-              <div className="film"></div>
-              <div className="grain"></div>
-              <div className="veil"></div>
-              <span className="tag">9:16</span>
-              <span className="mute">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z" />
-                </svg>
-              </span>
-              <div className="meta">
-                <div className="t">Reel produit</div>
-                <div className="s">Ad · vertical</div>
-              </div>
-              <div className="bar">
-                <i style={{ animationDelay: '-2.5s' }}></i>
-              </div>
-              <div className="play">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </div>
-            </article>
-          </div>
-          <p className="rail-note wrap">
-            // 5 à 8 vidéos · glissez à la souris, au doigt ou au clavier · clic = lecteur avec son
-          </p>
-        </section>
+      <main>
+        <Hero />
 
         {/* ================= CHIFFRES ================= */}
         <section className="stats reveal">
