@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Hero from '@/components/Hero';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
+import { FAQAccordion } from '@/components/FAQAccordion';
 
 export default function Page() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -129,8 +130,13 @@ export default function Page() {
     };
 
     const handleHeroScroll = () => requestAnimationFrame(applyHeroAnimation);
-    window.addEventListener('scroll', handleHeroScroll, { passive: true });
-    window.addEventListener('resize', handleHeroScroll);
+
+    // Only apply animation on desktop (>768px)
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile) {
+      window.addEventListener('scroll', handleHeroScroll, { passive: true });
+      window.addEventListener('resize', handleHeroScroll);
+    }
 
     /* Reveal on scroll */
     const io = new IntersectionObserver(
@@ -147,8 +153,10 @@ export default function Page() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('scroll', handleHeroScroll);
-      window.removeEventListener('resize', handleHeroScroll);
+      if (!isMobile) {
+        window.removeEventListener('scroll', handleHeroScroll);
+        window.removeEventListener('resize', handleHeroScroll);
+      }
       burger?.removeEventListener('click', () => mm?.classList.add('open'));
       burgerClose?.removeEventListener('click', () => mm?.classList.remove('open'));
       closeMenuLinks?.forEach((a) =>
@@ -480,81 +488,41 @@ export default function Page() {
               </h2>
               <p>Si votre question n'y est pas, écrivez-moi, je réponds vite.</p>
             </div>
-            <div className="faq reveal">
-              <details open>
-                <summary>
-                  Quels formats de vidéos montez-vous ?
-                  <span className="ic">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="a">
-                  Je suis spécialisé dans les formats verticaux : 9:16 pour les reels, shorts et
-                  TikTok, 4:5 pour les fils d'actualité. Je monte aussi en 16:9 quand le projet le
-                  demande, mais le vertical reste mon terrain principal.
-                </div>
-              </details>
-              <details>
-                <summary>
-                  Quels types de projets prenez-vous ?
-                  <span className="ic">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="a">
-                  Publicités, reels, capsules podcast, VSL, contenus de formation et motion design.
-                  Je travaille avec des créateurs, des coachs, des agents immobiliers et des
-                  plateformes, en français comme en anglais.
-                </div>
-              </details>
-              <details>
-                <summary>
-                  Comment se passe la collaboration ?
-                  <span className="ic">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="a">
-                  On commence par un appel pour cadrer le besoin. Vous m'envoyez les rushes via un
-                  lien, je monte, et on affine ensemble avec des retours cadrés. Suivi clair du
-                  début à la livraison.
-                </div>
-              </details>
-              <details>
-                <summary>
-                  Quels sont vos délais ?
-                  <span className="ic">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="a">
-                  Ça dépend du volume et du format, mais un reel vertical part généralement sous
-                  quelques jours. On fixe les délais ensemble à l'appel, et je m'y tiens.
-                </div>
-              </details>
-              <details>
-                <summary>
-                  Quels sont vos tarifs ?
-                  <span className="ic">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                </summary>
-                <div className="a">
-                  Au projet ou au forfait mensuel selon vos besoins. Réservez un appel et je vous
-                  fais une proposition claire adaptée à votre volume.
-                </div>
-              </details>
-            </div>
+            <FAQAccordion
+              items={[
+                {
+                  id: 'formats',
+                  number: '01',
+                  title: 'Quels formats de vidéos montez-vous ?',
+                  content: 'Je suis spécialisé dans les formats verticaux : 9:16 pour les reels, shorts et TikTok, 4:5 pour les fils d\'actualité. Je monte aussi en 16:9 quand le projet le demande, mais le vertical reste mon terrain principal.'
+                },
+                {
+                  id: 'projects',
+                  number: '02',
+                  title: 'Quels types de projets prenez-vous ?',
+                  content: 'Publicités, reels, capsules podcast, VSL, contenus de formation et motion design. Je travaille avec des créateurs, des coachs, des agents immobiliers et des plateformes, en français comme en anglais.'
+                },
+                {
+                  id: 'collaboration',
+                  number: '03',
+                  title: 'Comment se passe la collaboration ?',
+                  content: 'On commence par un appel pour cadrer le besoin. Vous m\'envoyez les rushes via un lien, je monte, et on affine ensemble avec des retours cadrés. Suivi clair du début à la livraison.'
+                },
+                {
+                  id: 'delays',
+                  number: '04',
+                  title: 'Quels sont vos délais ?',
+                  content: 'Ça dépend du volume et du format, mais un reel vertical part généralement sous quelques jours. On fixe les délais ensemble à l\'appel, et je m\'y tiens.'
+                },
+                {
+                  id: 'pricing',
+                  number: '05',
+                  title: 'Quels sont vos tarifs ?',
+                  content: 'Au projet ou au forfait mensuel selon vos besoins. Réservez un appel et je vous fais une proposition claire adaptée à votre volume.'
+                }
+              ]}
+              className="reveal"
+            />
           </div>
         </section>
 
