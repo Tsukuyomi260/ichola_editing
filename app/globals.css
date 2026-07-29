@@ -542,8 +542,8 @@ img{max-width:100%;display:block}
 }
 
 /* ==========================================================================
-   HERO V3 « ÉCRAN IMMERSIF » — scope .hs
-   Tout est préfixé .hs : NE PAS dé-préfixer, NE PAS tailwindiser.
+   HERO V3.1 « ÉCRAN IMMERSIF » — scope .hs
+   (dock liquid glass + timecode réel) — NE PAS dé-préfixer, NE PAS tailwindiser.
    ========================================================================== */
 .hs{
   --screen:#071009;
@@ -600,9 +600,23 @@ img{max-width:100%;display:block}
 .hs .grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.09;mix-blend-mode:soft-light;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-/* --- HEADER pilules --- */
+/* --- HEADER pilules + dock --- */
+.hs .topbar-slot{height:88px}
 .hs .topbar{position:relative;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:22px 26px}
+
+/* Dock "liquid glass" : fixé en bas du viewport quand le hero est hors écran.
+   Même taille (padding identique), fond verre sombre translucide. */
+.hs .topbar.hs-docked{position:fixed;left:18px;right:18px;bottom:16px;z-index:80;
+  max-width:1364px;margin:0 auto;border-radius:999px;
+  background:rgba(7,16,9,.6);
+  -webkit-backdrop-filter:blur(22px) saturate(1.7);
+  backdrop-filter:blur(22px) saturate(1.7);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 24px 60px -24px rgba(7,22,13,.55), inset 0 1px 0 rgba(255,255,255,.12);
+  animation:hsDockIn .45s var(--ease)}
+@keyframes hsDockIn{from{transform:translateY(calc(100% + 24px))}to{transform:translateY(0)}}
+
 .hs .logo{display:inline-flex;align-items:center;gap:10px;color:var(--screen-ink)}
 .hs .logo .mk{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
   display:grid;place-items:center}
@@ -618,11 +632,6 @@ img{max-width:100%;display:block}
 .hs .pill.active{background:#fff;color:var(--ink);border-color:#fff;font-weight:600}
 
 .hs .top-right{display:flex;align-items:center;gap:10px}
-.hs .status{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 15px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.22);color:var(--screen-ink);font-family:var(--font-mono);font-size:12px}
-.hs .status .dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.hs .status .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:var(--accent);opacity:.35;animation:hsPulse 2s var(--ease) infinite}
-@keyframes hsPulse{0%{transform:scale(.6);opacity:.5}70%,100%{transform:scale(1.9);opacity:0}}
 .hs .btn-cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;border:none;cursor:pointer;
   background:var(--accent);color:var(--ink);font-family:var(--font-sans);font-weight:600;font-size:14.5px;
   box-shadow:0 10px 26px -12px rgba(0,212,106,.9);
@@ -665,15 +674,18 @@ img{max-width:100%;display:block}
 .hs .sub{margin-top:26px;max-width:540px;color:var(--screen-muted);font-size:15.5px;line-height:1.6}
 .hs .sub b{color:var(--screen-ink);font-weight:600}
 
-/* --- Coins bas : carte verre + pilule blanche + rond ↓ --- */
+/* --- Coins bas : carte verre + pilule blanche + rond ↓ ---
+   Hovers SANS soulèvement : changement de couleur uniquement. */
 .hs .glass{position:absolute;left:26px;bottom:76px;z-index:6;display:flex;align-items:center;gap:13px;
   padding:13px 16px;border-radius:16px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--screen-ink);
-  transition:transform .3s var(--ease),background .3s var(--ease)}
-.hs .glass:hover{transform:translateY(-4px);background:rgba(255,255,255,.13)}
+  transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease)}
+.hs .glass:hover{background:rgba(255,255,255,.95);color:var(--ink);border-color:rgba(255,255,255,.95)}
+.hs .glass:hover .l{color:#5E6B62}
 .hs .glass .thumb{width:42px;height:74px;border-radius:9px;background:linear-gradient(160deg,#155E3A,#2FCB72);border:1px solid rgba(255,255,255,.25)}
 .hs .glass .v{font-family:var(--font-display);font-weight:700;font-size:22px;line-height:1;display:block}
-.hs .glass .l{font-family:var(--font-mono);font-size:10.5px;color:var(--screen-muted);margin-top:4px;display:block}
+.hs .glass .l{font-family:var(--font-mono);font-size:10.5px;color:var(--screen-muted);margin-top:4px;display:block;
+  transition:color .25s var(--ease)}
 
 .hs .br-actions{position:absolute;right:26px;bottom:76px;z-index:6;display:flex;flex-direction:column;align-items:flex-end;gap:14px}
 .hs .scrolldown{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:var(--screen-ink);
@@ -682,11 +694,13 @@ img{max-width:100%;display:block}
 .hs .scrolldown svg{width:18px;height:18px}
 .hs .pill-white{display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 22px;border-radius:999px;border:none;cursor:pointer;
   background:#fff;color:var(--ink);font-family:var(--font-sans);font-weight:600;font-size:15px;
-  box-shadow:0 16px 34px -16px rgba(0,0,0,.5);transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
-.hs .pill-white:hover{transform:translateY(-3px);box-shadow:0 22px 40px -16px rgba(0,0,0,.6)}
-.hs .pill-white svg{width:15px;height:15px;color:var(--green-deep)}
+  box-shadow:0 16px 34px -16px rgba(0,0,0,.5);
+  transition:background .22s var(--ease),color .22s var(--ease)}
+.hs .pill-white:hover{background:var(--accent);color:var(--ink)}
+.hs .pill-white svg{width:15px;height:15px;color:var(--green-deep);transition:color .22s var(--ease)}
+.hs .pill-white:hover svg{color:var(--ink)}
 
-/* --- Scrub bar : le détail "monteur" en bas de l'écran --- */
+/* --- Scrub bar : timecode réel piloté en JS (voir HeroScreen.tsx) --- */
 .hs .scrub{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:center;gap:16px;
   padding:0 26px;height:52px;border-top:1px solid rgba(255,255,255,.12);
   background:linear-gradient(to top, rgba(3,10,6,.65), rgba(3,10,6,0));backdrop-filter:blur(6px)}
@@ -694,8 +708,6 @@ img{max-width:100%;display:block}
 .hs .scrub .line{position:relative;flex:1;height:2px;background:rgba(255,255,255,.2);border-radius:2px}
 .hs .scrub .line .ph{position:absolute;top:50%;left:30%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;
   background:var(--accent);box-shadow:0 0 0 4px rgba(0,212,106,.25)}
-.hs.hs-animate .scrub .line .ph{animation:hsDrift 24s linear infinite}
-@keyframes hsDrift{from{left:2%}to{left:98%}}
 
 /* --- Responsive --- */
 @media(max-width:1020px){
@@ -707,7 +719,6 @@ img{max-width:100%;display:block}
 @media(max-width:760px){
   .hs .frame-wrap{padding:10px}
   .hs .frame{border-radius:22px;min-height:calc(100vh - 20px);min-height:calc(100svh - 20px)}
-  .hs .status{display:none}
   .hs h1.giant{font-size:clamp(64px,21vw,120px)}
   .hs .reel{position:static;transform:rotate(2deg);margin:26px auto 0;width:172px}
   .hs .reel:hover{transform:rotate(0)}
@@ -718,8 +729,8 @@ img{max-width:100%;display:block}
   .hs .br-actions{right:16px;bottom:66px}
   .hs .pill-white{height:46px;padding:0 18px;font-size:14px}
   .hs .scrolldown{display:none}
+  .hs .topbar.hs-docked{left:10px;right:10px;bottom:10px}
 }
 @media(prefers-reduced-motion:reduce){
-  .hs .status .dot::after{animation:none}
-  .hs.hs-animate .scrub .line .ph{animation:none}
+  .hs .topbar.hs-docked{animation:none}
 }
