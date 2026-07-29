@@ -1,34 +1,25 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Hero from '@/components/Hero';
+import { useEffect, useRef } from 'react';
+import HeroScreen from '@/components/HeroScreen';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { FAQAccordion } from '@/components/FAQAccordion';
 
 export default function Page() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const mTitleRef = useRef<HTMLDivElement>(null);
   const mSubRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const nav = navRef.current;
-    const mm = mobileMenuRef.current;
     const modal = modalRef.current;
     const player = playerRef.current;
     const mTitle = mTitleRef.current;
     const mSub = mSubRef.current;
     const scrollProgress = document.getElementById('scroll-progress');
 
-    /* Scroll progress bar + Nav shadow on scroll */
+    /* Scroll progress bar */
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-      if (nav) {
-        nav.classList.toggle('scrolled', window.scrollY > 8);
-      }
       if (scrollProgress) {
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -37,17 +28,6 @@ export default function Page() {
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    /* Mobile menu */
-    const burger = document.getElementById('burger');
-    const burgerClose = document.getElementById('burgerClose');
-    const closeMenuLinks = mm?.querySelectorAll('[data-close]');
-
-    burger?.addEventListener('click', () => mm?.classList.add('open'));
-    burgerClose?.addEventListener('click', () => mm?.classList.remove('open'));
-    closeMenuLinks?.forEach((a) =>
-      a.addEventListener('click', () => mm?.classList.remove('open'))
-    );
 
     /* Modal player */
     const mClose = document.getElementById('mClose');
@@ -97,47 +77,6 @@ export default function Page() {
       if (e.key === 'ArrowLeft') openCard(idx - 1);
     });
 
-    /* Hero rail scroll-linked animation (Effet A) */
-    const clamp = (v: number, a: number, b: number) => Math.min(Math.max(v, a), b);
-    const seg = (p: number, s: number, e: number) => clamp((p - s) / (e - s), 0, 1);
-    const progressOf = (sec: HTMLElement) => {
-      const total = sec.offsetHeight - window.innerHeight;
-      if (total <= 0) return 0;
-      return clamp(-sec.getBoundingClientRect().top / total, 0, 1);
-    };
-
-    const heroStage = document.getElementById('hero-stage') as HTMLElement;
-    const heroRail = document.getElementById('hero-rail') as HTMLElement;
-    const heroVcards = heroRail ? Array.from(heroRail.querySelectorAll('.vcard')) as HTMLElement[] : [];
-    const W = 230, G = 16, mid = (heroVcards.length - 1) / 2;
-
-    const applyHeroAnimation = () => {
-      if (!heroStage || heroVcards.length === 0) return;
-      const p = progressOf(heroStage);
-      heroVcards.forEach((el, i) => {
-        const dist = i - mid, absd = Math.abs(dist);
-        const collapsedX = -dist * (W + G);
-        const s = Math.min(0.08 * absd, 0.34), e = Math.min(0.5 + 0.09 * absd, 0.96);
-        const t = seg(p, s, e);
-        const x = collapsedX + (0 - collapsedX) * t;
-        const base = absd === 0 ? 1.12 : 0.82;
-        const sc = base + (1 - base) * t;
-        const op = absd === 0 ? 1 : seg(p, s, Math.min(s + 0.14, 1));
-        el.style.transform = `translateX(${x}px) scale(${sc})`;
-        el.style.opacity = String(op);
-        el.style.zIndex = String(50 - absd);
-      });
-    };
-
-    const handleHeroScroll = () => requestAnimationFrame(applyHeroAnimation);
-
-    // Only apply animation on desktop (>768px)
-    const isMobile = window.innerWidth <= 768;
-    if (!isMobile) {
-      window.addEventListener('scroll', handleHeroScroll, { passive: true });
-      window.addEventListener('resize', handleHeroScroll);
-    }
-
     /* Reveal on scroll */
     const io = new IntersectionObserver(
       (es) =>
@@ -153,15 +92,6 @@ export default function Page() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (!isMobile) {
-        window.removeEventListener('scroll', handleHeroScroll);
-        window.removeEventListener('resize', handleHeroScroll);
-      }
-      burger?.removeEventListener('click', () => mm?.classList.add('open'));
-      burgerClose?.removeEventListener('click', () => mm?.classList.remove('open'));
-      closeMenuLinks?.forEach((a) =>
-        a.removeEventListener('click', () => mm?.classList.remove('open'))
-      );
       cards.forEach((c) =>
         c.removeEventListener('click', () => openCard(0))
       );
@@ -186,68 +116,9 @@ export default function Page() {
       {/* Scroll progress bar */}
       <div id="scroll-progress" className="scroll-progress"></div>
 
-      {/* ================= NAV ================= */}
-      <header className="nav" id="nav" ref={navRef}>
-        <div className="nav-inner-wrapper" style={{ transition: 'all 0.3s var(--ease)' }}>
-          <div className="wrap nav-inner">
-            <a href="#" className="brand">
-              ICHOLA<span className="dot">.</span>EDITING
-            </a>
-            <nav className="nav-links">
-              <a href="#accueil">Accueil</a>
-              <a href="#realisations">Réalisations</a>
-              <a href="#apropos">À propos</a>
-            </nav>
-            <div className="nav-right">
-              <span className="status">
-                <span className="live"></span>Disponible
-              </span>
-              <a href="#contact" className="btn btn-primary">
-                Réserver un appel
-              </a>
-              <button className="burger" id="burger" aria-label="Ouvrir le menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M4 7h16M4 12h16M4 17h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Menu mobile */}
-      <div className="mobile-menu" id="mobileMenu" ref={mobileMenuRef}>
-        <div className="mm-top">
-          <a href="#" className="brand">
-            ICHOLA<span className="dot">.</span>EDITING
-          </a>
-          <button className="burger" id="burgerClose" aria-label="Fermer le menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          </button>
-        </div>
-        <nav className="mm-links">
-          <a href="#accueil" data-close>
-            Accueil
-          </a>
-          <a href="#realisations" data-close>
-            Réalisations
-          </a>
-          <a href="#apropos" data-close>
-            À propos
-          </a>
-        </nav>
-        <div className="mm-cta">
-          <a href="#contact" className="btn btn-primary" data-close>
-            Réserver un appel
-          </a>
-        </div>
-      </div>
-
-      {/* ================= HERO (1b) ================= */}
+      {/* ================= HERO V3 ================= */}
       <main>
-        <Hero />
+        <HeroScreen />
 
         {/* ================= CHIFFRES ================= */}
         <section className="stats reveal">
