@@ -1,6 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import ScreenHeader from './ScreenHeader';
+
+/** Forme d'onde du bloc audio (hauteurs figées : pas de aléatoire, pas de mismatch SSR). */
+const WAVE = [22, 48, 34, 72, 56, 88, 42, 64, 96, 50, 30, 68, 84, 44, 26, 58, 92, 38, 70, 54, 80, 36, 62, 46, 74, 28, 52, 40];
 
 /**
  * Hero v3.1 « écran immersif » — design validé.
@@ -71,36 +75,11 @@ export default function HeroScreen() {
           <span className="tick bl" aria-hidden="true"></span>
           <span className="tick br" aria-hidden="true"></span>
 
-          {/* HEADER pilules — se docke en bas au scroll */}
-          <div className="topbar-slot">
-            <header className={`topbar${docked ? ' hs-docked' : ''}`}>
-              <a className="logo" href="#accueil">
-                <span className="mk">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                </span>
-                <b>ICHOLA.EDITING</b>
-              </a>
-              <nav className="pills" aria-label="Navigation principale">
-                <a className="pill active" href="#accueil">Accueil</a>
-                <a className="pill" href="#realisations">Réalisations</a>
-                <a className="pill" href="#apropos">À propos</a>
-                <a className="pill" href="#contact">Contact</a>
-              </nav>
-              <div className="top-right">
-                <a className="btn-cta" href="#contact">
-                  Réserver un appel
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                </a>
-                <button className="burger" type="button" aria-label="Menu" aria-expanded="false">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
-                </button>
-              </div>
-            </header>
-          </div>
+          {/* HEADER pilules partagé — se docke en bas au scroll */}
+          <ScreenHeader active="accueil" docked={docked} home />
 
           {/* CENTRE : mot géant + carte reel */}
           <div className="center">
-            <span className="eyebrow"><i></i>Ichola Editing — monteur vidéo</span>
             <div className="giant-wrap">
               <h1 className="giant">montage<span className="dot">.</span></h1>
               <article className="reel" tabIndex={0} aria-label="Aperçu d'un montage vertical 9:16">
@@ -118,18 +97,20 @@ export default function HeroScreen() {
               </article>
             </div>
             <p className="sub">
-              Ads, reels et capsules courtes en <b>9:16 et 4:5</b> — montées pour accrocher dès la
-              première seconde et <b>retenir jusqu&apos;à la dernière</b>. Zéro recadrage, jamais.
+              Des vidéos qui parlent à votre audience&nbsp;: <b>dans ses codes, à son rythme</b>. Ads,
+              reels et formats longs, pensés pour vendre. FR&nbsp;/&nbsp;EN.
             </p>
           </div>
 
-          {/* coins bas */}
-          <aside className="glass">
-            <span className="thumb" aria-hidden="true"></span>
-            <span>
-              <span className="v">+207M</span>
-              <span className="l">vues · MentorShow · S1 2026</span>
+          {/* coins bas : piste audio (remplace l'ancienne carte de chiffres) */}
+          <aside className="hs-wave" aria-hidden="true">
+            <span className="lbl">A1 · audio</span>
+            <span className="bars">
+              {WAVE.map((h, i) => (
+                <i key={i} style={{ '--h': `${h}%`, '--i': i } as React.CSSProperties} />
+              ))}
             </span>
+            <span className="meta">48 kHz · stéréo</span>
           </aside>
           <div className="br-actions">
             <a className="scrolldown" href="#realisations" aria-label="Voir la suite">
