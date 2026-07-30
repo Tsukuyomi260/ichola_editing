@@ -1070,11 +1070,10 @@ img{max-width:100%;display:block}
 
 /* --- Marques logiciels du panneau chiffres (monochromes : mono-accent respecté) --- */
 .lp-tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
-.lp-tools .tool{display:grid;place-items:center;height:34px;min-width:34px;padding:0 10px;border-radius:9px;
-  border:1px solid var(--line);background:var(--wash);
-  font-family:var(--font-mono);font-size:12.5px;font-weight:500;color:var(--green-deep);
-  transition:border-color .22s var(--ease),background .22s var(--ease)}
-.lp-tools .tool:hover{border-color:var(--accent);background:var(--surface)}
+.lp-tools .tool{display:grid;place-items:center;width:40px;height:40px;border-radius:9px;overflow:hidden;
+  transition:box-shadow .22s var(--ease)}
+.lp-tools .tool:hover{box-shadow:0 0 0 2px var(--accent)}
+.lp-tools .tool svg{display:block;width:100%;height:100%}
 
 /* ==========================================================================
    PAGE À PROPOS — préfixe ap-

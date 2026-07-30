@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 
 /**
  * Bas de page v4 — design validé (langage « écran » du hero).
@@ -172,10 +173,10 @@ export default function SectionsV4() {
             <div className="lp-stat">
               <div className="n"><span data-count="3">0</span></div>
               <div className="l">logiciels utilisés au quotidien</div>
-              <div className="lp-tools" role="list" aria-label="Premiere Pro, After Effects, CapCut">
-                <span className="tool" role="listitem" title="Adobe Premiere Pro">Pr</span>
-                <span className="tool" role="listitem" title="Adobe After Effects">Ae</span>
-                <span className="tool wide" role="listitem" title="CapCut">CapCut</span>
+              <div className="lp-tools" role="list">
+                <span className="tool" role="listitem" title="Adobe Premiere Pro"><PremiereProLogo /></span>
+                <span className="tool" role="listitem" title="Adobe After Effects"><AfterEffectsLogo /></span>
+                <span className="tool" role="listitem" title="CapCut"><CapCutLogo /></span>
               </div>
               <div className="bar" style={{ '--w': '100%' } as React.CSSProperties}><i></i></div>
             </div>
