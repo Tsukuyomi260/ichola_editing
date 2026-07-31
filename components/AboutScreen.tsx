@@ -130,6 +130,7 @@ export default function AboutScreen() {
         <ScreenHeader active="apropos" docked={docked} light />
 
         <section className="ap-hero" ref={heroRef}>
+          <div className="ap-hstack">
           <div className="ap-hcard">
           <div className="ap-hero-copy">
             <h1 className="ap-h1">
@@ -184,6 +185,7 @@ export default function AboutScreen() {
                 <span className="l">vues · S1 2026</span>
               </span>
             </div>
+          </div>
           </div>
           </div>
         </section>

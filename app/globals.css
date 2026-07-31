@@ -1364,7 +1364,12 @@ img{max-width:100%;display:block}
    la carte portrait elle-même. Elle déborde de l'aplat vert.
    ========================================================================== */
 .ap-hero{position:relative;max-width:1300px;margin:0 auto;padding:26px 24px 84px}
-.ap-hcard{position:relative;display:grid;grid-template-columns:1fr 1.06fr;gap:44px;align-items:center;
+/* Carte verte glissée derrière la blanche : elle dépasse de 10px en bas et à
+   droite. Même principe d'empilement que l'aplat vert derrière le portrait. */
+.ap-hstack{position:relative}
+.ap-hstack::before{content:"";position:absolute;left:10px;right:-10px;top:10px;bottom:-10px;z-index:0;
+  background:var(--accent);border-radius:34px}
+.ap-hcard{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.06fr;gap:44px;align-items:center;
   background:var(--surface);border:1px solid var(--line);border-radius:34px;padding:60px 56px 64px;
   box-shadow:0 44px 96px -54px rgba(10,30,18,.3);overflow:hidden}
 .ap-hcard::before{content:"";position:absolute;right:0;top:0;width:min(660px,72%);height:100%;z-index:0;pointer-events:none;
@@ -1438,13 +1443,14 @@ img{max-width:100%;display:block}
   .ap-trust{flex-direction:column;align-items:flex-start;gap:9px;margin-top:34px}
   .ap-trust .sep{display:none}
   .ap-hero{padding:16px 14px 60px}
+  .ap-hstack::before{left:6px;right:-6px;top:6px;bottom:-6px;border-radius:26px}
   .ap-hcard{padding:34px 22px 40px;border-radius:26px;gap:40px}
   .ap-h1{font-size:clamp(38px,12vw,58px)}
   .ap-stage{max-width:300px}
   .ap-shot{top:-26px}
-  .ap-hchip{left:-6px;bottom:34px;padding:9px 12px}
-  .ap-hchip .k{width:32px;height:32px}
-  .ap-hchip .v{font-size:15px}
+  /* Sous 560px le plateau est trop étroit : la carte chevauchait la légende
+     du portrait. Le chiffre reste lisible dans le panneau juste en dessous. */
+  .ap-hchip{display:none}
 }
 @media(prefers-reduced-motion:reduce){
   .ap-animate .ap-mk::before{animation:none;transform:scaleX(1)}
