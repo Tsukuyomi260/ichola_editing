@@ -1499,3 +1499,18 @@ img{max-width:100%;display:block}
   .ap-spec-row{grid-template-columns:1fr;gap:11px;padding:16px 0}
   .ap-spec-row .k{padding-top:0}
 }
+
+/* --- Aperçu vidéo Vimeo dans une carte (composant VimeoFrame) ---
+   L'affiche reste sous le lecteur : si l'iframe ne charge pas, on voit
+   l'image au lieu d'un rectangle noir. */
+.vf{position:absolute;inset:0;overflow:hidden;background:#0b140e}
+.vf-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vf-player{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+
+/* Pastille « muet » de la carte du hero */
+.hs .reel .muted{position:absolute;top:10px;right:10px;z-index:3;
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#eafff2;
+  background:rgba(3,14,8,.55);border:1px solid rgba(255,255,255,.2);padding:3px 7px;border-radius:6px;
+  backdrop-filter:blur(4px)}
+.hs .reel .tag,.hs .reel .cap{z-index:3}
+.hs .reel .rveil{z-index:2}

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import ScreenHeader from './ScreenHeader';
+import VimeoFrame from './VimeoFrame';
+import { SHOWREEL } from '@/lib/videos';
 
 /** Forme d'onde du bloc audio (hauteurs figées : pas de aléatoire, pas de mismatch SSR). */
 const WAVE = [22, 48, 34, 72, 56, 88, 42, 64, 96, 50, 30, 68, 84, 44, 26, 58, 92, 38, 70, 54, 80, 36, 62, 46, 74, 28, 52, 40];
@@ -82,17 +84,14 @@ export default function HeroScreen() {
           <div className="center">
             <div className="giant-wrap">
               <h1 className="giant">montage<span className="dot">.</span></h1>
-              <article className="reel" tabIndex={0} aria-label="Aperçu d'un montage vertical 9:16">
-                <div className="film"></div>
-                <div className="rgrain"></div>
-                <div className="rveil"></div>
-                <span className="tag">9:16</span>
-                <div className="play">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                </div>
+              <article className="reel" aria-label={`${SHOWREEL.title} — ${SHOWREEL.sub}`}>
+                <VimeoFrame video={SHOWREEL} />
+                <div className="rveil" aria-hidden="true"></div>
+                <span className="tag">{SHOWREEL.ratio}</span>
+                <span className="muted" aria-hidden="true">muet</span>
                 <div className="cap">
-                  <div className="t">Ad — coach</div>
-                  <div className="s">reel · vertical · FR</div>
+                  <div className="t">{SHOWREEL.title}</div>
+                  <div className="s">{SHOWREEL.sub}</div>
                 </div>
               </article>
             </div>
