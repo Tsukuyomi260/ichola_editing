@@ -32,6 +32,8 @@ export type Video = {
   sub: string;
   poster: string;
   ratio: Ratio;
+  /** Durée affichée sur la carte, au format mm:ss. */
+  duration?: string;
 };
 
 /** Vidéo mise en avant dans le cadre du hero d'accueil. */
@@ -42,6 +44,49 @@ export const SHOWREEL: Video = {
   poster:
     'https://i.vimeocdn.com/video/2185499314-bc5394a1d06053aabbb6ce488160f466292b96722de85fb6a5af546eb56c2262-d_720x1280',
   ratio: '9:16',
+  duration: '00:18',
+};
+
+/**
+ * Grille « Dernières réalisations ».
+ * Les titres et sous-titres viennent des noms de fichiers Vimeo et du contenu
+ * réel des vidéos — rien n'est inventé.
+ */
+export const REALISATIONS: Video[] = [
+  {
+    id: '1214555185',
+    title: 'Reginald Allouche',
+    sub: 'Ads · MentorShow · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2185516280-0ce6ddbdb490b618eae58563d4f8e46ae232a4c7bb1c3040e2775777bf59c1de-d_720x1280',
+    ratio: '9:16',
+    duration: '01:55',
+  },
+  {
+    id: '1214554767',
+    title: 'Capsule — Business',
+    sub: 'Motion design · vertical',
+    poster:
+      'https://i.vimeocdn.com/video/2185514722-c32e7ec85ec011c6c1e7d4c7ab551a4cfddcc416c47102cbbec1bb494848bd43-d_720x1280',
+    ratio: '9:16',
+    duration: '00:20',
+  },
+  {
+    id: '1214552992',
+    title: 'Healing Days — Londres',
+    sub: 'Ads · MentorShow · EN',
+    poster:
+      'https://i.vimeocdn.com/video/2185513487-2bce720226f1461c4077afed0ef4220305e39d5d39ada4be7055a1893bd8e5a3-d_1280x720',
+    ratio: '16:9',
+    duration: '01:59',
+  },
+];
+
+/** Classe de ratio utilisée par les cartes de la grille. */
+export const RATIO_CLASS: Record<Ratio, string> = {
+  '9:16': 'r916',
+  '4:5': 'r45',
+  '16:9': 'r169',
 };
 
 /**

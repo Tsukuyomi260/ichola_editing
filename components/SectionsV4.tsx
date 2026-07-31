@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
+import VimeoFrame from './VimeoFrame';
+import VideoModal from './VideoModal';
+import { REALISATIONS, RATIO_CLASS, type Video } from '@/lib/videos';
 
 /**
  * Bas de page v4 — design validé (langage « écran » du hero).
@@ -11,8 +14,8 @@ import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
  * - SHOW_REAL_QUOTES : passer à true UNIQUEMENT quand de VRAIS avis clients
  *   existent (remplacer alors les placeholders). En attendant, la variante
  *   honnête « Les premiers retours arrivent » est affichée.
- * - Les cartes réalisations sont volontairement inertes (placeholders) :
- *   elles seront câblées au lecteur avec les vraies vidéos (Bunny/Vimeo).
+ * - Les cartes réalisations lisent le catalogue lib/videos.ts : affiche au
+ *   repos, aperçu muet au survol, lecteur agrandi avec le son au clic.
  */
 
 /** Numéro WhatsApp d'Ichola, au format wa.me (indicatif sans le +). */
@@ -55,38 +58,37 @@ const FAQ_ITEMS = [
   },
 ];
 
-const WORKS_ROW1 = [
-  { cls: 'r916', c1: '#0F6B3F', c2: '#2FCB72', p: '64%', dur: '00:34', t: 'Ad — coach business', s: 'ADS · FRANÇAIS', tag: '9:16' },
-  { cls: 'r45', c1: '#134E37', c2: '#3FB6A0', p: '38%', dur: '00:52', t: 'Capsule podcast', s: 'PODCAST · VERTICAL', tag: '4:5' },
-  { cls: 'r169', c1: '#155E3A', c2: '#57E39A', p: '52%', dur: '01:12', t: 'VSL formation', s: 'VSL · HORIZONTAL', tag: '16:9' },
-];
-
-const WORKS_ROW2 = [
-  { cls: 'r916', c1: '#1A5E2E', c2: '#7BD94F', p: '58%', dur: '00:27', t: 'Reel immobilier', s: 'IMMOBILIER · VERTICAL', tag: '9:16' },
-  { cls: 'r916', c1: '#0D5C46', c2: '#34D19A', p: '44%', dur: '00:22', t: 'Motion flyer', s: 'MOTION · VERTICAL', tag: '9:16' },
-  { cls: 'r916', c1: '#136044', c2: '#2FB77E', p: '70%', dur: '00:31', t: 'Short — English', s: 'REEL · ENGLISH', tag: '9:16' },
-  { cls: 'r916', c1: '#155E3A', c2: '#2FCB72', p: '49%', dur: '00:41', t: 'Ad — MentorShow', s: 'ADS · FR/EN', tag: '9:16' },
-];
-
-function WorkCard({ w }: { w: (typeof WORKS_ROW1)[number] }) {
+/**
+ * Carte de réalisation.
+ * Au repos on n'affiche que l'affiche Vimeo ; le lecteur muet ne se monte
+ * qu'au survol, et se démonte quand la souris repart. Avec une vingtaine de
+ * vidéos, c'est ce qui garde la page légère.
+ */
+function WorkCard({ v, onOpen }: { v: Video; onOpen: (v: Video) => void }) {
+  const [survol, setSurvol] = useState(false);
   return (
-    <article
-      className={`lp-wk ${w.cls}`}
-      style={{ '--c1': w.c1, '--c2': w.c2, '--p': w.p } as React.CSSProperties}
+    <button
+      type="button"
+      className={`lp-wk ${RATIO_CLASS[v.ratio]}`}
+      onMouseEnter={() => setSurvol(true)}
+      onMouseLeave={() => setSurvol(false)}
+      onFocus={() => setSurvol(true)}
+      onBlur={() => setSurvol(false)}
+      onClick={() => onOpen(v)}
+      aria-label={`Agrandir avec le son : ${v.title} — ${v.sub}`}
     >
-      <div className="film"></div>
-      <div className="veilw"></div>
-      <span className="tag">{w.tag}</span>
-      <span className="dur">{w.dur}</span>
-      <div className="playw">
+      <VimeoFrame video={v} active={survol} />
+      <div className="veilw" aria-hidden="true"></div>
+      <span className="tag">{v.ratio}</span>
+      {v.duration && <span className="dur">{v.duration}</span>}
+      <div className="playw" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
       </div>
       <div className="metaw">
-        <div className="t">{w.t}</div>
-        <div className="s">{w.s}</div>
+        <div className="t">{v.title}</div>
+        <div className="s">{v.sub}</div>
       </div>
-      <div className="pb"><i></i></div>
-    </article>
+    </button>
   );
 }
 
@@ -95,6 +97,7 @@ export default function SectionsV4() {
   const statsRef = useRef<HTMLElement>(null);
   const [statsPlayed, setStatsPlayed] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
+  const [lecture, setLecture] = useState<Video | null>(null);
 
   // Reveal doux
   useEffect(() => {
@@ -211,10 +214,9 @@ export default function SectionsV4() {
         </div>
 
         <div className="lp-wr1">
-          {WORKS_ROW1.map((w) => <WorkCard key={w.t} w={w} />)}
-        </div>
-        <div className="lp-wr2">
-          {WORKS_ROW2.map((w) => <WorkCard key={w.t} w={w} />)}
+          {REALISATIONS.map((v) => (
+            <WorkCard key={v.id} v={v} onOpen={setLecture} />
+          ))}
         </div>
 
         <div className="lp-wfoot">
@@ -404,6 +406,8 @@ export default function SectionsV4() {
           <span className="st"><i></i>Disponible pour de nouveaux projets · FR / EN</span>
         </div>
       </footer>
+
+      <VideoModal video={lecture} onClose={() => setLecture(null)} />
     </div>
   );
 }

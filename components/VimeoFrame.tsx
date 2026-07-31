@@ -36,7 +36,11 @@ export default function VimeoFrame({
   const [etat, setEtat] = useState<'affiche' | 'lecteur' | 'echec'>('affiche');
 
   useEffect(() => {
-    if (!active) return;
+    // `echec` est définitif : inutile de réessayer un lecteur qui ne répond pas.
+    if (!active) {
+      setEtat((e) => (e === 'echec' ? e : 'affiche'));
+      return;
+    }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     setEtat((e) => (e === 'echec' ? e : 'lecteur'));
   }, [active]);

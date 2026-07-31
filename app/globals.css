@@ -1614,3 +1614,9 @@ img{max-width:100%;display:block}
 .hs .reel .expand svg{width:14px;height:14px}
 .vm-stage .vm-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .vm-stage iframe{position:relative}
+
+/* Les cartes de réalisation sont devenues de vrais boutons */
+button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearance:none;appearance:none;
+  display:block;width:100%}
+.lp-wk .veilw,.lp-wk .tag,.lp-wk .dur,.lp-wk .playw,.lp-wk .metaw{z-index:2}
+.lp-wk .playw{z-index:3}
