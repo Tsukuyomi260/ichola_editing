@@ -15,17 +15,32 @@ import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
  *   elles seront câblées au lecteur avec les vraies vidéos (Bunny/Vimeo).
  */
 
+/** Numéro WhatsApp d'Ichola, au format wa.me (indicatif sans le +). */
+const WHATSAPP = '2290148192084';
+
+/**
+ * Le formulaire n'a pas de backend : il compose le message et ouvre la
+ * conversation WhatsApp pré-remplie. Rien n'est stocké côté serveur, donc
+ * pas de besoin d'anti-spam ici.
+ */
+function ouvrirWhatsApp(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  const data = new FormData(e.currentTarget);
+  const champ = (k: string) => String(data.get(k) ?? '').trim();
+  const nomComplet = [champ('prenom'), champ('nom')].filter(Boolean).join(' ');
+
+  const lignes = ['Bonjour Ichola,'];
+  if (nomComplet) lignes.push(`Je suis ${nomComplet}.`);
+  if (champ('email')) lignes.push(`Email : ${champ('email')}`);
+  if (champ('message')) lignes.push('', champ('message'));
+
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lignes.join('\n'))}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
 const SHOW_REAL_QUOTES = false;
 
 const FAQ_ITEMS = [
-  {
-    q: 'Quels formats de vidéos montez-vous ?',
-    a: "Je suis spécialisé dans les formats verticaux : 9:16 pour les reels, shorts et TikTok, 4:5 pour les fils d'actualité. Je monte aussi en 16:9 quand le projet le demande, mais le vertical reste mon terrain principal.",
-  },
-  {
-    q: 'Quels types de projets prenez-vous ?',
-    a: 'Publicités, reels organiques, capsules de podcast, VSL et vidéos de formation — pour des marques, des coachs, des agents immobiliers et des créateurs, en français comme en anglais.',
-  },
   {
     q: 'Comment se passe la collaboration ?',
     a: "Un appel de cadrage, un brief clair, puis une première version rapide. On itère ensemble sur des points précis (rythme, textes, musique) jusqu'à validation. Vous savez toujours où en est le projet.",
@@ -308,26 +323,27 @@ export default function SectionsV4() {
           <span className="lp-eb"><i></i>Contact</span>
           <h2 className="lp-title">Parlons de votre projet<em>.</em></h2>
           <div className="lp-cgrid">
-            <form className="lp-cform" onSubmit={(e) => e.preventDefault()}>
+            <form className="lp-cform" onSubmit={ouvrirWhatsApp}>
               <div className="lp-frow">
                 <div className="lp-field">
                   <label htmlFor="lp-fp">Prénom</label>
-                  <input id="lp-fp" type="text" placeholder="Prénom" autoComplete="given-name" />
+                  <input id="lp-fp" name="prenom" type="text" placeholder="Prénom" autoComplete="given-name" />
                 </div>
                 <div className="lp-field">
                   <label htmlFor="lp-fn">Nom</label>
-                  <input id="lp-fn" type="text" placeholder="Nom" autoComplete="family-name" />
+                  <input id="lp-fn" name="nom" type="text" placeholder="Nom" autoComplete="family-name" />
                 </div>
               </div>
               <div className="lp-field">
                 <label htmlFor="lp-fe">Email</label>
-                <input id="lp-fe" type="email" placeholder="vous@exemple.com" autoComplete="email" />
+                <input id="lp-fe" name="email" type="email" placeholder="vous@exemple.com" autoComplete="email" />
               </div>
               <div className="lp-field">
                 <label htmlFor="lp-fm">Message</label>
-                <textarea id="lp-fm" placeholder="Décrivez votre projet en quelques mots…"></textarea>
+                <textarea id="lp-fm" name="message" required placeholder="Décrivez votre projet en quelques mots…"></textarea>
               </div>
               <button className="lp-btn-a" type="submit">Envoyer le message</button>
+              <p className="lp-fnote">{'// '}la conversation s&apos;ouvre dans WhatsApp</p>
             </form>
             <aside className="lp-ccall">
               <span className="lp-ctk a"></span><span className="lp-ctk b"></span>

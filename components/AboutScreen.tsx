@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import ScreenHeader from './ScreenHeader';
+import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 
 /**
  * Page À propos — préfixe CSS ap-, header partagé .sh-.
@@ -218,31 +219,50 @@ export default function AboutScreen() {
               </div>
             </div>
             <div>
-              <div className="ap-chipgrp">
-                <div className="ap-chiplbl">Ce que je fais</div>
-                <div className="ap-chips">
-                  <span className="ap-chip">Montage</span>
-                  <span className="ap-chip">Motion design</span>
-                  <span className="ap-chip">9:16 · reels</span>
-                  <span className="ap-chip">4:5 · fil d&apos;actu</span>
-                  <span className="ap-chip">16:9</span>
-                  <span className="ap-chip">Ads &amp; VSL</span>
-                  <span className="ap-chip">Capsules podcast</span>
+              <div className="ap-spec">
+                <span className="ap-ptk a"></span><span className="ap-ptk b"></span>
+                <span className="ap-ptk c"></span><span className="ap-ptk d"></span>
+
+                <div className="ap-spec-head">
+                  <span>{'// '}<b>Fiche technique</b></span>
+                  <span>Monteur · Motion</span>
                 </div>
-              </div>
-              <div className="ap-chipgrp">
-                <div className="ap-chiplbl">Outils</div>
-                <div className="ap-chips">
-                  <span className="ap-chip">Premiere Pro</span>
-                  <span className="ap-chip">After Effects</span>
-                  <span className="ap-chip">CapCut</span>
+
+                <div className="ap-spec-row">
+                  <div className="k">Outils</div>
+                  <div className="v tools">
+                    <span className="ap-tchip"><span className="lg"><PremiereProLogo /></span>Premiere&nbsp;Pro</span>
+                    <span className="ap-tchip"><span className="lg"><AfterEffectsLogo /></span>After&nbsp;Effects</span>
+                    <span className="ap-tchip"><span className="lg"><CapCutLogo /></span>CapCut</span>
+                  </div>
                 </div>
-              </div>
-              <div className="ap-chipgrp">
-                <div className="ap-chiplbl">Langues</div>
-                <div className="ap-chips">
-                  <span className="ap-chip">Français</span>
-                  <span className="ap-chip">English</span>
+
+                <div className="ap-spec-row">
+                  <div className="k">Formats</div>
+                  <div className="v">
+                    <span className="val">9:16</span><i></i>
+                    <span className="val">4:5</span><i></i>
+                    <span className="val">16:9</span>
+                  </div>
+                </div>
+
+                <div className="ap-spec-row">
+                  <div className="k">Livrables</div>
+                  <div className="v">
+                    <span className="val">Ads</span><i></i>
+                    <span className="val">VSL</span><i></i>
+                    <span className="val">Reels</span><i></i>
+                    <span className="val">Capsules podcast</span><i></i>
+                    <span className="val">Motion design</span>
+                  </div>
+                </div>
+
+                <div className="ap-spec-row">
+                  <div className="k">Langues</div>
+                  <div className="v">
+                    <span className="val">Français</span><i></i>
+                    <span className="val">English</span>
+                  </div>
                 </div>
               </div>
             </div>
