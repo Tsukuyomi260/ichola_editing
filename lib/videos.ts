@@ -18,6 +18,13 @@
 
 export type Ratio = '9:16' | '4:5' | '16:9';
 
+/** Ratio CSS correspondant, pour dimensionner un cadre sans jamais recadrer. */
+export const RATIO_CSS: Record<Ratio, string> = {
+  '9:16': '9 / 16',
+  '4:5': '4 / 5',
+  '16:9': '16 / 9',
+};
+
 export type Video = {
   id: string;
   hash?: string;
@@ -42,14 +49,20 @@ export const SHOWREEL: Video = {
  * `background` masque toutes les commandes et lance la lecture en boucle
  * muette : c'est le mode « aperçu », celui qu'on veut dans une carte.
  */
-export function playerUrl(v: Video, opts: { background?: boolean } = {}) {
+export function playerUrl(v: Video, opts: { background?: boolean; autoplay?: boolean } = {}) {
   const p = new URLSearchParams();
   if (v.hash) p.set('h', v.hash);
   if (opts.background) {
+    // Aperçu : boucle muette, aucune commande.
     p.set('background', '1');
     p.set('autoplay', '1');
     p.set('loop', '1');
     p.set('muted', '1');
+    p.set('autopause', '0');
+  } else if (opts.autoplay) {
+    // Lecteur agrandi : avec le son. Le clic qui ouvre la fenêtre compte comme
+    // geste utilisateur, donc les navigateurs autorisent la lecture sonore.
+    p.set('autoplay', '1');
     p.set('autopause', '0');
   }
   // Toujours : pas d'habillage Vimeo, pas de pistage.

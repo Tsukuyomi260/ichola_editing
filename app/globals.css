@@ -1036,9 +1036,8 @@ img{max-width:100%;display:block}
 
 @media(max-width:1020px){
   .sh-pills{display:none}
-  .sh-burger{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;
+  .sh-burger{position:relative;display:block;width:44px;height:44px;border-radius:50%;
     border:1px solid rgba(255,255,255,.22);background:transparent;color:var(--screen-ink);cursor:pointer}
-  .sh-burger svg{width:20px;height:20px}
 }
 @media(max-width:760px){
   .sh-topbar.sh-docked{left:10px;right:10px;bottom:10px}
@@ -1350,13 +1349,13 @@ img{max-width:100%;display:block}
 /* --- Variante claire du header partagé (pages intérieures à fond clair).
    Ne s'applique QUE hors dock : une fois docké, on retrouve le verre sombre
    signature, identique sur toutes les pages. --- */
-.sh-topbar.sh-light:not(.sh-docked) .sh-logo{color:var(--ink)}
-.sh-topbar.sh-light:not(.sh-docked) .sh-logo .mk{background:var(--wash);border-color:var(--line)}
-.sh-topbar.sh-light:not(.sh-docked) .sh-logo .mk svg{color:var(--green-deep)}
-.sh-topbar.sh-light:not(.sh-docked) .sh-pill{color:var(--ink-2);border-color:var(--line)}
-.sh-topbar.sh-light:not(.sh-docked) .sh-pill:hover{background:var(--wash);border-color:var(--accent);color:var(--green-deep)}
-.sh-topbar.sh-light:not(.sh-docked) .sh-pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.sh-topbar.sh-light:not(.sh-docked) .sh-burger{color:var(--ink);border-color:var(--line)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-logo{color:var(--ink)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-logo .mk{background:var(--wash);border-color:var(--line)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-logo .mk svg{color:var(--green-deep)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-pill{color:var(--ink-2);border-color:var(--line)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-pill:hover{background:var(--wash);border-color:var(--accent);color:var(--green-deep)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-burger{color:var(--ink);border-color:var(--line)}
 
 /* ==========================================================================
    HERO CLAIR DE LA PAGE À PROPOS — préfixe ap-
@@ -1514,3 +1513,104 @@ img{max-width:100%;display:block}
   backdrop-filter:blur(4px)}
 .hs .reel .tag,.hs .reel .cap{z-index:3}
 .hs .reel .rveil{z-index:2}
+
+/* ==========================================================================
+   MENU MOBILE — panneau plein écran, ouverture par glissement
+   ========================================================================== */
+/* Barres du burger : deux traits qui pivotent en croix. */
+.sh-burger .bl{position:absolute;top:50%;left:50%;width:17px;height:1.6px;border-radius:2px;
+  background:currentColor;transition:transform .38s var(--ease)}
+.sh-burger .b1{transform:translate(-50%,-50%) translateY(-4px)}
+.sh-burger .b2{transform:translate(-50%,-50%) translateY(4px)}
+.sh-burger.is-open .b1{transform:translate(-50%,-50%) rotate(45deg)}
+.sh-burger.is-open .b2{transform:translate(-50%,-50%) rotate(-45deg)}
+
+/* Le header repasse au-dessus du panneau : le bouton de fermeture reste
+   atteignable, et le logo reste visible — comme chez Apple. */
+.sh-topbar.sh-menu-open{z-index:95}
+
+.sh-menu{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;justify-content:center;
+  gap:38px;padding:104px 30px 44px;
+  background:rgba(7,16,9,.9);
+  -webkit-backdrop-filter:blur(26px) saturate(1.5);backdrop-filter:blur(26px) saturate(1.5);
+  opacity:0;visibility:hidden;transform:translateY(-10px);
+  transition:opacity .34s var(--ease),transform .34s var(--ease),visibility .34s}
+.sh-menu.open{opacity:1;visibility:visible;transform:none}
+.sh-menu ul{list-style:none;margin:0;padding:0}
+.sh-menu li{opacity:0;transform:translateY(16px);
+  transition:opacity .46s var(--ease),transform .46s var(--ease)}
+.sh-menu.open li,.sh-menu.open .sh-menu-foot{transition-delay:calc(.06s + var(--i) * .055s)}
+.sh-menu.open li{opacity:1;transform:none}
+.sh-menu li a{display:flex;align-items:baseline;gap:16px;padding:13px 0;
+  font-family:var(--font-display);font-weight:600;font-size:clamp(30px,9vw,44px);letter-spacing:-.03em;
+  color:var(--screen-ink);transition:color .2s var(--ease)}
+.sh-menu li a .num{font-family:var(--font-mono);font-size:12px;font-weight:400;letter-spacing:.1em;
+  color:var(--screen-muted);transition:color .2s var(--ease)}
+.sh-menu li a.on,.sh-menu li a:hover{color:var(--accent)}
+.sh-menu li a.on .num{color:var(--accent)}
+
+.sh-menu-foot{display:flex;flex-direction:column;align-items:flex-start;gap:16px;
+  padding-top:30px;border-top:1px solid rgba(255,255,255,.14);
+  opacity:0;transform:translateY(16px);
+  transition:opacity .46s var(--ease),transform .46s var(--ease)}
+.sh-menu.open .sh-menu-foot{opacity:1;transform:none}
+.sh-menu .sh-menu-cta{display:inline-flex;align-items:center;gap:9px;height:50px;padding:0 24px;border-radius:999px;
+  background:var(--accent);color:var(--ink);font-weight:600;font-size:15.5px;
+  transition:background .22s var(--ease)}
+.sh-menu .sh-menu-cta:hover{background:var(--accent-bright)}
+.sh-menu .sh-menu-cta svg{width:15px;height:15px}
+.sh-menu-note{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--screen-muted)}
+
+@media(prefers-reduced-motion:reduce){
+  .sh-menu{transition:opacity .01s,visibility .01s;transform:none}
+  .sh-menu li,.sh-menu-foot{transition:none;opacity:1;transform:none}
+  .sh-burger .bl{transition:none}
+}
+
+/* ==========================================================================
+   LECTEUR AGRANDI — préfixe vm-
+   ========================================================================== */
+.vm{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;
+  background:rgba(3,10,6,.86);
+  -webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);
+  animation:vmIn .28s var(--ease)}
+@keyframes vmIn{from{opacity:0}to{opacity:1}}
+.vm-inner{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:96vw}
+/* Le ratio pilote le cadre : une verticale reste verticale et pleine. */
+.vm-stage{position:relative;height:min(80svh,860px);aspect-ratio:var(--ar,9/16);
+  border-radius:20px;overflow:hidden;background:#000;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 50px 100px -40px rgba(0,0,0,.8);
+  animation:vmUp .34s var(--ease)}
+@keyframes vmUp{from{transform:translateY(12px) scale(.985)}to{transform:none}}
+.vm-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vm-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;
+  max-width:min(92vw,520px);color:#fff}
+.vm-meta .t{font-family:var(--font-display);font-weight:600;font-size:16px}
+.vm-meta .s{font-family:var(--font-mono);font-size:11px;color:var(--screen-muted);margin-top:3px}
+.vm-close{width:44px;height:44px;border-radius:50%;flex:none;cursor:pointer;
+  border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;display:grid;place-items:center;
+  transition:background .22s var(--ease),border-color .22s var(--ease)}
+.vm-close:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5)}
+.vm-close svg{width:19px;height:19px}
+
+@media(max-width:560px){
+  .vm{padding:12px}
+  .vm-stage{width:92vw;height:auto;max-height:78svh}
+}
+@media(prefers-reduced-motion:reduce){
+  .vm{animation:none}
+  .vm-stage{animation:none}
+}
+
+/* La carte du hero devient un vrai bouton : clic n'importe où = lecteur agrandi */
+.hs button.reel{padding:0;font:inherit;text-align:left;-webkit-appearance:none;appearance:none}
+.hs .reel .expand{position:absolute;inset:0;z-index:4;display:grid;place-items:center;
+  opacity:0;background:rgba(3,10,6,.34);transition:opacity .25s var(--ease)}
+.hs .reel:hover .expand,.hs .reel:focus-visible .expand{opacity:1}
+.hs .reel .expand span{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;border-radius:999px;
+  background:rgba(255,255,255,.95);color:#0b140e;
+  font-family:var(--font-sans);font-weight:600;font-size:12.5px}
+.hs .reel .expand svg{width:14px;height:14px}
+.vm-stage .vm-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vm-stage iframe{position:relative}

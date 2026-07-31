@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import ScreenHeader from './ScreenHeader';
 import VimeoFrame from './VimeoFrame';
-import { SHOWREEL } from '@/lib/videos';
+import VideoModal from './VideoModal';
+import { SHOWREEL, type Video } from '@/lib/videos';
 
 /** Forme d'onde du bloc audio (hauteurs figées : pas de aléatoire, pas de mismatch SSR). */
 const WAVE = [22, 48, 34, 72, 56, 88, 42, 64, 96, 50, 30, 68, 84, 44, 26, 58, 92, 38, 70, 54, 80, 36, 62, 46, 74, 28, 52, 40];
@@ -20,6 +21,7 @@ const WAVE = [22, 48, 34, 72, 56, 88, 42, 64, 96, 50, 30, 68, 84, 44, 26, 58, 92
  */
 export default function HeroScreen() {
   const [docked, setDocked] = useState(false);
+  const [lecture, setLecture] = useState<Video | null>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const phRef = useRef<HTMLSpanElement>(null);
   const tcRef = useRef<HTMLSpanElement>(null);
@@ -84,16 +86,27 @@ export default function HeroScreen() {
           <div className="center">
             <div className="giant-wrap">
               <h1 className="giant">montage<span className="dot">.</span></h1>
-              <article className="reel" aria-label={`${SHOWREEL.title} — ${SHOWREEL.sub}`}>
+              <button
+                type="button"
+                className="reel"
+                onClick={() => setLecture(SHOWREEL)}
+                aria-label={`Agrandir avec le son : ${SHOWREEL.title} — ${SHOWREEL.sub}`}
+              >
                 <VimeoFrame video={SHOWREEL} />
                 <div className="rveil" aria-hidden="true"></div>
                 <span className="tag">{SHOWREEL.ratio}</span>
                 <span className="muted" aria-hidden="true">muet</span>
+                <div className="expand" aria-hidden="true">
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M4 9V4h5M20 15v5h-5M20 9V4h-5M4 15v5h5" /></svg>
+                    Voir avec le son
+                  </span>
+                </div>
                 <div className="cap">
                   <div className="t">{SHOWREEL.title}</div>
                   <div className="s">{SHOWREEL.sub}</div>
                 </div>
-              </article>
+              </button>
             </div>
             <p className="sub">
               Des vidéos qui parlent à votre audience&nbsp;: <b>dans ses codes, à son rythme</b>. Ads,
@@ -129,6 +142,8 @@ export default function HeroScreen() {
           </div>
         </div>
       </div>
+
+      <VideoModal video={lecture} onClose={() => setLecture(null)} />
     </div>
   );
 }

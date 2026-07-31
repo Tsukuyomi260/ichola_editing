@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 /**
  * Header « écran » partagé — préfixe CSS .sh-
@@ -15,10 +16,19 @@ import Link from 'next/link';
  * - `light`  : variante pour les pages à hero clair. Une fois docké, le header
  *              redevient verre sombre — le dock est identique partout.
  *
- * TODO : brancher le menu du burger mobile (bouton présent, inerte).
+ * Menu mobile : panneau plein écran en verre sombre, ouverture par glissement
+ * avec apparition décalée des entrées. Le header reste au-dessus du panneau
+ * pour que le bouton de fermeture soit toujours atteignable.
  */
 
 export type ScreenNav = 'accueil' | 'realisations' | 'apropos' | 'contact';
+
+const ENTREES: { cle: ScreenNav; libelle: string }[] = [
+  { cle: 'accueil', libelle: 'Accueil' },
+  { cle: 'realisations', libelle: 'Réalisations' },
+  { cle: 'apropos', libelle: 'À propos' },
+  { cle: 'contact', libelle: 'Contact' },
+];
 
 export default function ScreenHeader({
   active,
@@ -31,15 +41,41 @@ export default function ScreenHeader({
   home?: boolean;
   light?: boolean;
 }) {
+  const [ouvert, setOuvert] = useState(false);
+
   const anchor = (hash: string) => (home ? `#${hash}` : `/#${hash}`);
   const accueilHref = home ? '#accueil' : '/';
-  const cls = (k: ScreenNav) => `sh-pill${active === k ? ' active' : ''}`;
+  const lien = (k: ScreenNav) =>
+    k === 'accueil' ? accueilHref : k === 'apropos' ? '/a-propos' : anchor(k);
   const cur = (k: ScreenNav) => (active === k ? ('page' as const) : undefined);
+
+  /* Menu ouvert : défilement bloqué, Échap ferme, et on referme si l'écran
+     repasse au-dessus du seuil mobile (rotation de tablette, par exemple). */
+  useEffect(() => {
+    if (!ouvert) return;
+    const overflowInitial = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOuvert(false);
+    };
+    const onResize = () => {
+      if (window.innerWidth > 1020) setOuvert(false);
+    };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
+      document.body.style.overflow = overflowInitial;
+    };
+  }, [ouvert]);
 
   return (
     <div className="sh-slot">
-      <header className={`sh-topbar${light ? ' sh-light' : ''}${docked ? ' sh-docked' : ''}`}>
-        <Link className="sh-logo" href={accueilHref}>
+      <header
+        className={`sh-topbar${light ? ' sh-light' : ''}${docked ? ' sh-docked' : ''}${ouvert ? ' sh-menu-open' : ''}`}
+      >
+        <Link className="sh-logo" href={accueilHref} onClick={() => setOuvert(false)}>
           <span className="mk">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
           </span>
@@ -47,22 +83,64 @@ export default function ScreenHeader({
         </Link>
 
         <nav className="sh-pills" aria-label="Navigation principale">
-          <Link className={cls('accueil')} aria-current={cur('accueil')} href={accueilHref}>Accueil</Link>
-          <Link className={cls('realisations')} aria-current={cur('realisations')} href={anchor('realisations')}>Réalisations</Link>
-          <Link className={cls('apropos')} aria-current={cur('apropos')} href="/a-propos">À propos</Link>
-          <Link className={cls('contact')} aria-current={cur('contact')} href={anchor('contact')}>Contact</Link>
+          {ENTREES.map(({ cle, libelle }) => (
+            <Link
+              key={cle}
+              className={`sh-pill${active === cle ? ' active' : ''}`}
+              aria-current={cur(cle)}
+              href={lien(cle)}
+            >
+              {libelle}
+            </Link>
+          ))}
         </nav>
 
         <div className="sh-right">
-          <Link className="sh-btn-cta" href={anchor('contact')}>
+          <Link className="sh-btn-cta" href={anchor('contact')} onClick={() => setOuvert(false)}>
             <span className="lbl">Réserver un appel</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
           </Link>
-          <button className="sh-burger" type="button" aria-label="Menu" aria-expanded="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          <button
+            className={`sh-burger${ouvert ? ' is-open' : ''}`}
+            type="button"
+            aria-label={ouvert ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={ouvert}
+            aria-controls="sh-menu"
+            onClick={() => setOuvert((v) => !v)}
+          >
+            <span className="bl b1" aria-hidden="true"></span>
+            <span className="bl b2" aria-hidden="true"></span>
           </button>
         </div>
       </header>
+
+      <div id="sh-menu" className={`sh-menu${ouvert ? ' open' : ''}`} hidden={!ouvert}>
+        <nav aria-label="Navigation mobile">
+          <ul>
+            {ENTREES.map(({ cle, libelle }, i) => (
+              <li key={cle} style={{ '--i': i } as React.CSSProperties}>
+                <Link
+                  href={lien(cle)}
+                  aria-current={cur(cle)}
+                  className={active === cle ? 'on' : undefined}
+                  onClick={() => setOuvert(false)}
+                >
+                  <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                  {libelle}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="sh-menu-foot" style={{ '--i': ENTREES.length } as React.CSSProperties}>
+          <Link className="sh-menu-cta" href={anchor('contact')} onClick={() => setOuvert(false)}>
+            Réserver un appel
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </Link>
+          <span className="sh-menu-note">Disponible pour de nouveaux projets · FR / EN</span>
+        </div>
+      </div>
     </div>
   );
 }
