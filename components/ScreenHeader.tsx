@@ -12,6 +12,8 @@ import Link from 'next/link';
  * - `active` : quelle pilule est en blanc.
  * - `home`   : sur l'accueil les liens sont des ancres ; ailleurs ils
  *              repartent vers la page d'accueil (/#realisations…).
+ * - `light`  : variante pour les pages à hero clair. Une fois docké, le header
+ *              redevient verre sombre — le dock est identique partout.
  *
  * TODO : brancher le menu du burger mobile (bouton présent, inerte).
  */
@@ -22,10 +24,12 @@ export default function ScreenHeader({
   active,
   docked,
   home = false,
+  light = false,
 }: {
   active: ScreenNav;
   docked: boolean;
   home?: boolean;
+  light?: boolean;
 }) {
   const anchor = (hash: string) => (home ? `#${hash}` : `/#${hash}`);
   const accueilHref = home ? '#accueil' : '/';
@@ -34,7 +38,7 @@ export default function ScreenHeader({
 
   return (
     <div className="sh-slot">
-      <header className={`sh-topbar${docked ? ' sh-docked' : ''}`}>
+      <header className={`sh-topbar${light ? ' sh-light' : ''}${docked ? ' sh-docked' : ''}`}>
         <Link className="sh-logo" href={accueilHref}>
           <span className="mk">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
@@ -51,7 +55,7 @@ export default function ScreenHeader({
 
         <div className="sh-right">
           <Link className="sh-btn-cta" href={anchor('contact')}>
-            Réserver un appel
+            <span className="lbl">Réserver un appel</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
           </Link>
           <button className="sh-burger" type="button" aria-label="Menu" aria-expanded="false">

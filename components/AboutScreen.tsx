@@ -32,9 +32,10 @@ function Wave({ bars }: { bars: number[] }) {
 
 export default function AboutScreen() {
   const [docked, setDocked] = useState(false);
+  const [animate, setAnimate] = useState(false);
   const [statsPlayed, setStatsPlayed] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
 
   /* Barre de progression du scroll */
@@ -49,9 +50,14 @@ export default function AboutScreen() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  /* Marqueur vert du titre : animé au chargement, sauf reduced-motion */
+  useEffect(() => {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setAnimate(true);
+  }, []);
+
   /* Dock du header : fixé en bas quand le hero n'est plus visible */
   useEffect(() => {
-    const el = frameRef.current;
+    const el = heroRef.current;
     if (!el) return;
     const io = new IntersectionObserver(([entry]) => setDocked(!entry.isIntersecting), { threshold: 0 });
     io.observe(el);
@@ -119,51 +125,71 @@ export default function AboutScreen() {
     <>
       <div id="scroll-progress" className="scroll-progress"></div>
 
-      <div className="ap" ref={rootRef}>
-        {/* ============ HERO ÉCRAN ============ */}
-        <div className="ap-frame-wrap">
-          <div className="ap-frame" ref={frameRef}>
-            <div className="ap-glow" aria-hidden="true"></div>
-            <div className="ap-grain" aria-hidden="true"></div>
-            <span className="ap-tick tl" aria-hidden="true"></span>
-            <span className="ap-tick tr" aria-hidden="true"></span>
-            <span className="ap-tick bl" aria-hidden="true"></span>
-            <span className="ap-tick br" aria-hidden="true"></span>
+      <div className={`ap${animate ? ' ap-animate' : ''}`} ref={rootRef}>
+        {/* ============ HERO CLAIR ============ */}
+        <ScreenHeader active="apropos" docked={docked} light />
 
-            <ScreenHeader active="apropos" docked={docked} />
+        <section className="ap-hero" ref={heroRef}>
+          <div className="ap-hcard">
+          <div className="ap-hero-copy">
+            <h1 className="ap-h1">
+              <span className="l">Je suis OCHILET</span>
+              <span className="l"><span className="ap-mk">ichola</span>.</span>
+            </h1>
 
-            <div className="ap-center">
-              <span className="ap-eb"><i></i>Monteur vidéo · Motion designer</span>
-              <div className="ap-giant-wrap">
-                <h1 className="ap-giant">ichola<em>.</em></h1>
-                <figure className="ap-portrait">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="shot" src="/PHOTO.jpeg" alt="Portrait d'Ichola, monteur vidéo, en studio" />
-                  <div className="phveil" aria-hidden="true"></div>
-                  <span className="tag">9:16</span>
-                  <figcaption className="cap">
-                    <div className="t">Ichola</div>
-                    <div className="s">monteur · motion · fr/en</div>
-                  </figcaption>
-                </figure>
-              </div>
-              <p className="ap-role">
-                Le vertical, c&apos;est mon terrain. <b>+250 vidéos livrées</b> pour des créateurs, des
-                coachs et des plateformes de formation, en France et à l&apos;international.
-              </p>
+            <div className="ap-hcta">
+              <Link className="ap-btn-a" href="/#contact">
+                Réserver un appel
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </Link>
+              <Link className="ap-link" href="/#realisations">
+                Voir mes réalisations
+                <span className="ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                </span>
+              </Link>
             </div>
 
-            <div className="ap-scrub" aria-hidden="true">
-              <span className="tc">00:00:00</span>
-              <span className="line"><i></i></span>
-              <span className="tc">PROFIL</span>
+            <div className="ap-trust">
+              <span><span className="n">+250</span> vidéos livrées</span>
+              <span className="sep" aria-hidden="true"></span>
+              <span>Studio dirigé <span className="n">2 ans</span></span>
             </div>
           </div>
-        </div>
+
+          <div className="ap-stage">
+            <div className="ap-slab">
+              <span className="rec">REC ● 9:16 · 4:5</span>
+            </div>
+
+            <figure className="ap-shot">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="shot" src="/PHOTO.jpeg" alt="Portrait d'Ichola Ochilet, monteur vidéo, en studio" />
+              <div className="sveil" aria-hidden="true"></div>
+              <span className="stk a" aria-hidden="true"></span><span className="stk b" aria-hidden="true"></span>
+              <span className="stk c" aria-hidden="true"></span><span className="stk d" aria-hidden="true"></span>
+              <span className="tag">9:16</span>
+              <figcaption className="cap">
+                <div className="t">Ichola</div>
+                <div className="s">monteur · motion · fr/en</div>
+              </figcaption>
+            </figure>
+
+            <div className="ap-hchip">
+                <span className="k" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg>
+                </span>
+              <span>
+                <span className="v">207M</span>
+                <span className="l">vues · S1 2026</span>
+              </span>
+            </div>
+          </div>
+          </div>
+        </section>
 
         {/* ============ BIO ============ */}
         <section className="ap-bio ap-wrap" data-rv>
-          <span className="ap-eb"><i></i>Le monteur</span>
           <h2 className="ap-title">Qui monte vos vidéos<em>.</em></h2>
           <div className="ap-bio-grid">
             <div className="ap-bio-txt">

@@ -1346,3 +1346,113 @@ img{max-width:100%;display:block}
   .ap-fr .sb .ln i{animation:none;left:30%}
   .ap-stats.played .ap-stat .bar i{transition:none}
 }
+
+/* --- Variante claire du header partagé (pages intérieures à fond clair).
+   Ne s'applique QUE hors dock : une fois docké, on retrouve le verre sombre
+   signature, identique sur toutes les pages. --- */
+.sh-topbar.sh-light:not(.sh-docked) .sh-logo{color:var(--ink)}
+.sh-topbar.sh-light:not(.sh-docked) .sh-logo .mk{background:var(--wash);border-color:var(--line)}
+.sh-topbar.sh-light:not(.sh-docked) .sh-logo .mk svg{color:var(--green-deep)}
+.sh-topbar.sh-light:not(.sh-docked) .sh-pill{color:var(--ink-2);border-color:var(--line)}
+.sh-topbar.sh-light:not(.sh-docked) .sh-pill:hover{background:var(--wash);border-color:var(--accent);color:var(--green-deep)}
+.sh-topbar.sh-light:not(.sh-docked) .sh-pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sh-topbar.sh-light:not(.sh-docked) .sh-burger{color:var(--ink);border-color:var(--line)}
+
+/* ==========================================================================
+   HERO CLAIR DE LA PAGE À PROPOS — préfixe ap-
+   Le « écran » sombre du langage maison n'a pas disparu : c'est désormais
+   la carte portrait elle-même. Elle déborde de l'aplat vert.
+   ========================================================================== */
+.ap-hero{position:relative;max-width:1300px;margin:0 auto;padding:26px 24px 84px}
+.ap-hcard{position:relative;display:grid;grid-template-columns:1fr 1.06fr;gap:44px;align-items:center;
+  background:var(--surface);border:1px solid var(--line);border-radius:34px;padding:60px 56px 64px;
+  box-shadow:0 44px 96px -54px rgba(10,30,18,.3);overflow:hidden}
+.ap-hcard::before{content:"";position:absolute;right:0;top:0;width:min(660px,72%);height:100%;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at 68% 46%,rgba(0,212,106,.12),transparent 64%)}
+.ap-hero-copy,.ap-stage{position:relative;z-index:1}
+
+.ap-h1{font-family:var(--font-display);font-weight:700;color:var(--ink);
+  font-size:clamp(44px,6.4vw,86px);line-height:.98;letter-spacing:-.03em}
+.ap-h1 .l{display:block}
+.ap-mk{position:relative;isolation:isolate;white-space:nowrap;padding:0 .06em}
+.ap-mk::before{content:"";position:absolute;left:-.06em;right:-.06em;top:.1em;bottom:.12em;
+  background:var(--accent);border-radius:10px;z-index:-1;transform-origin:left}
+.ap-animate .ap-mk::before{transform:scaleX(0);animation:apMark .7s .35s var(--ease) forwards}
+@keyframes apMark{to{transform:scaleX(1)}}
+
+.ap-hcta{display:flex;align-items:center;gap:22px;margin-top:38px;flex-wrap:wrap}
+.ap .ap-link{display:inline-flex;align-items:center;gap:11px;font-weight:600;font-size:16px;color:var(--ink);cursor:pointer}
+.ap-link .ic{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;
+  transition:border-color .22s var(--ease),background .22s var(--ease)}
+.ap-link .ic svg{width:15px;height:15px;transition:transform .22s var(--ease)}
+.ap-link:hover .ic{border-color:var(--accent);background:var(--wash)}
+.ap-link:hover .ic svg{transform:translateX(2px)}
+
+.ap-trust{display:flex;align-items:center;gap:16px;margin-top:46px;flex-wrap:wrap;
+  font-family:var(--font-mono);font-size:12.5px;color:var(--muted)}
+.ap-trust .n{color:var(--ink);font-weight:500}
+.ap-trust .sep{width:5px;height:5px;border-radius:50%;background:var(--line);flex:none}
+
+/* --- Le plateau : aplat vert en fond, carte portrait qui déborde en haut
+   et à droite. Les coins de viseur sont portés par la carte — c'est elle
+   « l'écran » du langage maison. --- */
+.ap-stage{justify-self:end;position:relative;width:100%;max-width:520px;aspect-ratio:1/1.06}
+.ap-slab{position:absolute;left:0;top:0;z-index:1;width:88%;height:100%;
+  background:var(--accent);border-radius:26px;box-shadow:0 40px 80px -42px rgba(0,140,70,.6)}
+.ap-slab .rec{position:absolute;left:24px;bottom:20px;font-family:var(--font-mono);font-size:12px;
+  letter-spacing:.06em;color:rgba(6,40,22,.7)}
+
+.ap-shot{position:absolute;right:0;top:-30px;z-index:2;width:60%;aspect-ratio:9/16;
+  border-radius:20px;overflow:hidden;background:#0b0906;border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 36px 68px -28px rgba(6,40,22,.66)}
+.ap-shot .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0%;
+  transform:scale(1.12);transform-origin:50% 0%}
+.ap-shot .sveil{position:absolute;inset:0;background:linear-gradient(to top,rgba(3,10,6,.8),transparent 52%)}
+.ap-shot .stk{position:absolute;width:14px;height:14px;border:2px solid rgba(255,255,255,.34);z-index:3}
+.ap-shot .stk.a{top:11px;left:11px;border-right:none;border-bottom:none;border-radius:5px 0 0 0}
+.ap-shot .stk.b{top:11px;right:11px;border-left:none;border-bottom:none;border-radius:0 5px 0 0}
+.ap-shot .stk.c{bottom:11px;left:11px;border-right:none;border-top:none;border-radius:0 0 0 5px}
+.ap-shot .stk.d{bottom:11px;right:11px;border-left:none;border-top:none;border-radius:0 0 5px 0}
+.ap-shot .tag{position:absolute;top:11px;left:50%;transform:translateX(-50%);z-index:3;
+  font-family:var(--font-mono);font-size:10.5px;color:#eafff2;
+  background:rgba(3,14,8,.5);border:1px solid rgba(255,255,255,.2);padding:3px 8px;border-radius:6px}
+.ap-shot .cap{position:absolute;left:16px;right:16px;bottom:16px;z-index:3;color:#fff}
+.ap-shot .cap .t{font-family:var(--font-display);font-weight:600;font-size:15px}
+.ap-shot .cap .s{font-family:var(--font-mono);font-size:10.5px;color:#bfe9cf;margin-top:2px}
+
+.ap-hchip{position:absolute;left:-20px;bottom:52px;z-index:3;display:flex;align-items:center;gap:11px;
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 15px;
+  box-shadow:0 22px 44px -22px rgba(10,30,18,.3);
+  transition:border-color .25s var(--ease)}
+.ap-hchip:hover{border-color:var(--accent)}
+.ap-hchip .k{width:38px;height:38px;border-radius:11px;background:var(--wash);display:grid;place-items:center;color:var(--green-deep)}
+.ap-hchip .k svg{width:19px;height:19px}
+.ap-hchip .v{font-family:var(--font-display);font-weight:700;font-size:17px;line-height:1;display:block}
+.ap-hchip .l{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);margin-top:3px;display:block}
+
+@media(max-width:900px){
+  .ap-hcard{grid-template-columns:1fr;gap:52px;padding:48px 32px 54px}
+  .ap-stage{justify-self:center;max-width:400px;margin-top:6px}
+}
+@media(max-width:560px){
+  .ap-trust{flex-direction:column;align-items:flex-start;gap:9px;margin-top:34px}
+  .ap-trust .sep{display:none}
+  .ap-hero{padding:16px 14px 60px}
+  .ap-hcard{padding:34px 22px 40px;border-radius:26px;gap:40px}
+  .ap-h1{font-size:clamp(38px,12vw,58px)}
+  .ap-stage{max-width:300px}
+  .ap-shot{top:-26px}
+  .ap-hchip{left:-6px;bottom:34px;padding:9px 12px}
+  .ap-hchip .k{width:32px;height:32px}
+  .ap-hchip .v{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  .ap-animate .ap-mk::before{animation:none;transform:scaleX(1)}
+}
+
+/* Sous 560px, le CTA du header se réduit à sa flèche : le libellé ne tient
+   plus à côté du logo et du burger (il débordait de 16px). */
+@media(max-width:560px){
+  .sh-topbar .sh-btn-cta .lbl{display:none}
+  .sh-topbar .sh-btn-cta{padding:0 15px;gap:0}
+}
