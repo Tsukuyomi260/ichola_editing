@@ -60,24 +60,32 @@ const FAQ_ITEMS = [
 
 /**
  * Carte de réalisation.
- * Au repos on n'affiche que l'affiche Vimeo ; le lecteur muet ne se monte
- * qu'au survol, et se démonte quand la souris repart. Avec une vingtaine de
- * vidéos, c'est ce qui garde la page légère.
+ * La vidéo tourne d'elle-même, en boucle muette, mais UNIQUEMENT quand la
+ * carte est à l'écran : le lecteur se monte à l'entrée dans le viewport et se
+ * démonte à la sortie. Avec une vingtaine de vidéos, c'est ce qui évite de
+ * charger vingt lecteurs d'un coup. Le son arrive au clic, en grand.
  */
 function WorkCard({ v, onOpen }: { v: Video; onOpen: (v: Video) => void }) {
-  const [survol, setSurvol] = useState(false);
+  const ref = useRef<HTMLButtonElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <button
+      ref={ref}
       type="button"
       className={`lp-wk ${RATIO_CLASS[v.ratio]}`}
-      onMouseEnter={() => setSurvol(true)}
-      onMouseLeave={() => setSurvol(false)}
-      onFocus={() => setSurvol(true)}
-      onBlur={() => setSurvol(false)}
       onClick={() => onOpen(v)}
       aria-label={`Agrandir avec le son : ${v.title} — ${v.sub}`}
     >
-      <VimeoFrame video={v} active={survol} />
+      <VimeoFrame video={v} active={visible} />
       <div className="veilw" aria-hidden="true"></div>
       <span className="tag">{v.ratio}</span>
       {v.duration && <span className="dur">{v.duration}</span>}

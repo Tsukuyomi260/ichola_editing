@@ -17,9 +17,27 @@ import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
  * (filigrane du studio) sort du champ sans qu'on recadre le visage.
  */
 
-const CLIP_WAVE_A = [40, 70, 35, 90, 55, 75, 30, 60, 85, 45, 65, 38];
-const CLIP_WAVE_B = [60, 95, 50, 80, 100, 45, 70, 88, 55, 92, 40, 75, 62, 85];
-const CLIP_WAVE_C = [50, 78, 42, 66, 90, 48, 72, 58, 84, 44];
+/**
+ * Forme d'onde d'un clip.
+ * Générée par une fonction pure (sinus superposés) plutôt qu'écrite à la main :
+ * assez dense pour ressembler à de l'audio, et strictement identique côté
+ * serveur et client — pas de désynchronisation d'hydratation.
+ */
+function onde(graine: number, n = 90) {
+  const out: number[] = [];
+  for (let i = 0; i < n; i++) {
+    const x =
+      Math.sin(graine + i * 0.73) * 0.5 +
+      Math.sin(graine * 2.1 + i * 1.91) * 0.3 +
+      Math.sin(i * 0.29) * 0.2;
+    out.push(Math.round(14 + Math.abs(x) * 82));
+  }
+  return out;
+}
+
+const CLIP_WAVE_A = onde(1.3);
+const CLIP_WAVE_B = onde(4.7);
+const CLIP_WAVE_C = onde(8.2);
 
 function Wave({ bars }: { bars: number[] }) {
   return (
@@ -290,7 +308,7 @@ export default function AboutScreen() {
               <i style={{ left: '50%' }}></i><i style={{ left: '62.5%' }}></i>
               <i className="maj" style={{ left: '75%' }}></i>
               <i style={{ left: '87.5%' }}></i>
-              <i className="maj" style={{ left: '100%' }}></i><b style={{ left: '100%' }}>NOW</b>
+              <i className="maj" style={{ left: '100%' }}></i>
             </div>
 
             <div className="ap-tracks">
