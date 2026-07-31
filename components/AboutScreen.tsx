@@ -8,46 +8,12 @@ import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 /**
  * Page À propos — préfixe CSS ap-, header partagé .sh-.
  *
- * Section signature : le parcours en « timeline de montage » sur DEUX pistes.
- * La bio dit que MentorShow et le freelance sont menés en parallèle : dans une
- * vraie timeline, parallèle veut dire deux pistes vidéo. V1 porte le studio puis
- * MentorShow, V2 porte le freelance.
+ * Section Parcours : liste à filets, dates en mono à gauche, poste et
+ * description à droite. Panneau sombre — le langage « écran » du site.
  *
  * La photo est mise à l'échelle depuis le haut du cadre 9:16 : le coin bas-droit
  * (filigrane du studio) sort du champ sans qu'on recadre le visage.
  */
-
-/**
- * Forme d'onde d'un clip.
- * Générée par une fonction pure (sinus superposés) plutôt qu'écrite à la main :
- * assez dense pour ressembler à de l'audio, et strictement identique côté
- * serveur et client — pas de désynchronisation d'hydratation.
- */
-function onde(graine: number, n = 90) {
-  const out: number[] = [];
-  for (let i = 0; i < n; i++) {
-    const x =
-      Math.sin(graine + i * 0.73) * 0.5 +
-      Math.sin(graine * 2.1 + i * 1.91) * 0.3 +
-      Math.sin(i * 0.29) * 0.2;
-    out.push(Math.round(14 + Math.abs(x) * 82));
-  }
-  return out;
-}
-
-const CLIP_WAVE_A = onde(1.3);
-const CLIP_WAVE_B = onde(4.7);
-const CLIP_WAVE_C = onde(8.2);
-
-function Wave({ bars }: { bars: number[] }) {
-  return (
-    <div className="wave" aria-hidden="true">
-      {bars.map((h, i) => (
-        <i key={i} style={{ height: `${h}%` }} />
-      ))}
-    </div>
-  );
-}
 
 export default function AboutScreen() {
   const [docked, setDocked] = useState(false);
@@ -287,64 +253,42 @@ export default function AboutScreen() {
           </div>
         </section>
 
-        {/* ============ TIMELINE DE MONTAGE ============ */}
+        {/* ============ PARCOURS ============ */}
         <section className="ap-tl ap-wrap" data-rv>
-          <span className="ap-eb"><i></i>Parcours</span>
-          <h2 className="ap-title">Le montage de ma carrière<em>.</em></h2>
+          <h2 className="ap-title">Mon parcours<em>.</em></h2>
 
-          <div className="ap-tlbox">
+          <div className="ap-path">
             <span className="ap-ptk a"></span><span className="ap-ptk b"></span>
             <span className="ap-ptk c"></span><span className="ap-ptk d"></span>
 
-            <div className="ap-tlhead">
-              <span>{'// '}<b>Séquence</b> — parcours</span>
-              <span>2 pistes · V1 / V2</span>
+            <div className="ap-path-head">
+              <span>{'// '}<b>Parcours</b></span>
+              <span>Monteur · Motion</span>
             </div>
 
-            <div className="ap-ruler" aria-hidden="true">
-              <i className="maj" style={{ left: '0%' }}></i><b style={{ left: '0%' }}>DÉBUT</b>
-              <i style={{ left: '12.5%' }}></i><i style={{ left: '25%' }}></i>
-              <i className="maj" style={{ left: '37.5%' }}></i>
-              <i style={{ left: '50%' }}></i><i style={{ left: '62.5%' }}></i>
-              <i className="maj" style={{ left: '75%' }}></i>
-              <i style={{ left: '87.5%' }}></i>
-              <i className="maj" style={{ left: '100%' }}></i>
-            </div>
-
-            <div className="ap-tracks">
-              <div className="ap-play" aria-hidden="true"></div>
-
-              <div className="ap-track">
-                <span className="ap-vlbl">V1</span>
-                <span className="ap-lane" aria-hidden="true"></span>
-                <article className="ap-clip ap-c-studio">
-                  <div className="tc">2 ans · direction</div>
-                  <h3>Studio de production</h3>
-                  <p>Créé de zéro : les locaux, le matériel, l&apos;équipe. Photo et vidéo.</p>
-                  <Wave bars={CLIP_WAVE_A} />
-                </article>
-                <article className="ap-clip ap-c-mentor">
-                  <div className="tc">Aujourd&apos;hui</div>
-                  <h3>MentorShow</h3>
-                  <p>
-                    Je monte les publicités de la plateforme française de masterclass, en français et
-                    en anglais, au sein d&apos;une équipe de monteurs.
-                  </p>
-                  <Wave bars={CLIP_WAVE_B} />
-                </article>
-              </div>
-
-              <div className="ap-track">
-                <span className="ap-vlbl">V2</span>
-                <span className="ap-lane" aria-hidden="true"></span>
-                <article className="ap-clip ap-c-free">
-                  <div className="tc">En parallèle</div>
-                  <h3>Freelance</h3>
-                  <p>Coachs, agents immobiliers et créateurs de contenu.</p>
-                  <Wave bars={CLIP_WAVE_C} />
-                </article>
-              </div>
-            </div>
+            <ol className="ap-path-list">
+              <li className="now">
+                <span className="an">2026 <i aria-hidden="true">→</i></span>
+                <div className="tx">
+                  <h3>Monteur — MentorShow</h3>
+                  <p>Publicités bilingues FR/EN, formats verticaux.</p>
+                </div>
+              </li>
+              <li className="now">
+                <span className="an">En parallèle</span>
+                <div className="tx">
+                  <h3>Freelance — ICHOLA EDITING</h3>
+                  <p>Coachs, agents immobiliers, créateurs.</p>
+                </div>
+              </li>
+              <li>
+                <span className="an">2023 <i aria-hidden="true">→</i> 2025</span>
+                <div className="tx">
+                  <h3>Fondateur &amp; directeur de studio</h3>
+                  <p>Studio photo/vidéo monté de zéro, équipe de 4 personnes.</p>
+                </div>
+              </li>
+            </ol>
           </div>
         </section>
 

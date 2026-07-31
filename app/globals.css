@@ -1629,3 +1629,35 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
   display:block;width:100%}
 .lp-wk .veilw,.lp-wk .tag,.lp-wk .dur,.lp-wk .playw,.lp-wk .metaw{z-index:2}
 .lp-wk .playw{z-index:3}
+
+/* ==========================================================================
+   PARCOURS — liste à filets sur panneau sombre (remplace la timeline)
+   ========================================================================== */
+.ap-path{position:relative;margin-top:34px;border-radius:22px;background:var(--screen);
+  padding:26px 30px 12px;overflow:hidden;
+  box-shadow:0 44px 96px -54px rgba(7,22,13,.62)}
+.ap-path .ap-ptk{border-color:rgba(255,255,255,.26)}
+.ap-path-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.14)}
+.ap-path-head span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--screen-muted)}
+.ap-path-head span b{color:var(--accent);font-weight:500}
+
+.ap-path-list{list-style:none;margin:0;padding:0}
+.ap-path-list li{display:grid;grid-template-columns:150px 1fr;gap:26px;align-items:start;
+  padding:26px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.ap-path-list li:last-child{border-bottom:none}
+.ap-path-list .an{font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;
+  color:rgba(255,255,255,.46);padding-top:5px;white-space:nowrap}
+.ap-path-list .an i{font-style:normal}
+/* L'étape en cours se détache : c'est la seule info hiérarchique de la colonne. */
+.ap-path-list li.now .an{color:var(--accent)}
+.ap-path-list .tx h3{font-family:var(--font-display);font-weight:600;font-size:19px;
+  letter-spacing:-.01em;color:#fff}
+.ap-path-list .tx p{color:var(--screen-muted);font-size:15px;line-height:1.6;margin-top:7px;max-width:520px}
+
+@media(max-width:560px){
+  .ap-path{padding:22px 20px 10px}
+  .ap-path-list li{grid-template-columns:1fr;gap:9px;padding:22px 0}
+  .ap-path-list .an{padding-top:0}
+}
