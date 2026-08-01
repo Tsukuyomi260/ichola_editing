@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import ScreenHeader from './ScreenHeader';
+import ScrollProgress from './ScrollProgress';
 import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 
 /**
@@ -22,18 +23,6 @@ export default function AboutScreen() {
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
-
-  /* Barre de progression du scroll */
-  useEffect(() => {
-    const el = document.getElementById('scroll-progress');
-    const onScroll = () => {
-      if (!el) return;
-      const doc = document.documentElement.scrollHeight - window.innerHeight;
-      el.style.width = (doc > 0 ? (window.scrollY / doc) * 100 : 0) + '%';
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   /* Marqueur vert du titre : animé au chargement, sauf reduced-motion */
   useEffect(() => {
@@ -108,7 +97,7 @@ export default function AboutScreen() {
 
   return (
     <>
-      <div id="scroll-progress" className="scroll-progress"></div>
+      <ScrollProgress />
 
       <div className={`ap${animate ? ' ap-animate' : ''}`} ref={rootRef}>
         {/* ============ HERO CLAIR ============ */}
@@ -267,21 +256,21 @@ export default function AboutScreen() {
             </div>
 
             <ol className="ap-path-list">
-              <li className="now">
+              <li className="now" data-rv style={{ '--rvd': '0s' } as React.CSSProperties}>
                 <span className="an">2026 <i aria-hidden="true">→</i></span>
                 <div className="tx">
                   <h3>Monteur — MentorShow</h3>
                   <p>Publicités bilingues FR/EN, formats verticaux.</p>
                 </div>
               </li>
-              <li className="now">
+              <li className="now" data-rv style={{ '--rvd': '.1s' } as React.CSSProperties}>
                 <span className="an">En parallèle</span>
                 <div className="tx">
                   <h3>Freelance — ICHOLA EDITING</h3>
                   <p>Coachs, agents immobiliers, créateurs.</p>
                 </div>
               </li>
-              <li>
+              <li data-rv style={{ '--rvd': '.2s' } as React.CSSProperties}>
                 <span className="an">2023 <i aria-hidden="true">→</i> 2025</span>
                 <div className="tx">
                   <h3>Fondateur &amp; directeur de studio</h3>
@@ -355,7 +344,7 @@ export default function AboutScreen() {
         </div>
 
         {/* ============ FOOTER ============ */}
-        <footer className="ap-footer ap-wrap">
+        <footer className="ap-footer ap-wrap" data-rv>
           <div className="ap-fgrid">
             <div className="ap-fbrand">
               <div className="wm">ICHOLA<span>.</span>EDITING</div>

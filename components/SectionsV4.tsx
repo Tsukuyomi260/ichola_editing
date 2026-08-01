@@ -65,7 +65,7 @@ const FAQ_ITEMS = [
  * démonte à la sortie. Avec une vingtaine de vidéos, c'est ce qui évite de
  * charger vingt lecteurs d'un coup. Le son arrive au clic, en grand.
  */
-function WorkCard({ v, onOpen }: { v: Video; onOpen: (v: Video) => void }) {
+function WorkCard({ v, onOpen, i = 0 }: { v: Video; onOpen: (v: Video) => void; i?: number }) {
   const ref = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -82,6 +82,8 @@ function WorkCard({ v, onOpen }: { v: Video; onOpen: (v: Video) => void }) {
       ref={ref}
       type="button"
       className={`lp-wk ${RATIO_CLASS[v.ratio]}`}
+      data-rv
+      style={{ '--rvd': `${i * 0.1}s` } as React.CSSProperties}
       onClick={() => onOpen(v)}
       aria-label={`Agrandir avec le son : ${v.title} — ${v.sub}`}
     >
@@ -222,8 +224,8 @@ export default function SectionsV4() {
         </div>
 
         <div className="lp-wr1">
-          {REALISATIONS.map((v) => (
-            <WorkCard key={v.id} v={v} onOpen={setLecture} />
+          {REALISATIONS.map((v, i) => (
+            <WorkCard key={v.id} v={v} i={i} onOpen={setLecture} />
           ))}
         </div>
 
@@ -388,7 +390,7 @@ export default function SectionsV4() {
       </div>
 
       {/* ============ 08 — FOOTER ============ */}
-      <footer className="lp-footer lp-wrap">
+      <footer className="lp-footer lp-wrap" data-rv>
         <div className="lp-fgrid">
           <div className="lp-fbrand">
             <div className="wm">ICHOLA<span>.</span>EDITING</div>

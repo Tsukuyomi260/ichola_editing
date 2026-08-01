@@ -1,23 +1,7 @@
 import type { Metadata } from 'next';
-import {
-  Bricolage_Grotesque,
-  Instrument_Sans,
-  JetBrains_Mono,
-} from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { ModalProvider } from '@/components/Modal';
-
-const bricolage = Bricolage_Grotesque({
-  variable: '--font-bricolage',
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-});
-
-const instrument = Instrument_Sans({
-  variable: '--font-instrument',
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-});
+import { SITE_NAME, SITE_URL } from '@/lib/site';
 
 const jetbrains = JetBrains_Mono({
   variable: '--font-jetbrains',
@@ -25,11 +9,49 @@ const jetbrains = JetBrains_Mono({
   weight: ['400', '500'],
 });
 
+const DESCRIPTION =
+  'Monteur vidéo et motion designer spécialisé dans le format vertical. Publicités, reels et capsules courtes en 9:16 et 4:5, montées pour retenir l\'attention. FR / EN.';
+
 export const metadata: Metadata = {
-  title: 'ICHOLA EDITING — Monteur vidéo vertical',
-  description:
-    'Je monte des vidéos verticales qui retiennent l\'attention. Publicités, reels et capsules courtes en 9:16 et 4:5.',
-  metadataBase: new URL('https://ichola-editing.com'),
+  metadataBase: new URL(SITE_URL),
+  title: {
+    // `default` sert l'accueil ; `template` habille automatiquement les autres
+    // pages, qui n'ont donc qu'à déclarer leur propre titre court.
+    default: 'ICHOLA EDITING — Monteur vidéo & motion designer vertical',
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: 'Ichola Ochilet' }],
+  creator: 'Ichola Ochilet',
+  keywords: [
+    'monteur vidéo',
+    'motion designer',
+    'vidéo verticale',
+    '9:16',
+    'reels',
+    'publicité vidéo',
+    'montage vidéo freelance',
+  ],
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: 'ICHOLA EDITING — Monteur vidéo & motion designer vertical',
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ICHOLA EDITING — Monteur vidéo & motion designer vertical',
+    description: DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
 };
 
 export default function RootLayout({
@@ -41,11 +63,11 @@ export default function RootLayout({
     <html
       lang="fr"
       suppressHydrationWarning
-      className={`${bricolage.variable} ${instrument.variable} ${jetbrains.variable}`}
+      className={jetbrains.variable}
     >
       <head />
       <body>
-        <ModalProvider>{children}</ModalProvider>
+        {children}
       </body>
     </html>
   );
