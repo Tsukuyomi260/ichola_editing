@@ -5,6 +5,8 @@ import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 import VimeoFrame from './VimeoFrame';
 import VideoModal from './VideoModal';
 import { REALISATIONS, RATIO_CLASS, type Video } from '@/lib/videos';
+import CalEmbed from './CalEmbed';
+import { CAL_URL } from '@/lib/site';
 
 /**
  * Bas de page v4 — design validé (langage « écran » du hero).
@@ -362,8 +364,10 @@ export default function SectionsV4() {
               <span className="lp-ctk c"></span><span className="lp-ctk d"></span>
               <h3>Vous préférez en parler de vive voix ?</h3>
               <p className="txt">Réservez un créneau, c&apos;est plus rapide. Planifiez une réunion en un clic avec Cal.com.</p>
-              <div className="lp-embed">[ EMBED CAL.COM ]</div>
-              <a className="lp-btn-a" href="#">Réserver un appel</a>
+              <CalEmbed />
+              <a className="lp-btn-a" href={CAL_URL} target="_blank" rel="noopener noreferrer">
+                Réserver un appel
+              </a>
             </aside>
           </div>
         </div>

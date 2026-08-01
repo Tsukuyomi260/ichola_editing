@@ -10,3 +10,6 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ichola-editing.vercel.app';
 
 export const SITE_NAME = 'ICHOLA EDITING';
+
+/** Page de réservation Cal.com — utilisée en intégration et en lien de secours. */
+export const CAL_URL = 'https://cal.com/idaniel/15min';
