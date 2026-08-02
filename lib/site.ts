@@ -12,4 +12,4 @@ export const SITE_URL =
 export const SITE_NAME = 'ICHOLA EDITING';
 
 /** Page de réservation Cal.com — utilisée en intégration et en lien de secours. */
-export const CAL_URL = 'https://cal.com/idaniel/15min';
+export const CAL_URL = 'https://cal.com/daniel-ichola-um1zmg';
