@@ -190,7 +190,7 @@ export default function SectionsV4() {
           <div className="lp-sgrid">
             <div className="lp-stat">
               <div className="n"><em>+</em><span data-count="250">0</span></div>
-              <div className="l">vidéos livrées, en majorité en vertical</div>
+              <div className="l">vidéos livrées</div>
               <div className="m">9:16 · 4:5 · 16:9</div>
               <div className="bar" style={{ '--w': '86%' } as React.CSSProperties}><i></i></div>
             </div>
