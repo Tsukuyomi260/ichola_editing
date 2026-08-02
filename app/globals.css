@@ -116,6 +116,22 @@ img{max-width:100%;display:block}
   --font-mono:var(--font-jetbrains),ui-monospace,monospace;
   --ease:cubic-bezier(.22,.61,.36,1);
   font-family:var(--font-sans);
+
+  /* Débord de la carte reel à droite du mot géant. UNE SEULE MOLETTE pour le
+     bloc « montage. + carte » : elle règle à la fois de combien la carte mord
+     sur le mot ET la place réservée à sa droite dans .center.
+     Les deux DOIVENT rester égaux, sinon le bloc n'est plus centré dans le
+     cadre : le mot est centré dans l'espace restant après le padding, donc si
+     la place réservée ne vaut pas le débord réel, tout le bloc dérive.
+     Plus la valeur est PETITE, plus la carte recouvre le mot.
+     Repères (la carte fait 15vw, le point vert ~4vw) :
+       14.8vw → la carte s'arrête au bord du mot, aucun recouvrement (origine)
+       11vw   → elle recouvre le point vert, sans toucher le « e »
+        9.6vw → + le bord du « e »  ← réglage actuel, plancher lisible
+        7.4vw → elle atteint l'ouverture du « e », qui se met à se lire « o »
+     Le plafond en px prend le relais au-dessus de ~1400 px, là où le corps du
+     titre est plafonné par son propre clamp et cesse de suivre le viewport. */
+  --reel-overhang:clamp(0px,9.6vw,135px);
 }
 .hs a{color:inherit;text-decoration:none}
 .hs :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
@@ -200,7 +216,7 @@ img{max-width:100%;display:block}
 
 /* --- Contenu central : mot géant + carte reel --- */
 .hs .center{position:relative;z-index:4;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:12px 24px 120px;padding-right:calc(24px + clamp(0px,14vw,206px));text-align:center}
+  padding:12px 24px 120px;padding-right:calc(24px + var(--reel-overhang));text-align:center}
 .hs .eyebrow{align-self:center;display:inline-flex;align-items:center;gap:10px;color:var(--screen-muted);
   font-family:var(--font-mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
 .hs .eyebrow i{width:22px;height:2px;background:var(--accent);border-radius:2px}
@@ -211,7 +227,14 @@ img{max-width:100%;display:block}
   text-shadow:0 6px 40px rgba(0,0,0,.35)}
 .hs h1.giant .dot{color:var(--accent)}
 
-.hs .reel{position:absolute;right:-22%;top:50%;transform:translateY(-56%) rotate(3deg);
+/* Chevauchement voulu : la carte mord sur la fin du mot (le point et le bord du
+   « e ») pour que la vidéo et le titre se lisent comme un seul bloc, pas deux
+   éléments posés côte à côte.
+   Le débord vient de --reel-overhang, la même variable que le padding-right de
+   .center : c'est ce qui garantit que le bloc reste centré quand on règle le
+   recouvrement. Ne pas remettre un % en dur ici — ça décorrèle les deux et fait
+   dériver toute la composition. */
+.hs .reel{position:absolute;right:calc(-1 * var(--reel-overhang));top:50%;transform:translateY(-56%) rotate(3deg);
   width:clamp(150px,15vw,215px);aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#0b140e;z-index:5;
   border:1px solid rgba(255,255,255,.18);
   box-shadow:0 34px 70px -28px rgba(0,0,0,.65);cursor:pointer;
