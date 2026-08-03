@@ -190,7 +190,55 @@ export function playerUrl(v: Video, opts: { background?: boolean; autoplay?: boo
  * déséquilibrer. Une entrée suffit, la page se réorganise seule — les filtres
  * et leurs compteurs sont calculés à partir de cette liste.
  */
-export const AUTRES: Video[] = [];
+export const AUTRES: Video[] = [
+  {
+    id: '1215301368',
+    // Titre provisoire tiré de l'accroche à l'écran — le nom de fichier Vimeo
+    // (« SHORT 14 (1) ») n'a rien à faire sur un portfolio.
+    title: 'Airbnb — réservations',
+    sub: 'Short · conciergerie · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186442010-baee096879519fb3c06736bb1ed4d445e686ac8f2a2d47af1dc6d6f3bded610b-d_720x1280',
+    ratio: '9:16',
+    duration: '00:31',
+    tags: ['Short / Reel'],
+    langue: 'Français',
+  },
+  {
+    id: '1215301369',
+    // Idem : nom de fichier « SHORT 22 ». Même client, même série que ci-dessus.
+    title: 'Airbnb — loyers',
+    sub: 'Short · conciergerie · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186441808-e19772c345925429c2f8cc93b450298b264ef211407d6b3859796f7bbf610ad7-d_720x1280',
+    ratio: '9:16',
+    duration: '00:21',
+    tags: ['Short / Reel'],
+    langue: 'Français',
+  },
+  {
+    id: '1215307193',
+    title: 'B2B et B2C',
+    sub: 'Motion design · typographie · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186448605-c33f28bc049319acb8577d19109c0c50e40d8a861f8d76f34641c17803cf8498-d_1280x720',
+    ratio: '16:9',
+    duration: '00:51',
+    tags: ['Motion design'],
+    langue: 'Français',
+  },
+  {
+    id: '1215301370',
+    title: 'Tournée',
+    sub: 'Motion design · Branding For All · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186441508-8b4fa6373684ad54bd96c7157aef007d56597ca60f63f34c63bc8ee86af350ec-d_900x1080',
+    ratio: '5:6',
+    duration: '00:26',
+    tags: ['Motion design'],
+    langue: 'Français',
+  },
+];
 
 /**
  * Catalogue complet servant la page /realisations : tout ce qui est en ligne.
