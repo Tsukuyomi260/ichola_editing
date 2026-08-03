@@ -98,7 +98,6 @@ function WorkCard({ v, onOpen, i = 0 }: { v: Video; onOpen: (v: Video) => void; 
       </div>
       <div className="metaw">
         <div className="t">{v.title}</div>
-        <div className="s">{v.sub}</div>
       </div>
     </button>
   );
