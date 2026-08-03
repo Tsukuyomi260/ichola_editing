@@ -103,95 +103,89 @@ export default function AboutScreen() {
         {/* ============ HERO CLAIR ============ */}
         <ScreenHeader active="apropos" docked={docked} light />
 
+        {/* ============ HERO : portrait en grand + identité + bio ============ */}
         <section className="ap-hero" ref={heroRef}>
           <div className="ap-hstack">
-          <div className="ap-hcard">
-          <div className="ap-hero-copy">
-            <h1 className="ap-h1">
-              <span className="l">Je suis OCHILET</span>
-              <span className="l"><span className="ap-mk">ichola</span>.</span>
-            </h1>
+            <div className="ap-hcard">
+              {/* Le portrait occupe toute la colonne gauche : c'est la pièce
+                  maîtresse de la page, plus une vignette posée à côté. */}
+              <div className="ap-stage">
+                <div className="ap-slab" aria-hidden="true">
+                  <span className="rec">REC ● 9:16</span>
+                </div>
 
-            <div className="ap-hcta">
-              <Link className="ap-btn-a" href="/#contact">
-                Réserver un appel
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-              </Link>
-              <Link className="ap-link" href="/#realisations">
-                Voir mes réalisations
-                <span className="ic">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                </span>
-              </Link>
+                <figure className="ap-shot">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img className="shot" src="/PHOTO.jpeg" alt="Portrait d'Ichola Ochilet, monteur vidéo, en studio" />
+                  <div className="sveil" aria-hidden="true"></div>
+                  <span className="stk a" aria-hidden="true"></span><span className="stk b" aria-hidden="true"></span>
+                  <span className="stk c" aria-hidden="true"></span><span className="stk d" aria-hidden="true"></span>
+                  <figcaption className="cap">
+                    <div className="t">Ichola</div>
+                    <div className="s">monteur · motion · fr/en</div>
+                  </figcaption>
+                </figure>
+
+                <div className="ap-hchip">
+                  <span className="k" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg>
+                  </span>
+                  <span>
+                    <span className="v">207M</span>
+                    <span className="l">vues · S1 2026</span>
+                  </span>
+                </div>
+              </div>
+
+              <div className="ap-hero-copy">
+                <h1 className="ap-h1">
+                  <span className="l">Je suis OCHILET</span>
+                  <span className="l"><span className="ap-mk">ichola</span>.</span>
+                </h1>
+
+                <div className="ap-bio-txt">
+                  <p>
+                    Je suis monteur vidéo et motion designer. J&apos;ai livré <b>plus de 250 vidéos</b>, en
+                    grande majorité au format vertical, pour des créateurs, des coachs et des plateformes
+                    de formation en France et à l&apos;international.
+                  </p>
+                  <p>
+                    Aujourd&apos;hui, je monte les publicités de <b>MentorShow</b> au sein d&apos;une équipe
+                    de monteurs, plateforme française de masterclass, en français et en anglais. En
+                    parallèle, je travaille en freelance pour des coachs, des agents immobiliers et des
+                    créateurs de contenu.
+                  </p>
+                  <p>
+                    Avant cela, j&apos;ai créé de zéro un studio de production photo et vidéo : les locaux,
+                    le matériel, l&apos;équipe. Je l&apos;ai dirigé pendant deux ans.
+                  </p>
+                  <div className="ap-pull">
+                    <p>
+                      Cette double expérience — production et post-production — change la façon dont
+                      j&apos;aborde un projet.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="ap-hcta">
+                  <Link className="ap-btn-a" href="/#contact">
+                    Réserver un appel
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                  </Link>
+                  <Link className="ap-link" href="/#realisations">
+                    Voir mes réalisations
+                    <span className="ic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                    </span>
+                  </Link>
+                </div>
+              </div>
             </div>
-
-            <div className="ap-trust">
-              <span><span className="n">+250</span> vidéos livrées</span>
-              <span className="sep" aria-hidden="true"></span>
-              <span>Studio dirigé <span className="n">2 ans</span></span>
-            </div>
-          </div>
-
-          <div className="ap-stage">
-            <div className="ap-slab">
-              <span className="rec">REC ● 9:16 · 4:5</span>
-            </div>
-
-            <figure className="ap-shot">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="shot" src="/PHOTO.jpeg" alt="Portrait d'Ichola Ochilet, monteur vidéo, en studio" />
-              <div className="sveil" aria-hidden="true"></div>
-              <span className="stk a" aria-hidden="true"></span><span className="stk b" aria-hidden="true"></span>
-              <span className="stk c" aria-hidden="true"></span><span className="stk d" aria-hidden="true"></span>
-              <span className="tag">9:16</span>
-              <figcaption className="cap">
-                <div className="t">Ichola</div>
-                <div className="s">monteur · motion · fr/en</div>
-              </figcaption>
-            </figure>
-
-            <div className="ap-hchip">
-                <span className="k" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg>
-                </span>
-              <span>
-                <span className="v">207M</span>
-                <span className="l">vues · S1 2026</span>
-              </span>
-            </div>
-          </div>
-          </div>
           </div>
         </section>
 
-        {/* ============ BIO ============ */}
-        <section className="ap-bio ap-wrap" data-rv>
-          <h2 className="ap-title">Qui monte vos vidéos<em>.</em></h2>
-          <div className="ap-bio-grid">
-            <div className="ap-bio-txt">
-              <p>
-                Je suis monteur vidéo et motion designer. J&apos;ai livré <b>plus de 250 vidéos</b>, en
-                grande majorité au format vertical, pour des créateurs, des coachs et des plateformes
-                de formation en France et à l&apos;international.
-              </p>
-              <p>
-                Aujourd&apos;hui, je monte les publicités de <b>MentorShow</b> au sein d&apos;une équipe
-                de monteurs, plateforme française de masterclass, en français et en anglais. En
-                parallèle, je travaille en freelance pour des coachs, des agents immobiliers et des
-                créateurs de contenu.
-              </p>
-              <p>
-                Avant cela, j&apos;ai créé de zéro un studio de production photo et vidéo : les locaux,
-                le matériel, l&apos;équipe. Je l&apos;ai dirigé pendant deux ans.
-              </p>
-              <div className="ap-pull">
-                <p>
-                  Cette double expérience — production et post-production — change la façon dont
-                  j&apos;aborde un projet.
-                </p>
-              </div>
-            </div>
-            <div>
+        {/* ============ FICHE TECHNIQUE ============ */}
+        <section className="ap-fiche ap-wrap" data-rv>
               <div className="ap-spec">
                 <span className="ap-ptk a"></span><span className="ap-ptk b"></span>
                 <span className="ap-ptk c"></span><span className="ap-ptk d"></span>
@@ -238,8 +232,6 @@ export default function AboutScreen() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
         </section>
 
         {/* ============ PARCOURS ============ */}
@@ -293,7 +285,7 @@ export default function AboutScreen() {
             <div className="ap-sgrid">
               <div className="ap-stat">
                 <div className="n"><em>+</em><span data-count="250">0</span></div>
-                <div className="l">vidéos livrées, en majorité en vertical</div>
+                <div className="l">vidéos livrées</div>
                 <div className="m">9:16 · 4:5 · 16:9</div>
                 <div className="bar" style={{ '--w': '86%' } as React.CSSProperties}><i></i></div>
               </div>
@@ -304,10 +296,14 @@ export default function AboutScreen() {
                 <div className="bar" style={{ '--w': '72%' } as React.CSSProperties}><i></i></div>
               </div>
               <div className="ap-stat">
-                <div className="n"><span data-count="4">0</span></div>
-                <div className="l">personnes encadrées en studio</div>
-                <div className="m">Direction montage</div>
-                <div className="bar" style={{ '--w': '40%' } as React.CSSProperties}><i></i></div>
+                <div className="n"><span data-count="3">0</span></div>
+                <div className="l">logiciels utilisés au quotidien</div>
+                <div className="ap-tools" role="list">
+                  <span className="tool" role="listitem" title="Adobe Premiere Pro"><PremiereProLogo /></span>
+                  <span className="tool" role="listitem" title="Adobe After Effects"><AfterEffectsLogo /></span>
+                  <span className="tool" role="listitem" title="CapCut"><CapCutLogo /></span>
+                </div>
+                <div className="bar" style={{ '--w': '100%' } as React.CSSProperties}><i></i></div>
               </div>
             </div>
           </div>
