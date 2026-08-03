@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 import VimeoFrame from './VimeoFrame';
 import VideoModal from './VideoModal';
-import { REALISATIONS, RATIO_CLASS, type Video } from '@/lib/videos';
+import { REALISATIONS, REALISATIONS_2, RATIO_CLASS, type Video } from '@/lib/videos';
 import CalEmbed from './CalEmbed';
 import { CAL_URL } from '@/lib/site';
 
@@ -226,6 +226,11 @@ export default function SectionsV4() {
 
         <div className="lp-wr1">
           {REALISATIONS.map((v, i) => (
+            <WorkCard key={v.id} v={v} i={i} onOpen={setLecture} />
+          ))}
+        </div>
+        <div className="lp-wr2">
+          {REALISATIONS_2.map((v, i) => (
             <WorkCard key={v.id} v={v} i={i} onOpen={setLecture} />
           ))}
         </div>

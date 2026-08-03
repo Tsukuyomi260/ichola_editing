@@ -83,6 +83,37 @@ export const REALISATIONS: Video[] = [
   },
 ];
 
+/** Seconde rangée — formats verticaux (9:16 et 5:6). */
+export const REALISATIONS_2: Video[] = [
+  {
+    id: '1215184801',
+    title: 'Paul Bordas x Wilson BOTOYIYE',
+    sub: 'Capsule podcast · vertical · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186293201-9c6cdf668ef0461bcfafdffb03d894af6f5d3089a2184f564d98f0fb47292f1a-d_720x1280',
+    ratio: '9:16',
+    duration: '00:45',
+  },
+  {
+    id: '1214554767',
+    title: 'Réel',
+    sub: 'Motion design · vertical · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2185514722-c32e7ec85ec011c6c1e7d4c7ab551a4cfddcc416c47102cbbec1bb494848bd43-d_720x1280',
+    ratio: '9:16',
+    duration: '00:20',
+  },
+  {
+    id: '1215182648',
+    title: 'Branding For All',
+    sub: 'Spot publicitaire · vertical',
+    poster:
+      'https://i.vimeocdn.com/video/2186290740-e0063d9c42ac44c73c3f8612b844d16f2104bdebe0782b317762eaabf76b98b1-d_900x1080',
+    ratio: '5:6',
+    duration: '00:32',
+  },
+];
+
 /** Classe de ratio utilisée par les cartes de la grille. */
 export const RATIO_CLASS: Record<Ratio, string> = {
   '9:16': 'r916',
