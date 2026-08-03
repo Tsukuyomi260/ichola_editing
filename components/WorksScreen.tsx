@@ -11,7 +11,7 @@ import { CATALOGUE, orientation, type Video } from '@/lib/videos';
 /**
  * Page Réalisations — préfixe CSS rz-.
  *
- * Filtres cumulables sur trois axes : orientation, genre, langue. À l'intérieur
+ * Filtres cumulables sur deux axes : orientation et genre. À l'intérieur
  * d'un axe les choix s'additionnent (ou logique), entre axes ils se croisent
  * (et logique) — c'est le comportement attendu d'un filtre de catalogue.
  *
@@ -20,27 +20,28 @@ import { CATALOGUE, orientation, type Video } from '@/lib/videos';
  * qui ne ramènerait rien n'est pas affichée du tout — cliquer pour tomber sur
  * une grille vide est le pire scénario sur un portfolio.
  *
- * L'état est reflété dans l'URL (?orientation=…&genre=…&langue=…&q=…) via
+ * L'état est reflété dans l'URL (?orientation=…&genre=…&q=…) via
  * history.replaceState : la page est partageable et le bouton retour marche.
  */
 
-type Axe = 'orientation' | 'genre' | 'langue';
+/**
+ * Axes de filtrage. La langue en a été retirée : un seul montage du catalogue
+ * est en anglais, un filtre à une entrée ne rend aucun service. Le champ
+ * `langue` reste renseigné dans les données — il suffira de rajouter l'axe ici
+ * le jour où il y aura de quoi le nourrir.
+ */
+type Axe = 'orientation' | 'genre';
+const AXES: Axe[] = ['orientation', 'genre'];
 
 function valeursDe(v: Video, axe: Axe): string[] {
-  if (axe === 'orientation') return [orientation(v)];
-  if (axe === 'genre') return v.tags ?? [];
-  return v.langue ? [v.langue] : [];
+  return axe === 'orientation' ? [orientation(v)] : v.tags ?? [];
 }
 
 export default function WorksScreen() {
   const [docked, setDocked] = useState(false);
   const [lecture, setLecture] = useState<Video | null>(null);
   const [q, setQ] = useState('');
-  const [choix, setChoix] = useState<Record<Axe, string[]>>({
-    orientation: [],
-    genre: [],
-    langue: [],
-  });
+  const [choix, setChoix] = useState<Record<Axe, string[]>>({ orientation: [], genre: [] });
 
   /* Le header se docke dès qu'on quitte le haut de page. */
   useEffect(() => {
@@ -54,17 +55,13 @@ export default function WorksScreen() {
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     setQ(p.get('q') ?? '');
-    setChoix({
-      orientation: p.getAll('orientation'),
-      genre: p.getAll('genre'),
-      langue: p.getAll('langue'),
-    });
+    setChoix({ orientation: p.getAll('orientation'), genre: p.getAll('genre') });
   }, []);
 
   /* Écriture de l'état dans l'URL, sans recharger ni empiler l'historique. */
   useEffect(() => {
     const p = new URLSearchParams();
-    (Object.keys(choix) as Axe[]).forEach((a) => choix[a].forEach((val) => p.append(a, val)));
+    AXES.forEach((a) => choix[a].forEach((val) => p.append(a, val)));
     if (q.trim()) p.set('q', q.trim());
     const url = p.toString() ? `?${p.toString()}` : window.location.pathname;
     window.history.replaceState(null, '', url);
@@ -96,9 +93,9 @@ export default function WorksScreen() {
       [axe]: c[axe].includes(val) ? c[axe].filter((x) => x !== val) : [...c[axe], val],
     }));
 
-  const actifs = choix.orientation.length + choix.genre.length + choix.langue.length;
+  const actifs = AXES.reduce((n, a) => n + choix[a].length, 0);
   const toutEffacer = () => {
-    setChoix({ orientation: [], genre: [], langue: [] });
+    setChoix({ orientation: [], genre: [] });
     setQ('');
   };
 
@@ -112,7 +109,7 @@ export default function WorksScreen() {
   const resultats = useMemo(
     () =>
       CATALOGUE.filter(
-        (v) => correspondQ(v) && (['orientation', 'genre', 'langue'] as Axe[]).every((a) => satisfait(v, a))
+        (v) => correspondQ(v) && AXES.every((a) => satisfait(v, a))
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [choix, q]
@@ -124,7 +121,7 @@ export default function WorksScreen() {
       (v) =>
         correspondQ(v) &&
         valeursDe(v, axe).includes(val) &&
-        (['orientation', 'genre', 'langue'] as Axe[]).filter((a) => a !== axe).every((a) => satisfait(v, a))
+        AXES.filter((a) => a !== axe).every((a) => satisfait(v, a))
     ).length;
 
   /** Options d'un axe, triées par abondance, celles qui ne ramènent rien exclues. */
@@ -202,7 +199,6 @@ export default function WorksScreen() {
         <div className="rz-filtres rz-wrap">
           <Groupe axe="orientation" titre="Orientation" />
           <Groupe axe="genre" titre="Genre" />
-          <Groupe axe="langue" titre="Langue" />
           {actifs > 0 && (
             <button type="button" className="rz-clear" onClick={toutEffacer}>
               Tout effacer

@@ -1282,22 +1282,27 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
   text-decoration:underline;text-underline-offset:3px}
 .rz-clear:hover{color:var(--accent-bright)}
 
-.rz-grille{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start;
-  padding-top:26px;padding-bottom:60px}
+/* Mur en colonnes (masonry). Une grille alignée sur des rangées laissait de
+   grands vides sous les cartes courtes dès qu'une 9:16 voisinait une 16:9 :
+   chaque rangée prenait la hauteur de la plus haute. Ici chaque colonne se
+   remplit indépendamment, les cartes se calent les unes sous les autres et
+   gardent leur ratio d'origine — aucun recadrage. */
+.rz-grille{column-count:3;column-gap:16px;padding-top:26px;padding-bottom:60px}
+.rz-grille .lp-wk{display:block;width:100%;margin:0 0 16px;
+  -webkit-column-break-inside:avoid;break-inside:avoid}
 .rz .ap-footer{border-top:1px solid var(--line);margin-top:10px}
-/* Un 16:9 dans une grille de verticales : il prend deux colonnes, sinon il
-   serait écrasé et le mur perdrait son rythme. */
-.rz-grille .lp-wk.r169{grid-column:span 2}
-.rz-vide{grid-column:1/-1;padding:60px 0;text-align:center;color:var(--muted);font-size:16px}
+.rz-vide{column-span:all;padding:60px 0;text-align:center;color:var(--muted);font-size:16px}
 .rz-vide button{border:none;background:none;cursor:pointer;color:var(--green-deep);font:inherit;
   text-decoration:underline;text-underline-offset:3px}
 
 @media(max-width:1020px){
-  .rz-grille{grid-template-columns:repeat(3,1fr)}
+  .rz-grille{column-count:2}
 }
 @media(max-width:760px){
-  .rz-grille{grid-template-columns:repeat(2,1fr)}
-  .rz-grille .lp-wk.r169{grid-column:1/-1}
+  .rz-grille{column-count:2}
+  /* Une 16:9 dans une demi-colonne de téléphone fait 95px de haut : le titre
+     vient buter sur les badges. Elle reprend toute la largeur. */
+  .rz-grille .lp-wk.r169{column-span:all;margin-bottom:16px}
   /* Trois axes empilés font une barre de 200px : collée en haut d'un écran de
      téléphone elle mangerait un quart du viewport. On la laisse défiler. */
   .rz-filtres{position:static;gap:10px 14px;-webkit-backdrop-filter:none;backdrop-filter:none}
