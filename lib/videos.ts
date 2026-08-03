@@ -16,11 +16,12 @@
  * suit le `/` dans l'URL privée). Sans lui, Vimeo refuse la lecture.
  */
 
-export type Ratio = '9:16' | '4:5' | '16:9';
+export type Ratio = '9:16' | '5:6' | '4:5' | '16:9';
 
 /** Ratio CSS correspondant, pour dimensionner un cadre sans jamais recadrer. */
 export const RATIO_CSS: Record<Ratio, string> = {
   '9:16': '9 / 16',
+  '5:6': '5 / 6',
   '4:5': '4 / 5',
   '16:9': '16 / 9',
 };
@@ -54,22 +55,22 @@ export const SHOWREEL: Video = {
  */
 export const REALISATIONS: Video[] = [
   {
-    id: '1214555185',
-    title: 'Reginald Allouche',
-    sub: 'Ads · MentorShow · FR',
+    id: '1215014254',
+    title: 'Maxwell',
+    sub: 'Capsule podcast · vertical · FR',
     poster:
-      'https://i.vimeocdn.com/video/2185516280-0ce6ddbdb490b618eae58563d4f8e46ae232a4c7bb1c3040e2775777bf59c1de-d_720x1280',
+      'https://i.vimeocdn.com/video/2186086817-57f7fe0af91f16b0a0bf948f797cc85e70126cc3760710b426fa71a9ee619eb9-d_720x1280',
     ratio: '9:16',
-    duration: '01:55',
+    duration: '01:23',
   },
   {
-    id: '1214554767',
-    title: 'Capsule — Business',
-    sub: 'Motion design · vertical',
+    id: '1215041025',
+    title: 'Chancio',
+    sub: 'Motion design · promo · FR',
     poster:
-      'https://i.vimeocdn.com/video/2185514722-c32e7ec85ec011c6c1e7d4c7ab551a4cfddcc416c47102cbbec1bb494848bd43-d_720x1280',
-    ratio: '9:16',
-    duration: '00:20',
+      'https://i.vimeocdn.com/video/2186117850-87fccd2e4ffba13588056a3347ca1df899ba2e6ee2bd702c90db4f34b244cdf0-d_900x1080',
+    ratio: '5:6',
+    duration: '00:29',
   },
   {
     id: '1214552992',
@@ -85,6 +86,7 @@ export const REALISATIONS: Video[] = [
 /** Classe de ratio utilisée par les cartes de la grille. */
 export const RATIO_CLASS: Record<Ratio, string> = {
   '9:16': 'r916',
+  '5:6': 'r56',
   '4:5': 'r45',
   '16:9': 'r169',
 };

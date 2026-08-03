@@ -421,6 +421,7 @@ img{max-width:100%;display:block}
   transition:transform .28s var(--ease),box-shadow .28s var(--ease)}
 .lp-wk:hover{transform:translateY(-4px);box-shadow:0 26px 50px -24px rgba(10,26,16,.45)}
 .lp-wk.r916{aspect-ratio:9/16}
+.lp-wk.r56{aspect-ratio:5/6}
 .lp-wk.r45{aspect-ratio:4/5}
 .lp-wk.r169{aspect-ratio:16/9}
 .lp-wk .film{position:absolute;inset:0;background:linear-gradient(150deg,var(--c1),var(--c2))}
