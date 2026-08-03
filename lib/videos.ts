@@ -26,6 +26,10 @@ export const RATIO_CSS: Record<Ratio, string> = {
   '16:9': '16 / 9',
 };
 
+/** Genres utilisés par les filtres de /realisations. */
+export type Tag = 'Ads' | 'Podcast' | 'Short / Reel' | 'Motion design' | 'VSL' | 'Témoignage';
+export type Langue = 'Français' | 'English';
+
 export type Video = {
   id: string;
   hash?: string;
@@ -35,17 +39,30 @@ export type Video = {
   ratio: Ratio;
   /** Durée affichée sur la carte, au format mm:ss. */
   duration?: string;
+  tags?: Tag[];
+  langue?: Langue;
 };
 
-/** Vidéo mise en avant dans le cadre du hero d'accueil. */
+/** Vertical ou horizontal — déduit du ratio, jamais saisi à la main. */
+export function orientation(v: Video): 'Vertical' | 'Horizontal' {
+  return v.ratio === '16:9' ? 'Horizontal' : 'Vertical';
+}
+
+/**
+ * Vidéo mise en avant dans le cadre du hero d'accueil.
+ * Elle figure aussi au catalogue : c'est une réalisation à part entière, pas
+ * seulement une bande-annonce.
+ */
 export const SHOWREEL: Video = {
   id: '1214542567',
   title: 'Ad — coach',
-  sub: 'reel · vertical · FR',
+  sub: 'Spot publicitaire · vertical · FR',
   poster:
     'https://i.vimeocdn.com/video/2185499314-bc5394a1d06053aabbb6ce488160f466292b96722de85fb6a5af546eb56c2262-d_720x1280',
   ratio: '9:16',
   duration: '00:18',
+  tags: ['Ads', 'Short / Reel'],
+  langue: 'Français',
 };
 
 /**
@@ -62,6 +79,8 @@ export const REALISATIONS: Video[] = [
       'https://i.vimeocdn.com/video/2186086817-57f7fe0af91f16b0a0bf948f797cc85e70126cc3760710b426fa71a9ee619eb9-d_720x1280',
     ratio: '9:16',
     duration: '01:23',
+    tags: ['Podcast', 'Short / Reel'],
+    langue: 'Français',
   },
   {
     id: '1215041025',
@@ -71,6 +90,8 @@ export const REALISATIONS: Video[] = [
       'https://i.vimeocdn.com/video/2186117850-87fccd2e4ffba13588056a3347ca1df899ba2e6ee2bd702c90db4f34b244cdf0-d_900x1080',
     ratio: '5:6',
     duration: '00:29',
+    tags: ['Motion design'],
+    langue: 'Français',
   },
   {
     id: '1214552992',
@@ -80,6 +101,8 @@ export const REALISATIONS: Video[] = [
       'https://i.vimeocdn.com/video/2185513487-2bce720226f1461c4077afed0ef4220305e39d5d39ada4be7055a1893bd8e5a3-d_1280x720',
     ratio: '16:9',
     duration: '01:59',
+    tags: ['Ads'],
+    langue: 'English',
   },
 ];
 
@@ -93,6 +116,8 @@ export const REALISATIONS_2: Video[] = [
       'https://i.vimeocdn.com/video/2186293201-9c6cdf668ef0461bcfafdffb03d894af6f5d3089a2184f564d98f0fb47292f1a-d_720x1280',
     ratio: '9:16',
     duration: '00:45',
+    tags: ['Podcast', 'Short / Reel'],
+    langue: 'Français',
   },
   {
     id: '1214554767',
@@ -102,6 +127,8 @@ export const REALISATIONS_2: Video[] = [
       'https://i.vimeocdn.com/video/2185514722-c32e7ec85ec011c6c1e7d4c7ab551a4cfddcc416c47102cbbec1bb494848bd43-d_720x1280',
     ratio: '9:16',
     duration: '00:20',
+    tags: ['Motion design'],
+    langue: 'Français',
   },
   {
     id: '1215182648',
@@ -111,6 +138,8 @@ export const REALISATIONS_2: Video[] = [
       'https://i.vimeocdn.com/video/2186290740-e0063d9c42ac44c73c3f8612b844d16f2104bdebe0782b317762eaabf76b98b1-d_900x1080',
     ratio: '5:6',
     duration: '00:32',
+    tags: ['Ads'],
+    langue: 'Français',
   },
 ];
 
@@ -152,3 +181,25 @@ export function playerUrl(v: Video, opts: { background?: boolean; autoplay?: boo
   p.set('dnt', '1');
   return `https://player.vimeo.com/video/${v.id}?${p.toString()}`;
 }
+
+/**
+ * Réalisations visibles uniquement sur /realisations.
+ *
+ * C'est ici qu'on ajoute les nouvelles vidéos : l'accueil garde ses six cartes
+ * choisies pour leur mélange de formats, le catalogue s'allonge sans le
+ * déséquilibrer. Une entrée suffit, la page se réorganise seule — les filtres
+ * et leurs compteurs sont calculés à partir de cette liste.
+ */
+export const AUTRES: Video[] = [];
+
+/**
+ * Catalogue complet servant la page /realisations : tout ce qui est en ligne.
+ * Le showreel du hero y figure aussi, dédoublonné par identifiant au cas où il
+ * serait ajouté deux fois.
+ */
+export const CATALOGUE: Video[] = [
+  ...REALISATIONS,
+  ...REALISATIONS_2,
+  SHOWREEL,
+  ...AUTRES,
+].filter((v, i, tout) => tout.findIndex((x) => x.id === v.id) === i);

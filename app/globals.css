@@ -813,7 +813,9 @@ img{max-width:100%;display:block}
 @keyframes apDrift{from{left:2%}to{left:98%}}
 
 /* --- Footer --- */
-.ap-footer{padding:64px 24px 34px}
+/* Le bas de page réserve la hauteur du header docké (90px + 18px de marge),
+   sinon le dock recouvre la ligne de copyright en fin de défilement. */
+.ap-footer{padding:64px 24px 130px}
 .ap-fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px}
 .ap-fbrand .wm{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-.01em;color:var(--ink)}
 .ap-fbrand .wm span{color:var(--accent)}
@@ -869,7 +871,7 @@ img{max-width:100%;display:block}
 .ap-hstack{position:relative}
 .ap-hstack::before{content:"";position:absolute;left:10px;right:-10px;top:10px;bottom:-10px;z-index:0;
   background:var(--accent);border-radius:34px}
-.ap-hcard{position:relative;z-index:1;display:grid;grid-template-columns:.82fr 1.18fr;gap:52px;align-items:start;
+.ap-hcard{position:relative;z-index:1;display:grid;grid-template-columns:.88fr 1.12fr;gap:52px;align-items:center;
   background:var(--surface);border:1px solid var(--line);border-radius:34px;padding:60px 56px 64px;
   box-shadow:0 44px 96px -54px rgba(10,30,18,.3);overflow:hidden}
 .ap-hcard::before{content:"";position:absolute;right:0;top:0;width:min(660px,72%);height:100%;z-index:0;pointer-events:none;
@@ -901,17 +903,18 @@ img{max-width:100%;display:block}
 /* --- Le plateau : aplat vert en fond, carte portrait qui déborde en haut
    et à droite. Les coins de viseur sont portés par la carte — c'est elle
    « l'écran » du langage maison. --- */
-.ap-stage{justify-self:stretch;position:relative;width:100%;aspect-ratio:1/1.52}
-.ap-slab{position:absolute;right:0;bottom:0;z-index:1;width:84%;height:86%;
+.ap-stage{justify-self:stretch;position:relative;width:100%;aspect-ratio:1/1.7}
+.ap-slab{position:absolute;right:0;bottom:0;z-index:1;width:82%;height:88%;
   background:var(--accent);border-radius:26px;box-shadow:0 40px 80px -42px rgba(0,140,70,.6)}
-.ap-slab .rec{position:absolute;left:24px;bottom:20px;font-family:var(--font-mono);font-size:12px;
-  letter-spacing:.06em;color:rgba(6,40,22,.7)}
 
-.ap-shot{position:absolute;left:0;top:0;z-index:2;width:80%;aspect-ratio:9/16;
+.ap-shot{position:absolute;left:0;top:0;z-index:2;width:90%;aspect-ratio:9/16;
   border-radius:20px;overflow:hidden;background:#0b0906;border:1px solid rgba(255,255,255,.14);
   box-shadow:0 36px 68px -28px rgba(6,40,22,.66)}
+/* Cadrage du portrait : la photo d'origine a un tiers de fond vide au-dessus
+   de la tête et le filigrane du studio en bas à droite. On montre la tranche
+   13 % → 90 % : la tête remonte, le filigrane sort du champ. */
 .ap-shot .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0%;
-  transform:scale(1.12);transform-origin:50% 0%}
+  transform:translateY(-17%) scale(1.3);transform-origin:50% 0%}
 .ap-shot .sveil{position:absolute;inset:0;background:linear-gradient(to top,rgba(3,10,6,.8),transparent 52%)}
 .ap-shot .stk{position:absolute;width:14px;height:14px;border:2px solid rgba(255,255,255,.34);z-index:3}
 .ap-shot .stk.a{top:11px;left:11px;border-right:none;border-bottom:none;border-radius:5px 0 0 0}
@@ -925,15 +928,6 @@ img{max-width:100%;display:block}
 .ap-shot .cap .t{font-family:var(--font-display);font-weight:600;font-size:15px}
 .ap-shot .cap .s{font-family:var(--font-mono);font-size:10.5px;color:#bfe9cf;margin-top:2px}
 
-.ap-hchip{position:absolute;right:0;bottom:26px;z-index:3;display:flex;align-items:center;gap:11px;
-  background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 15px;
-  box-shadow:0 22px 44px -22px rgba(10,30,18,.3);
-  transition:border-color .25s var(--ease)}
-.ap-hchip:hover{border-color:var(--accent)}
-.ap-hchip .k{width:38px;height:38px;border-radius:11px;background:var(--wash);display:grid;place-items:center;color:var(--green-deep)}
-.ap-hchip .k svg{width:19px;height:19px}
-.ap-hchip .v{font-family:var(--font-display);font-weight:700;font-size:17px;line-height:1;display:block}
-.ap-hchip .l{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);margin-top:3px;display:block}
 
 @media(max-width:900px){
   .ap-hcard{grid-template-columns:1fr;gap:52px;padding:48px 32px 54px}
@@ -949,7 +943,7 @@ img{max-width:100%;display:block}
   .ap-shot{top:-26px}
   /* Sous 560px le plateau est trop étroit : la carte chevauchait la légende
      du portrait. Le chiffre reste lisible dans le panneau juste en dessous. */
-  .ap-hchip{display:none}}
+}
 @media(prefers-reduced-motion:reduce){
   .ap-animate .ap-mk::before{animation:none;transform:scaleX(1)}}
 
@@ -1210,10 +1204,102 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
 .ap-fiche .ap-spec{max-width:820px;margin:0 auto}
 
 @media(max-width:900px){
-  .ap-stage{aspect-ratio:1/1.3;max-width:420px;margin:0 auto 8px}
+  .ap-stage{aspect-ratio:1/1.62;max-width:400px;margin:0 auto 8px}
 }
 @media(max-width:560px){
-  .ap-stage{aspect-ratio:1/1.34;max-width:320px}
-  .ap-shot{width:82%}
-  .ap-hchip{display:none}
+  .ap-stage{aspect-ratio:1/1.66;max-width:310px}
+  .ap-shot{width:92%}
+}
+
+/* ==========================================================================
+   PAGE RÉALISATIONS — préfixe rz-
+   ========================================================================== */
+.rz{
+  --bg:#FCFCFA;--surface:#FFFFFF;--ink:#0A130D;--ink-2:#2C3A32;--muted:#697269;
+  --line:#E7EBE4;--wash:#E9FAF0;
+  --screen:#071009;--screen-ink:#F2FBF5;--screen-muted:#BFD9C8;
+  --accent:#00D46A;--accent-bright:#00E676;--green-deep:#0A5E38;
+  --font-display:"Clash Display",system-ui,sans-serif;
+  --font-sans:"General Sans",system-ui,sans-serif;
+  --font-mono:var(--font-jetbrains),ui-monospace,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  font-family:var(--font-sans);color:var(--ink);
+}
+.rz a{color:inherit;text-decoration:none}
+.rz button{font:inherit}
+.rz :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+.rz-wrap{max-width:1300px;margin:0 auto;padding:0 24px}
+.rz [data-rv]{opacity:0;transform:translateY(30px);
+  transition:opacity .8s var(--ease) var(--rvd,0s),transform .8s var(--ease) var(--rvd,0s)}
+.rz [data-rv].in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rz [data-rv]{opacity:1;transform:none;transition:none}}
+
+.rz-head{padding:22px 24px 26px}
+.rz-title{font-family:var(--font-display);font-weight:700;font-size:clamp(38px,5.4vw,68px);
+  letter-spacing:-.03em;line-height:1.02;color:var(--ink)}
+.rz-title em{font-style:normal;color:var(--accent)}
+.rz-count{margin-top:10px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.08em;color:var(--green-deep)}
+
+.rz-search{position:relative;display:flex;align-items:center;gap:10px;margin-top:24px;max-width:420px;
+  border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:0 18px;height:50px;
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.rz-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,212,106,.16)}
+/* Le cadre entier signale déjà le focus : l'anneau générique ferait doublon. */
+.rz-search input:focus-visible{outline:none}
+.rz-search svg{width:17px;height:17px;color:var(--muted);flex:none}
+.rz-search input{flex:1;min-width:0;border:none;background:none;outline:none;font:inherit;font-size:15px;color:var(--ink)}
+.rz-search input::placeholder{color:var(--muted)}
+/* Chrome habille les champs `search` d'une croix et d'un liseré internes qui
+   se superposent au cadre dessiné ici — on les neutralise pour poser la nôtre. */
+.rz-search input::-webkit-search-cancel-button,
+.rz-search input::-webkit-search-decoration{-webkit-appearance:none;appearance:none}
+.rz-xq{flex:none;width:24px;height:24px;border:none;border-radius:50%;background:var(--wash);cursor:pointer;
+  display:grid;place-items:center;font-size:16px;line-height:1;color:var(--green-deep);
+  transition:background .2s var(--ease),color .2s var(--ease)}
+.rz-xq:hover{background:var(--accent);color:var(--ink)}
+
+/* Barre de filtres collante : elle reste sous le header pendant qu'on parcourt. */
+.rz-filtres{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;
+  padding-top:16px;padding-bottom:16px;margin-bottom:8px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+.rz-groupe{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rz-glbl{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.rz-pills{display:flex;flex-wrap:wrap;gap:7px}
+.rz-pill{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);cursor:pointer;
+  font-family:var(--font-mono);font-size:12px;color:var(--ink-2);
+  transition:border-color .2s var(--ease),background .2s var(--ease),color .2s var(--ease)}
+.rz-pill:hover{border-color:var(--accent);background:var(--wash);color:var(--green-deep)}
+.rz-pill .n{font-size:10.5px;color:var(--muted)}
+.rz-pill.on{background:var(--accent);border-color:var(--accent);color:var(--ink);font-weight:500}
+.rz-pill.on .n{color:rgba(10,19,13,.6)}
+.rz-pill .x{font-size:14px;line-height:1;opacity:.7}
+.rz-clear{margin-left:auto;border:none;background:none;cursor:pointer;
+  font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;color:var(--green-deep);
+  text-decoration:underline;text-underline-offset:3px}
+.rz-clear:hover{color:var(--accent-bright)}
+
+.rz-grille{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start;
+  padding-top:26px;padding-bottom:60px}
+.rz .ap-footer{border-top:1px solid var(--line);margin-top:10px}
+/* Un 16:9 dans une grille de verticales : il prend deux colonnes, sinon il
+   serait écrasé et le mur perdrait son rythme. */
+.rz-grille .lp-wk.r169{grid-column:span 2}
+.rz-vide{grid-column:1/-1;padding:60px 0;text-align:center;color:var(--muted);font-size:16px}
+.rz-vide button{border:none;background:none;cursor:pointer;color:var(--green-deep);font:inherit;
+  text-decoration:underline;text-underline-offset:3px}
+
+@media(max-width:1020px){
+  .rz-grille{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:760px){
+  .rz-grille{grid-template-columns:repeat(2,1fr)}
+  .rz-grille .lp-wk.r169{grid-column:1/-1}
+  /* Trois axes empilés font une barre de 200px : collée en haut d'un écran de
+     téléphone elle mangerait un quart du viewport. On la laisse défiler. */
+  .rz-filtres{position:static;gap:10px 14px;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .rz-clear{margin-left:0}
 }

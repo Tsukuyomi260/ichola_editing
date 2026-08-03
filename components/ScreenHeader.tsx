@@ -46,7 +46,10 @@ export default function ScreenHeader({
   const anchor = (hash: string) => (home ? `#${hash}` : `/#${hash}`);
   const accueilHref = home ? '#accueil' : '/';
   const lien = (k: ScreenNav) =>
-    k === 'accueil' ? accueilHref : k === 'apropos' ? '/a-propos' : anchor(k);
+    k === 'accueil' ? accueilHref
+    : k === 'apropos' ? '/a-propos'
+    : k === 'realisations' ? '/realisations'
+    : anchor(k);
   const cur = (k: ScreenNav) => (active === k ? ('page' as const) : undefined);
 
   /* Menu ouvert : défilement bloqué, Échap ferme, et on referme si l'écran

@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
-import VimeoFrame from './VimeoFrame';
 import VideoModal from './VideoModal';
-import { REALISATIONS, REALISATIONS_2, RATIO_CLASS, type Video } from '@/lib/videos';
+import WorkCard from './WorkCard';
+import { REALISATIONS, REALISATIONS_2, type Video } from '@/lib/videos';
 import CalEmbed from './CalEmbed';
 import { CAL_URL } from '@/lib/site';
 
@@ -59,49 +59,6 @@ const FAQ_ITEMS = [
     a: 'Au projet ou au forfait mensuel selon votre volume. Le plus simple : un appel de 15 minutes pour cadrer le besoin, et vous repartez avec une fourchette claire.',
   },
 ];
-
-/**
- * Carte de réalisation.
- * La vidéo tourne d'elle-même, en boucle muette, mais UNIQUEMENT quand la
- * carte est à l'écran : le lecteur se monte à l'entrée dans le viewport et se
- * démonte à la sortie. Avec une vingtaine de vidéos, c'est ce qui évite de
- * charger vingt lecteurs d'un coup. Le son arrive au clic, en grand.
- */
-function WorkCard({ v, onOpen, i = 0 }: { v: Video; onOpen: (v: Video) => void; i?: number }) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.25 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <button
-      ref={ref}
-      type="button"
-      className={`lp-wk ${RATIO_CLASS[v.ratio]}`}
-      data-rv
-      style={{ '--rvd': `${i * 0.1}s` } as React.CSSProperties}
-      onClick={() => onOpen(v)}
-      aria-label={`Agrandir avec le son : ${v.title} — ${v.sub}`}
-    >
-      <VimeoFrame video={v} active={visible} />
-      <div className="veilw" aria-hidden="true"></div>
-      <span className="tag">{v.ratio}</span>
-      {v.duration && <span className="dur">{v.duration}</span>}
-      <div className="playw" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-      </div>
-      <div className="metaw">
-        <div className="t">{v.title}</div>
-      </div>
-    </button>
-  );
-}
 
 export default function SectionsV4() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -221,7 +178,7 @@ export default function SectionsV4() {
             <h2 className="lp-title">Dernières réalisations<em>.</em></h2>
             <p className="lp-sub">Un aperçu. Tout le reste est sur la page Réalisations.</p>
           </div>
-          <a className="lp-btn-g" href="#">Voir toutes mes réalisations</a>
+          <a className="lp-btn-g" href="/realisations">Voir toutes mes réalisations</a>
         </div>
 
         <div className="lp-wr1">
@@ -236,7 +193,7 @@ export default function SectionsV4() {
         </div>
 
         <div className="lp-wfoot">
-          <a className="lp-linkr" href="#">Voir toutes mes réalisations
+          <a className="lp-linkr" href="/realisations">Voir toutes mes réalisations
             <span className="lp-rc">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </span>
@@ -407,7 +364,7 @@ export default function SectionsV4() {
           <div className="lp-fcol">
             <div className="lp-flbl">Navigation</div>
             <a href="#accueil">Accueil</a>
-            <a href="#realisations">Réalisations</a>
+            <a href="/realisations">Réalisations</a>
             <a href="/a-propos">À propos</a>
             <a href="#contact">Réserver un appel</a>
           </div>

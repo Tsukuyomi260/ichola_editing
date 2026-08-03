@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import ScreenHeader from './ScreenHeader';
 import ScrollProgress from './ScrollProgress';
+import SiteFooter from './SiteFooter';
 import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 
 /**
@@ -110,9 +111,7 @@ export default function AboutScreen() {
               {/* Le portrait occupe toute la colonne gauche : c'est la pièce
                   maîtresse de la page, plus une vignette posée à côté. */}
               <div className="ap-stage">
-                <div className="ap-slab" aria-hidden="true">
-                  <span className="rec">REC ● 9:16</span>
-                </div>
+                <div className="ap-slab" aria-hidden="true"></div>
 
                 <figure className="ap-shot">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -126,15 +125,6 @@ export default function AboutScreen() {
                   </figcaption>
                 </figure>
 
-                <div className="ap-hchip">
-                  <span className="k" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg>
-                  </span>
-                  <span>
-                    <span className="v">207M</span>
-                    <span className="l">vues · S1 2026</span>
-                  </span>
-                </div>
               </div>
 
               <div className="ap-hero-copy">
@@ -172,7 +162,7 @@ export default function AboutScreen() {
                     Réserver un appel
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                   </Link>
-                  <Link className="ap-link" href="/#realisations">
+                  <Link className="ap-link" href="/realisations">
                     Voir mes réalisations
                     <span className="ic">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
@@ -340,34 +330,7 @@ export default function AboutScreen() {
         </div>
 
         {/* ============ FOOTER ============ */}
-        <footer className="ap-footer ap-wrap" data-rv>
-          <div className="ap-fgrid">
-            <div className="ap-fbrand">
-              <div className="wm">ICHOLA<span>.</span>EDITING</div>
-              <p>
-                Monteur vidéo &amp; motion designer. Publicités, reels et capsules courtes en vertical.
-              </p>
-            </div>
-            <div className="ap-fcol">
-              <div className="ap-flbl">Navigation</div>
-              <Link href="/">Accueil</Link>
-              <Link href="/#realisations">Réalisations</Link>
-              <Link href="/a-propos">À propos</Link>
-              <Link href="/#contact">Réserver un appel</Link>
-            </div>
-            <div className="ap-fcol">
-              <div className="ap-flbl">Réseaux</div>
-              <a href="#">Instagram</a>
-              <a href="#">LinkedIn</a>
-              <a href="#">X / Twitter</a>
-              <a href="#">Email</a>
-            </div>
-          </div>
-          <div className="ap-fbot">
-            <span className="cp">© 2026 <b>ICHOLA EDITING</b>. Tous droits réservés.</span>
-            <span className="st"><i></i>Disponible pour de nouveaux projets · FR / EN</span>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </>
   );
