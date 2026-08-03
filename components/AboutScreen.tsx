@@ -325,8 +325,8 @@ export default function AboutScreen() {
             <span className="ap-eb"><i></i>Prochaine étape</span>
             <h2>parlons<em>.</em></h2>
             <p className="lede">
-              Premier échange <b>gratuit et sans engagement</b>. On transforme votre idée en vertical
-              qui accroche.
+              Premier échange <b>gratuit et sans engagement</b>. Vous me racontez votre projet, je
+              vous dis comment je le monterais.
             </p>
             <div className="btns">
               <Link className="ap-btn-a" href="/#contact">

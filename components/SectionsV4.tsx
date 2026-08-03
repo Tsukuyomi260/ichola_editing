@@ -386,7 +386,7 @@ export default function SectionsV4() {
           <span className="tk c"></span><span className="tk d"></span>
           <span className="lp-eb"><i></i>Prochaine étape</span>
           <h2>parlons<em>.</em></h2>
-          <p className="lede">Premier échange <b>gratuit et sans engagement</b>. On transforme votre idée en vertical qui accroche.</p>
+          <p className="lede">Premier échange <b>gratuit et sans engagement</b>. Vous me racontez votre projet, je vous dis comment je le monterais.</p>
           <div className="btns">
             <a className="lp-btn-a" href="#contact">Réserver un appel
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
