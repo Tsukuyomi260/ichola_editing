@@ -217,6 +217,30 @@ export const AUTRES: Video[] = [
     langue: 'Français',
   },
   {
+    id: '1215307192',
+    title: 'Résilience — Boris Cyrulnik',
+    sub: 'Ads · témoignage · MentorShow · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186451808-e3be0d8c30c26ef02369b73beef62f9f9f89e5c1e4c05a090eb0e5975ca69222-d_1280x720',
+    ratio: '16:9',
+    duration: '00:57',
+    tags: ['Ads', 'Témoignage'],
+    langue: 'Français',
+  },
+  {
+    id: '1215307195',
+    // Titre provisoire tiré du sous-titre à l'écran — sur Vimeo elle s'appelle
+    // encore « test 1 ».
+    title: 'Réveille-toi !',
+    sub: 'Capsule · face caméra · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186449013-7229f5267cf935c8f4fe4e0f3bdbda52ef142ea84b1c00779b388277794e03b2-d_720x1280',
+    ratio: '9:16',
+    duration: '00:57',
+    tags: ['Short / Reel'],
+    langue: 'Français',
+  },
+  {
     id: '1215307193',
     title: 'B2B et B2C',
     sub: 'Motion design · typographie · FR',
@@ -236,6 +260,58 @@ export const AUTRES: Video[] = [
     ratio: '5:6',
     duration: '00:26',
     tags: ['Motion design'],
+    langue: 'Français',
+  },
+  {
+    id: '1215308360',
+    // Nom de fichier complet côté Vimeo : « DC - Bénéfices - FR - 9-16 - Ads ».
+    title: 'Bénéfices',
+    sub: 'Ads · témoignage client · MentorShow · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186451541-2a4f3c034a1d4c596b46d6551d45d4bb039cff8c756f14d8ee0811fa9052f974-d_720x1280',
+    ratio: '9:16',
+    duration: '01:16',
+    tags: ['Ads', 'Témoignage'],
+    langue: 'Français',
+  },
+  {
+    id: '1215310337',
+    // Titre raccourci depuis le nom Vimeo. Même plateau que la capsule
+    // « Paul Bordas x Wilson BOTOYIYE » déjà au catalogue.
+    title: 'Paul Bordas — la réaction des proches',
+    sub: 'Capsule podcast · vertical · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186452037-67a63d324f160894fdf5a3b14c0fcd387a467ee1977d7d13e2ea4d8accfb576c-d_720x1280',
+    ratio: '9:16',
+    duration: '00:45',
+    tags: ['Podcast', 'Short / Reel'],
+    langue: 'Français',
+  },
+  {
+    id: '1215311556',
+    // Aucun titre exploitable : le fichier s'appelle « 10 » et l'affiche ne
+    // porte aucun texte. Le numéro est conservé pour que la vidéo reste
+    // repérable côté Vimeo — à renommer.
+    title: 'Capsule podcast — 10',
+    sub: 'Capsule podcast · vertical · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186453008-8920ac3a5f8c6298defa470ce47b6f5d031a946c679b6f74bc568943981c87ab-d_720x1280',
+    ratio: '9:16',
+    duration: '00:44',
+    tags: ['Podcast', 'Short / Reel'],
+    langue: 'Français',
+  },
+  {
+    id: '1215311973',
+    // Idem : fichier « 02 ». Micro à la main, face caméra — à renommer, et le
+    // genre reste à confirmer.
+    title: 'Capsule — 02',
+    sub: 'Capsule · face caméra · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186453540-dddc0bdd4031ff64353772995e32fab1d4ab6868ea07b5c41b1b42113b48b933-d_720x1280',
+    ratio: '9:16',
+    duration: '00:28',
+    tags: ['Short / Reel'],
     langue: 'Français',
   },
 ];
