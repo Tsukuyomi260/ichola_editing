@@ -359,7 +359,7 @@ export default function SectionsV4() {
         <div className="lp-fgrid">
           <div className="lp-fbrand">
             <div className="wm">ICHOLA<span>.</span>EDITING</div>
-            <p>Monteur vidéo &amp; motion designer. Publicités, reels et capsules courtes en vertical.</p>
+            <p>Monteur vidéo &amp; motion designer. Publicités, capsules courtes et contenus de marque.</p>
           </div>
           <div className="lp-fcol">
             <div className="lp-flbl">Navigation</div>

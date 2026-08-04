@@ -65,7 +65,16 @@ export default function RootLayout({
       suppressHydrationWarning
       className={jetbrains.variable}
     >
-      <head />
+      <head>
+        {/* Pose le thème AVANT le premier rendu. Sans ce script bloquant, une
+            page réglée en sombre s'afficherait en clair le temps que React
+            s'hydrate — un flash blanc de plusieurs centaines de millisecondes. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var k='ichola-theme',s=localStorage.getItem(k),t=s||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
         {children}
       </body>

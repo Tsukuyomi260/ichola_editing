@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 /**
  * Header « écran » partagé — préfixe CSS .sh-
@@ -99,6 +100,7 @@ export default function ScreenHeader({
         </nav>
 
         <div className="sh-right">
+          <ThemeToggle />
           <Link className="sh-btn-cta" href={anchor('contact')} onClick={() => setOuvert(false)}>
             <span className="lbl">Réserver un appel</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>

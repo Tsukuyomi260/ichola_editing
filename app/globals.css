@@ -32,6 +32,11 @@
   --green-pop: #35D07E;   /* "Disponible", fin de dégradé, détails vifs */
   --green-dark:#0A7A45;   /* début de dégradé */
   --green-wash:#DDF3E7;   /* fonds de badges */
+  /* Texte posé SUR une pastille claire ou verte (boutons, pilule active,
+     filtre sélectionné). Ne suit pas le thème : ces fonds restent clairs en
+     sombre, le texte doit donc rester foncé. À ne pas confondre avec --ink,
+     qui est la couleur du texte SUR la page. */
+  --on-light:  #0A130D;
   --btn:       #15211B;   /* bouton principal foncé (signature Carlos) */
   --btn-hover: #0B120E;
   --radius:    18px;
@@ -203,11 +208,11 @@ img{max-width:100%;display:block}
   border:1px solid rgba(255,255,255,.22);background:transparent;cursor:pointer;
   transition:background .22s var(--ease),border-color .22s var(--ease),transform .22s var(--ease)}
 .hs .pill:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
-.hs .pill.active{background:#fff;color:var(--ink);border-color:#fff;font-weight:600}
+.hs .pill.active{background:#fff;color:var(--on-light);border-color:#fff;font-weight:600}
 
 .hs .top-right{display:flex;align-items:center;gap:10px}
 .hs .btn-cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;border:none;cursor:pointer;
-  background:var(--accent);color:var(--ink);font-family:var(--font-sans);font-weight:600;font-size:14.5px;
+  background:var(--accent);color:var(--on-light);font-family:var(--font-sans);font-weight:600;font-size:14.5px;
   box-shadow:0 10px 26px -12px rgba(0,212,106,.9);
   transition:transform .22s var(--ease),background .22s var(--ease),box-shadow .22s var(--ease)}
 .hs .btn-cta:hover{background:var(--accent-bright);transform:translateY(-2px)}
@@ -274,10 +279,10 @@ img{max-width:100%;display:block}
 .hs .scrolldown:hover{background:rgba(255,255,255,.12);transform:translateY(3px)}
 .hs .scrolldown svg{width:18px;height:18px}
 .hs .pill-white{display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 22px;border-radius:999px;border:none;cursor:pointer;
-  background:#fff;color:var(--ink);font-family:var(--font-sans);font-weight:600;font-size:15px;
+  background:#fff;color:var(--on-light);font-family:var(--font-sans);font-weight:600;font-size:15px;
   box-shadow:0 16px 34px -16px rgba(0,0,0,.5);
   transition:background .22s var(--ease),color .22s var(--ease)}
-.hs .pill-white:hover{background:var(--accent);color:var(--ink)}
+.hs .pill-white:hover{background:var(--accent);color:var(--on-light)}
 .hs .pill-white svg{width:15px;height:15px;color:var(--green-deep);transition:color .22s var(--ease)}
 .hs .pill-white:hover svg{color:var(--ink)}
 
@@ -360,12 +365,12 @@ img{max-width:100%;display:block}
 .lp-sub{color:var(--muted);font-size:16px;margin-top:12px;max-width:520px}
 
 /* --- Boutons (hovers = couleur uniquement) --- */
-.lp-btn-a{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 24px;border-radius:999px;border:none;cursor:pointer;
-  background:var(--accent);color:var(--ink);font-weight:600;font-size:15px;
+.lp .lp-btn-a{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 24px;border-radius:999px;border:none;cursor:pointer;
+  background:var(--accent);color:var(--on-light);font-weight:600;font-size:15px;
   box-shadow:0 10px 26px -12px rgba(0,212,106,.7);
   transition:background .22s var(--ease)}
-.lp-btn-a:hover{background:var(--accent-bright)}
-.lp-btn-a svg{width:15px;height:15px}
+.lp .lp-btn-a:hover{background:var(--accent-bright)}
+.lp .lp-btn-a svg{width:15px;height:15px}
 .lp-btn-g{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 20px;border-radius:999px;cursor:pointer;
   background:transparent;color:var(--ink);font-weight:600;font-size:14.5px;border:1px solid var(--line);
   transition:border-color .22s var(--ease),background .22s var(--ease),color .22s var(--ease)}
@@ -621,11 +626,11 @@ img{max-width:100%;display:block}
   border:1px solid rgba(255,255,255,.22);background:transparent;cursor:pointer;
   transition:background .22s var(--ease),border-color .22s var(--ease)}
 .sh-topbar .sh-pill:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
-.sh-topbar .sh-pill.active{background:#fff;color:var(--ink);border-color:#fff;font-weight:600}
+.sh-topbar .sh-pill.active{background:#fff;color:var(--on-light);border-color:#fff;font-weight:600}
 
 .sh-right{display:flex;align-items:center;gap:10px}
 .sh-topbar .sh-btn-cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;
-  border:none;cursor:pointer;background:var(--accent);color:var(--ink);
+  border:none;cursor:pointer;background:var(--accent);color:var(--on-light);
   font-family:var(--font-sans);font-weight:600;font-size:14.5px;
   box-shadow:0 10px 26px -12px rgba(0,212,106,.9);transition:background .22s var(--ease)}
 .sh-topbar .sh-btn-cta:hover{background:var(--accent-bright)}
@@ -711,7 +716,7 @@ img{max-width:100%;display:block}
   letter-spacing:-.02em;line-height:1.04;margin-top:14px;color:var(--ink)}
 .ap-title em{font-style:normal;color:var(--accent)}
 .ap .ap-btn-a{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 24px;
-  border-radius:999px;border:none;cursor:pointer;background:var(--accent);color:var(--ink);font-weight:600;font-size:15px;
+  border-radius:999px;border:none;cursor:pointer;background:var(--accent);color:var(--on-light);font-weight:600;font-size:15px;
   box-shadow:0 10px 26px -12px rgba(0,212,106,.7);transition:background .22s var(--ease)}
 .ap .ap-btn-a:hover{background:var(--accent-bright)}
 .ap .ap-btn-a svg{width:15px;height:15px}
@@ -1045,7 +1050,7 @@ img{max-width:100%;display:block}
   transition:opacity .46s var(--ease),transform .46s var(--ease)}
 .sh-menu.open .sh-menu-foot{opacity:1;transform:none}
 .sh-menu .sh-menu-cta{display:inline-flex;align-items:center;gap:9px;height:50px;padding:0 24px;border-radius:999px;
-  background:var(--accent);color:var(--ink);font-weight:600;font-size:15.5px;
+  background:var(--accent);color:var(--on-light);font-weight:600;font-size:15.5px;
   transition:background .22s var(--ease)}
 .sh-menu .sh-menu-cta:hover{background:var(--accent-bright)}
 .sh-menu .sh-menu-cta svg{width:15px;height:15px}
@@ -1180,7 +1185,7 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
 .nf-sub b{color:var(--screen-ink);font-weight:600}
 .nf-cta{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:34px;flex-wrap:wrap}
 .nf .nf-btn{display:inline-flex;align-items:center;gap:9px;height:50px;padding:0 24px;border-radius:999px;
-  background:var(--accent);color:var(--ink);font-weight:600;font-size:15.5px;
+  background:var(--accent);color:var(--on-light);font-weight:600;font-size:15.5px;
   box-shadow:0 10px 26px -12px rgba(0,212,106,.9);transition:background .22s var(--ease)}
 .nf .nf-btn:hover{background:var(--accent-bright)}
 .nf .nf-btn svg{width:15px;height:15px}
@@ -1257,7 +1262,7 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
 .rz-xq{flex:none;width:24px;height:24px;border:none;border-radius:50%;background:var(--wash);cursor:pointer;
   display:grid;place-items:center;font-size:16px;line-height:1;color:var(--green-deep);
   transition:background .2s var(--ease),color .2s var(--ease)}
-.rz-xq:hover{background:var(--accent);color:var(--ink)}
+.rz-xq:hover{background:var(--accent);color:var(--on-light)}
 
 /* Barre de filtres collante : elle reste sous le header pendant qu'on parcourt. */
 .rz-filtres{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;
@@ -1274,7 +1279,7 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
   transition:border-color .2s var(--ease),background .2s var(--ease),color .2s var(--ease)}
 .rz-pill:hover{border-color:var(--accent);background:var(--wash);color:var(--green-deep)}
 .rz-pill .n{font-size:10.5px;color:var(--muted)}
-.rz-pill.on{background:var(--accent);border-color:var(--accent);color:var(--ink);font-weight:500}
+.rz-pill.on{background:var(--accent);border-color:var(--accent);color:var(--on-light);font-weight:500}
 .rz-pill.on .n{color:rgba(10,19,13,.6)}
 .rz-pill .x{font-size:14px;line-height:1;opacity:.7}
 .rz-clear{margin-left:auto;border:none;background:none;cursor:pointer;
@@ -1308,3 +1313,92 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
   .rz-filtres{position:static;gap:10px 14px;-webkit-backdrop-filter:none;backdrop-filter:none}
   .rz-clear{margin-left:0}
 }
+
+/* ==========================================================================
+   THÈME SOMBRE — préfixe th- pour le bouton
+   ==========================================================================
+   Tout le site pilote ses couleurs par variables : le thème sombre n'est donc
+   qu'une redéfinition de ces variables, aucune règle de mise en page n'est
+   touchée. L'attribut est posé sur <html> par le script du <head>.
+
+   Les sélecteurs doivent citer les scopes (.lp, .ap, .rz…) : ceux-ci
+   redéclarent leurs variables localement, une règle sur :root seul serait
+   écrasée. `:root[data-theme] .lp` (0,3,0) passe devant `.lp` (0,1,0).
+
+   Les variables `--screen-*` décrivent les cadres sombres (hero, panneaux,
+   bloc CTA). Elles restent sombres dans les deux thèmes — c'est leur rôle —
+   mais `--screen` descend sous la couleur de page pour que ces cadres se
+   lisent encore comme des blocs en retrait et non comme du fond nu.
+   ========================================================================== */
+:root[data-theme="dark"],
+:root[data-theme="dark"] .hs,
+:root[data-theme="dark"] .lp,
+:root[data-theme="dark"] .ap,
+:root[data-theme="dark"] .rz,
+:root[data-theme="dark"] .nf{
+  --bg:#0B120E;
+  --surface:#141E18;
+  --wash-bg:#101913;
+  --ink:#EAF3EC;
+  --ink-2:#B4C4BA;
+  --muted:#8A9A90;
+  --line:#243229;
+  --wash:#11291C;
+  --screen:#050D08;
+  --screen-ink:#F2FBF5;
+  --screen-muted:#BFD9C8;
+  --accent:#00E676;
+  --accent-bright:#5BFFAE;
+  /* Vert « profond » : en clair c'est un vert foncé posé sur du blanc. En
+     sombre il doit s'inverser, sinon tous les libellés qui l'utilisent
+     (compteurs, liens de filtre, mentions) deviennent illisibles. */
+  --green-deep:#5BE8A6;
+  --green:#00E676;
+  --green-pop:#5BFFAE;
+}
+
+/* La pilule active du header clair inverse fond et texte : en sombre le fond
+   devient clair, le texte doit donc virer au foncé. */
+:root[data-theme="dark"] .sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .sh-pill.active{
+  color:var(--on-light)}
+
+/* Transition douce à la bascule, mais jamais sur les cartes vidéo ni pendant
+   une apparition au défilement : deux transitions concurrentes sur le même
+   élément produisent un clignotement. */
+:root[data-theme] body,
+:root[data-theme] .rz-pill,
+:root[data-theme] .rz-search,
+:root[data-theme] .ap-panel,
+:root[data-theme] .ap-spec,
+:root[data-theme] .rz-filtres{
+  transition:background-color .35s var(--ease,ease),border-color .35s var(--ease,ease),color .35s var(--ease,ease)}
+@media(prefers-reduced-motion:reduce){
+  :root[data-theme] body,:root[data-theme] .rz-pill,:root[data-theme] .rz-search,
+  :root[data-theme] .ap-panel,:root[data-theme] .ap-spec,:root[data-theme] .rz-filtres{transition:none}}
+
+/* --- Le bouton --- */
+.th-toggle{position:relative;display:grid;place-items:center;width:44px;height:44px;flex:none;
+  border-radius:50%;cursor:pointer;background:transparent;
+  border:1px solid rgba(255,255,255,.22);color:var(--screen-ink);
+  transition:background .22s var(--ease),border-color .22s var(--ease)}
+.th-toggle:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
+.th-ic{position:relative;display:block;width:18px;height:18px}
+.th-ic svg{position:absolute;inset:0;width:100%;height:100%;
+  transition:opacity .3s var(--ease),transform .45s var(--ease)}
+/* Thème clair affiché : on propose la lune. Thème sombre : on propose le soleil. */
+.th-sun{opacity:0;transform:rotate(-70deg) scale(.5)}
+.th-moon{opacity:1;transform:none}
+:root[data-theme="dark"] .th-sun{opacity:1;transform:none}
+:root[data-theme="dark"] .th-moon{opacity:0;transform:rotate(70deg) scale(.5)}
+@media(prefers-reduced-motion:reduce){
+  .th-ic svg{transition:opacity .2s linear;transform:none !important}}
+
+/* Sur un header à fond clair, le bouton reprend les filets de la page. */
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .th-toggle{
+  color:var(--ink);border-color:var(--line)}
+.sh-topbar.sh-light:not(.sh-docked):not(.sh-menu-open) .th-toggle:hover{
+  background:var(--wash);border-color:var(--accent);color:var(--green-deep)}
+
+@media(max-width:1020px){
+  /* Le burger prend la place ; la bascule reste, elle passe juste en premier. */
+  .th-toggle{width:40px;height:40px}}

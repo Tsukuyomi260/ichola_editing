@@ -302,6 +302,30 @@ export const AUTRES: Video[] = [
     langue: 'Français',
   },
   {
+    id: '1215325447',
+    // Nom Vimeo « 24 vie privée et pro ».
+    title: 'Vie privée et vie pro',
+    sub: 'Capsule podcast · vertical · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186469930-7a6ce1864e7a69d8d9d66c8a2121123cad97c5a9eda4c3cddb61d1c2c4ef9605-d_720x1280',
+    ratio: '9:16',
+    duration: '00:32',
+    tags: ['Podcast', 'Short / Reel'],
+    langue: 'Français',
+  },
+  {
+    id: '1215325126',
+    // Fichier « 12 ». Titre tiré de l'incrustation à l'écran — à confirmer.
+    title: 'E-commerce — la courbe',
+    sub: 'Short · incrustation animée · FR',
+    poster:
+      'https://i.vimeocdn.com/video/2186469413-409ce10e22baf35d88e8dc60ac32ad09c75d506827a6794fc2305a43f1d23dae-d_720x1280',
+    ratio: '9:16',
+    duration: '00:38',
+    tags: ['Short / Reel', 'Motion design'],
+    langue: 'Français',
+  },
+  {
     id: '1215311973',
     // Idem : fichier « 02 ». Micro à la main, face caméra — à renommer, et le
     // genre reste à confirmer.
