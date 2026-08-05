@@ -44,6 +44,31 @@ export default function ScreenHeader({
 }) {
   const [ouvert, setOuvert] = useState(false);
 
+  /* Dock en deux temps. `sh-docked` pose la barre en position fixe (état de
+     repos = sortie, en bas hors écran), `sh-dock-in` la fait monter une image
+     plus tard. On garde `sh-docked` le temps de la sortie pour que la barre
+     redescende par où elle est arrivée au lieu de disparaître d'un coup.
+     Le créneau reste réservé par .sh-slot (88 px) : la mise en page ne bouge
+     pas pendant ces 460 ms. */
+  const [dockPose, setDockPose] = useState(docked);
+  const [dockEntre, setDockEntre] = useState(docked);
+
+  useEffect(() => {
+    if (docked) {
+      setDockPose(true);
+      let id = requestAnimationFrame(() => {
+        id = requestAnimationFrame(() => setDockEntre(true));
+      });
+      return () => cancelAnimationFrame(id);
+    }
+    setDockEntre(false);
+    // Sans animation demandée, la barre disparaît tout de suite : la garder
+    // 460 ms de plus la laisserait visible par-dessus le hero revenu à l'écran.
+    const sansMouvement = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const t = setTimeout(() => setDockPose(false), sansMouvement ? 0 : 460);
+    return () => clearTimeout(t);
+  }, [docked]);
+
   const anchor = (hash: string) => (home ? `#${hash}` : `/#${hash}`);
   const accueilHref = home ? '#accueil' : '/';
   const lien = (k: ScreenNav) =>
@@ -77,7 +102,7 @@ export default function ScreenHeader({
   return (
     <div className="sh-slot">
       <header
-        className={`sh-topbar${light ? ' sh-light' : ''}${docked ? ' sh-docked' : ''}${ouvert ? ' sh-menu-open' : ''}`}
+        className={`sh-topbar${light ? ' sh-light' : ''}${dockPose ? ' sh-docked' : ''}${dockPose && dockEntre ? ' sh-dock-in' : ''}${ouvert ? ' sh-menu-open' : ''}`}
       >
         <Link className="sh-logo" href={accueilHref} onClick={() => setOuvert(false)}>
           <span className="mk">

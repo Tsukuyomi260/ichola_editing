@@ -351,3 +351,29 @@ export const CATALOGUE: Video[] = [
   SHOWREEL,
   ...AUTRES,
 ].filter((v, i, tout) => tout.findIndex((x) => x.id === v.id) === i);
+
+/**
+ * La même affiche dans un dérivé plus léger.
+ *
+ * Les URL d'affiche Vimeo se terminent par `-d_LARGEURxHAUTEUR` : changer le
+ * suffixe suffit à demander une autre taille au CDN. À utiliser dès qu'une
+ * affiche est rendue petite — le mur du hero affiche des cartes de ~300 px de
+ * large, y servir du 720x1280 est du poids jeté par la fenêtre (36,7 Ko contre
+ * 13 Ko en 360x640, et il y en a douze).
+ */
+export function affiche(v: Video, taille: string): string {
+  return v.poster.replace(/-d_\d+x\d+$/, `-d_${taille}`);
+}
+
+/**
+ * Les douze affiches du mur de verticales, en fond du hero.
+ *
+ * Dérivé du catalogue et jamais saisi à la main : ajouter une 9:16 à `AUTRES`
+ * suffit à alimenter le mur. Le showreel en est exclu — il occupe déjà la carte
+ * au premier plan, l'y remettre afficherait deux fois la même image à l'écran.
+ * Le `slice` garde la grille à douze si le catalogue s'allonge ; en dessous de
+ * douze verticales, la grille se remplit simplement moins.
+ */
+export const MUR_HERO: Video[] = CATALOGUE
+  .filter((v) => v.ratio === '9:16' && v.id !== SHOWREEL.id)
+  .slice(0, 12);

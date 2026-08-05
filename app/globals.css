@@ -157,21 +157,38 @@ img{max-width:100%;display:block}
 .hs .tick.br{bottom:14px;right:14px;border-left:none;border-top:none;border-radius:0 0 6px 0}
 
 /* --- Fond : mur de verticales (placeholders) + voile + grain --- */
+/* Le flou n'est pas un effet : c'est ce qui rend le mur compatible avec de
+   vraies affiches. Les rushes portent du texte incrusté (« Boostez vos
+   réservations Airbnb… ») qui, net, se lit et concurrence le mot « montage. »
+   posé par-dessus. Flouté, il ne reste que ce qu'on veut : des visages, des
+   couleurs, de la matière. Et le premier plan net sur un fond flou se lit comme
+   une profondeur de champ — la carte reel est au point, le mur ne l'est pas.
+   Le débord de -14 % met la frange floue hors cadre, donc aucun bord mou.
+   Régler ce flou change la lisibilité du titre : ne pas y toucher sans revoir
+   la composition entière. */
 .hs .mosaic{position:absolute;inset:-14%;display:grid;grid-template-columns:repeat(6,1fr);gap:20px;
-  transform:rotate(-5deg);opacity:.4;z-index:0}
-.hs .mosaic i{display:block;aspect-ratio:9/16;border-radius:16px;background:linear-gradient(150deg,var(--c1),var(--c2))}
-.hs .mosaic i:nth-child(1){--c1:#0E4D2F;--c2:#1F7A46;transform:translateY(-26px)}
-.hs .mosaic i:nth-child(2){--c1:#123C2B;--c2:#2E8F5C;transform:translateY(34px)}
-.hs .mosaic i:nth-child(3){--c1:#0B5B3A;--c2:#17A05B;transform:translateY(-10px)}
-.hs .mosaic i:nth-child(4){--c1:#14523B;--c2:#3AAE7C;transform:translateY(48px)}
-.hs .mosaic i:nth-child(5){--c1:#0E4630;--c2:#27865A;transform:translateY(-32px)}
-.hs .mosaic i:nth-child(6){--c1:#155E3A;--c2:#2FCB72;transform:translateY(22px)}
-.hs .mosaic i:nth-child(7){--c1:#0D3F2A;--c2:#1E7A4C;transform:translateY(30px)}
-.hs .mosaic i:nth-child(8){--c1:#0F5C3E;--c2:#35B57E;transform:translateY(-18px)}
-.hs .mosaic i:nth-child(9){--c1:#124832;--c2:#249B60;transform:translateY(52px)}
-.hs .mosaic i:nth-child(10){--c1:#0B4A2E;--c2:#1C8A52;transform:translateY(-40px)}
-.hs .mosaic i:nth-child(11){--c1:#136044;--c2:#2FB77E;transform:translateY(12px)}
-.hs .mosaic i:nth-child(12){--c1:#123E2B;--c2:#27794F;transform:translateY(38px)}
+  transform:rotate(-5deg);opacity:.4;z-index:0;filter:blur(2px)}
+/* L'affiche d'abord, le dégradé en secours dessous : si le CDN Vimeo ne répond
+   pas, on retombe sur le mur d'origine au lieu d'un trou noir.
+   Le décalage de repos passe par `--y` (et non par un `transform` en dur) pour
+   que la cascade d'entrée puisse s'y composer sans le perdre — voir hsCardIn
+   dans la passe mouvement en fin de fichier. */
+.hs .mosaic i{display:block;aspect-ratio:9/16;border-radius:16px;
+  background-image:var(--p,none),linear-gradient(150deg,var(--c1),var(--c2));
+  background-size:cover;background-position:center;
+  transform:translateY(var(--y,0px))}
+.hs .mosaic i:nth-child(1){--c1:#0E4D2F;--c2:#1F7A46;--y:-26px}
+.hs .mosaic i:nth-child(2){--c1:#123C2B;--c2:#2E8F5C;--y:34px}
+.hs .mosaic i:nth-child(3){--c1:#0B5B3A;--c2:#17A05B;--y:-10px}
+.hs .mosaic i:nth-child(4){--c1:#14523B;--c2:#3AAE7C;--y:48px}
+.hs .mosaic i:nth-child(5){--c1:#0E4630;--c2:#27865A;--y:-32px}
+.hs .mosaic i:nth-child(6){--c1:#155E3A;--c2:#2FCB72;--y:22px}
+.hs .mosaic i:nth-child(7){--c1:#0D3F2A;--c2:#1E7A4C;--y:30px}
+.hs .mosaic i:nth-child(8){--c1:#0F5C3E;--c2:#35B57E;--y:-18px}
+.hs .mosaic i:nth-child(9){--c1:#124832;--c2:#249B60;--y:52px}
+.hs .mosaic i:nth-child(10){--c1:#0B4A2E;--c2:#1C8A52;--y:-40px}
+.hs .mosaic i:nth-child(11){--c1:#136044;--c2:#2FB77E;--y:12px}
+.hs .mosaic i:nth-child(12){--c1:#123E2B;--c2:#27794F;--y:38px}
 .hs .veil{position:absolute;inset:0;z-index:1;
   background:
     radial-gradient(120% 90% at 50% 38%, rgba(3,10,6,.18) 30%, rgba(3,10,6,.66) 100%),
@@ -244,7 +261,17 @@ img{max-width:100%;display:block}
   border:1px solid rgba(255,255,255,.18);
   box-shadow:0 34px 70px -28px rgba(0,0,0,.65);cursor:pointer;
   transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.hs .reel:hover{transform:translateY(-60%) rotate(0deg);box-shadow:0 44px 90px -30px rgba(0,0,0,.75)}
+/* Le survol ne vaut que pour un vrai pointeur : au doigt, :hover se déclenche
+   au toucher et la carte reste coincée dans son état survolé après le tap. */
+@media (hover:hover) and (pointer:fine){
+  .hs .reel:hover{transform:translateY(-60%) rotate(0deg);box-shadow:0 44px 90px -30px rgba(0,0,0,.75)}}
+/* Pression : la carte est un bouton, elle doit répondre au doigt/à la souris
+   avant le relâchement. Le transform est réécrit en entier — pas de var()
+   partagée, sinon chaque changement recalcule le style des 8 enfants. */
+.hs .reel:active{transform:translateY(-56%) rotate(3deg) scale(.97);
+  transition:transform .14s var(--ease-out)}
+@media (hover:hover) and (pointer:fine){
+  .hs .reel:hover:active{transform:translateY(-60%) rotate(0deg) scale(.97)}}
 .hs .reel .film{position:absolute;inset:0;background:linear-gradient(155deg,#0f6b3f,#1f9b57 55%,#2fcb72)}
 .hs .reel .rgrain{position:absolute;inset:0;mix-blend-mode:overlay;opacity:.4;
   background:radial-gradient(90px 90px at 30% 22%,rgba(255,255,255,.5),transparent 60%),radial-gradient(120px 120px at 78% 82%,rgba(0,0,0,.42),transparent 60%)}
@@ -276,7 +303,12 @@ img{max-width:100%;display:block}
 .hs .br-actions{position:absolute;right:26px;bottom:76px;z-index:6;display:flex;flex-direction:column;align-items:flex-end;gap:14px}
 .hs .scrolldown{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:var(--screen-ink);
   display:grid;place-items:center;cursor:pointer;transition:background .22s var(--ease),transform .22s var(--ease)}
-.hs .scrolldown:hover{background:rgba(255,255,255,.12);transform:translateY(3px)}
+/* Le rond ↓ glisse vers le bas au survol : le mouvement intermédiaire pointe
+   déjà vers le résultat de l'action. Réservé au pointeur fin. */
+@media (hover:hover) and (pointer:fine){
+  .hs .scrolldown:hover{background:rgba(255,255,255,.12);transform:translateY(3px)}
+  .hs .scrolldown:hover:active{transform:translateY(3px) scale(.95)}}
+.hs .scrolldown:active{transform:scale(.95);transition:transform .14s var(--ease-out)}
 .hs .scrolldown svg{width:18px;height:18px}
 .hs .pill-white{display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 22px;border-radius:999px;border:none;cursor:pointer;
   background:#fff;color:var(--on-light);font-family:var(--font-sans);font-weight:600;font-size:15px;
@@ -292,8 +324,11 @@ img{max-width:100%;display:block}
   background:linear-gradient(to top, rgba(3,10,6,.65), rgba(3,10,6,0));backdrop-filter:blur(6px)}
 .hs .scrub .tc{font-family:var(--font-mono);font-size:11.5px;color:var(--screen-muted);letter-spacing:.05em}
 .hs .scrub .line{position:relative;flex:1;height:2px;background:rgba(255,255,255,.2);border-radius:2px}
-.hs .scrub .line .ph{position:absolute;top:50%;left:30%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;
-  background:var(--accent);box-shadow:0 0 0 4px rgba(0,212,106,.25)}
+/* La tête de lecture est déplacée en `transform` par HeroScreen.tsx, jamais en
+   `left` : `left` repasse par layout + paint à chaque image, `transform` reste
+   sur le compositeur. */
+.hs .scrub .line .ph{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 0 4px rgba(0,212,106,.25);will-change:transform}
 
 /* --- Responsive --- */
 @media(max-width:1020px){
@@ -306,7 +341,10 @@ img{max-width:100%;display:block}
   .hs .frame{border-radius:22px;min-height:calc(100vh - 20px);min-height:calc(100svh - 20px)}
   .hs h1.giant{font-size:clamp(64px,21vw,120px)}
   .hs .reel{position:static;transform:rotate(2deg);margin:26px auto 0;width:172px}
-  .hs .reel:hover{transform:rotate(0)}
+  @media (hover:hover) and (pointer:fine){
+    .hs .reel:hover{transform:rotate(0)}
+    .hs .reel:hover:active{transform:rotate(0) scale(.97)}}
+  .hs .reel:active{transform:rotate(2deg) scale(.97)}
   .hs .center{padding-bottom:150px;padding-right:24px}
   .hs .glass{left:16px;bottom:66px;padding:11px 13px}
   .hs .glass .v{font-size:18px}
@@ -603,16 +641,29 @@ img{max-width:100%;display:block}
 .sh-topbar{position:relative;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:22px 26px}
 
-/* Dock « liquid glass » : fixé en bas du viewport quand le hero est hors écran. */
+/* Dock « liquid glass » : fixé en bas du viewport quand le hero est hors écran.
+   Transition et non keyframe : la limite du hero se franchit dans les deux sens
+   en défilant, et une keyframe repartait de zéro à chaque passage. Une
+   transition se retarget depuis la position courante, donc un aller-retour
+   rapide reste fluide au lieu de saccader.
+   Le repos (.sh-docked seule) est l'état SORTI : la barre entre par le bas et
+   ressort par le bas — même chemin dans les deux sens.
+   Le flou et l'échelle bougent avec la translation : le verre « se matérialise »
+   au lieu d'apparaître en fondu tout fait. */
 .sh-topbar.sh-docked{position:fixed;left:18px;right:18px;bottom:16px;z-index:80;
   max-width:1364px;margin:0 auto;border-radius:999px;
   background:rgba(7,16,9,.6);
-  -webkit-backdrop-filter:blur(22px) saturate(1.7);
-  backdrop-filter:blur(22px) saturate(1.7);
+  -webkit-backdrop-filter:blur(0px) saturate(1.7);
+  backdrop-filter:blur(0px) saturate(1.7);
   border:1px solid rgba(255,255,255,.16);
   box-shadow:0 24px 60px -24px rgba(7,22,13,.55), inset 0 1px 0 rgba(255,255,255,.12);
-  animation:shDockIn .45s var(--ease)}
-@keyframes shDockIn{from{transform:translateY(calc(100% + 24px))}to{transform:translateY(0)}}
+  transform:translateY(calc(100% + 24px)) scale(.97);opacity:0;pointer-events:none;
+  transition:transform .44s var(--ease-drawer),opacity .3s var(--ease-out),
+             -webkit-backdrop-filter .44s var(--ease-out),
+             backdrop-filter .44s var(--ease-out)}
+.sh-topbar.sh-docked.sh-dock-in{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;
+  -webkit-backdrop-filter:blur(22px) saturate(1.7);
+  backdrop-filter:blur(22px) saturate(1.7)}
 
 .sh-topbar .sh-logo{display:inline-flex;align-items:center;gap:10px;color:var(--screen-ink)}
 .sh-topbar .sh-logo .mk{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.08);
@@ -644,7 +695,9 @@ img{max-width:100%;display:block}
 @media(max-width:760px){
   .sh-topbar.sh-docked{left:10px;right:10px;bottom:10px}}
 @media(prefers-reduced-motion:reduce){
-  .sh-topbar.sh-docked{animation:none}}
+  /* Pas de glissement : la barre est simplement là ou pas. */
+  .sh-topbar.sh-docked{transform:none;opacity:1;pointer-events:auto;
+    -webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7)}}
 
 /* --- Piste audio du hero (remplace l'ancienne carte de chiffres) --- */
 .hs .hs-wave{position:absolute;left:26px;bottom:76px;z-index:6;display:flex;flex-direction:column;gap:8px;
@@ -1098,11 +1151,20 @@ img{max-width:100%;display:block}
 /* La carte du hero devient un vrai bouton : clic n'importe où = lecteur agrandi */
 .hs button.reel{padding:0;font:inherit;text-align:left;-webkit-appearance:none;appearance:none}
 .hs .reel .expand{position:absolute;inset:0;z-index:4;display:grid;place-items:center;
-  opacity:0;background:rgba(3,10,6,.34);transition:opacity .25s var(--ease)}
-.hs .reel:hover .expand,.hs .reel:focus-visible .expand{opacity:1}
+  opacity:0;background:rgba(3,10,6,.34);transition:opacity .22s var(--ease-out)}
+/* Le voile « voir avec le son » ne sert qu'au pointeur : au doigt il resterait
+   affiché après le tap alors que le lecteur s'est déjà ouvert. Le clavier, lui,
+   y a toujours droit. */
+.hs .reel:focus-visible .expand{opacity:1}
+@media (hover:hover) and (pointer:fine){
+  .hs .reel:hover .expand{opacity:1}}
 .hs .reel .expand span{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;border-radius:999px;
   background:rgba(255,255,255,.95);color:#0b140e;
-  font-family:var(--font-sans);font-weight:600;font-size:12.5px}
+  font-family:var(--font-sans);font-weight:600;font-size:12.5px;
+  transform:scale(.96);transition:transform .22s var(--ease-out)}
+.hs .reel:focus-visible .expand span{transform:scale(1)}
+@media (hover:hover) and (pointer:fine){
+  .hs .reel:hover .expand span{transform:scale(1)}}
 .hs .reel .expand svg{width:14px;height:14px}
 .vm-stage .vm-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .vm-stage iframe{position:relative}
@@ -1402,3 +1464,103 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
 @media(max-width:1020px){
   /* Le burger prend la place ; la bascule reste, elle passe juste en premier. */
   .th-toggle{width:40px;height:40px}}
+
+/* ==========================================================================
+   HERO — PASSE MOUVEMENT
+   Uniquement du mouvement et des états d'interaction : aucune couleur, aucune
+   taille, aucune typo n'est touchée ici.
+   ========================================================================== */
+
+/* Courbes fortes. --ease (cubic-bezier(.22,.61,.36,1)) reste en place pour
+   l'existant ; ces deux-là sont pour le nouveau mouvement, qui a besoin d'un
+   départ plus franc que la courbe d'origine. */
+:root{
+  --ease-out:cubic-bezier(.23,1,.32,1);      /* entrées / sorties */
+  --ease-drawer:cubic-bezier(.32,.72,0,1);   /* tiroir façon iOS */
+}
+
+/* --------------------------------------------------------------------------
+   1. ARRIVÉE DE L'ÉCRAN
+   Le hero n'est vu qu'une fois par visite : c'est là que le budget mouvement
+   se dépense. En cascade, pour que la lecture se fasse dans l'ordre voulu —
+   le mot, puis la carte, puis la promesse, puis l'appareillage.
+
+   Tout est en @keyframes avec fill `backwards`, pas en transition pilotée par
+   React :
+   - `backwards` masque l'élément pendant son délai puis rend la main à la
+     règle de base — donc le `transform` de survol de .reel refonctionne après,
+     ce qu'un `forwards` aurait bloqué à jamais ;
+   - une animation CSS tourne hors du fil principal, or le hero s'affiche
+     exactement au moment où le navigateur charge le reste de la page ;
+   - sans JS pour déclencher, rien ne peut rester coincé à opacity:0.
+   -------------------------------------------------------------------------- */
+@keyframes hsRise{from{opacity:0;transform:translateY(18px)}}
+@keyframes hsFade{from{opacity:0}}
+@keyframes hsDrop{from{opacity:0;transform:translateY(-10px)}}
+@keyframes hsBarUp{from{opacity:0;transform:translateY(100%)}}
+/* Le flou qui se résorbe : l'objectif fait le point sur le mot. */
+@keyframes hsTitleIn{from{opacity:0;transform:translateY(22px);filter:blur(10px)}}
+/* La carte se pose : elle arrive plus haut, plus inclinée, un peu plus petite,
+   et se range dans son inclinaison de repos. Jamais depuis scale(0). */
+@keyframes hsReelIn{from{opacity:0;transform:translateY(-44%) rotate(7deg) scale(.94)}}
+@keyframes hsReelInFlow{from{opacity:0;transform:rotate(7deg) scale(.94)}}
+
+/* `:not(.sh-docked)` : si la page est ouverte déjà défilée, le dock prend la
+   main tout de suite et ne doit pas voir son transform écrasé par l'entrée. */
+/* Le mur s'allume carte par carte, en même temps que le titre fait son point —
+   pas avant : le titre n'attend rien. 35 ms entre deux cartes, soit 385 ms de
+   balayage ; la dernière se pose vers 935 ms, en phase avec la fin de la
+   cascade (la barre de scrub termine à 900 ms).
+   `translateY(var(--y))` d'abord : le décalage de repos propre à chaque carte
+   est conservé, la montée de 20 px vient s'y ajouter. Un coup unique, jamais
+   une boucle — un fond plein cadre qui bouge sans fin concurrencerait le mot
+   qu'on doit lire par-dessus. */
+@keyframes hsCardIn{from{opacity:0;transform:translateY(var(--y,0px)) translateY(20px) scale(.96)}}
+.hs .mosaic i{animation:hsCardIn .55s var(--ease-out) backwards;
+  animation-delay:calc(var(--i) * 35ms)}
+
+.hs .sh-slot > .sh-topbar:not(.sh-docked){animation:hsDrop .52s var(--ease-out) .06s backwards}
+.hs h1.giant{animation:hsTitleIn .7s var(--ease-out) backwards}
+.hs .reel{animation:hsReelIn .64s var(--ease-out) .12s backwards}
+.hs .sub{animation:hsRise .52s var(--ease-out) .21s backwards}
+.hs .hs-wave{animation:hsRise .52s var(--ease-out) .28s backwards}
+.hs .br-actions{animation:hsRise .52s var(--ease-out) .28s backwards}
+.hs .scrub{animation:hsBarUp .56s var(--ease-out) .34s backwards}
+.hs .tick{animation:hsFade .4s var(--ease-out) .42s backwards}
+/* Sous 760 px la carte repasse dans le flux : plus de translateY de repos,
+   donc une variante sans translation. Cette surcharge doit rester APRÈS le
+   raccourci `animation` ci-dessus, qui réinitialiserait sinon animation-name
+   (une media query n'ajoute pas de spécificité — seul l'ordre compte). */
+@media(max-width:760px){
+  .hs .reel{animation-name:hsReelInFlow}}
+
+/* --------------------------------------------------------------------------
+   2. RETOUR À LA PRESSION
+   Tout ce qui se presse répond au moment du contact, pas au relâchement.
+   Descente courte (140 ms) : c'est le système qui accuse réception.
+   -------------------------------------------------------------------------- */
+.hs .reel,.hs .pill-white,.hs .scrolldown,
+.sh-topbar .sh-pill,.sh-topbar .sh-btn-cta,.sh-burger{-webkit-tap-highlight-color:transparent}
+
+.hs .pill-white{transition:background .22s var(--ease),color .22s var(--ease),
+  transform .22s var(--ease-out)}
+.hs .pill-white:active{transform:scale(.97);transition:transform .14s var(--ease-out)}
+
+.sh-topbar .sh-pill{transition:background .22s var(--ease),border-color .22s var(--ease),
+  transform .22s var(--ease-out)}
+.sh-topbar .sh-pill:active{transform:scale(.97);transition:transform .14s var(--ease-out)}
+.sh-topbar .sh-btn-cta{transition:background .22s var(--ease),transform .22s var(--ease-out)}
+.sh-topbar .sh-btn-cta:active{transform:scale(.97);transition:transform .14s var(--ease-out)}
+.sh-burger:active{transform:scale(.94);transition:transform .14s var(--ease-out)}
+
+/* --------------------------------------------------------------------------
+   3. PARALLAXE DU MUR (piloté par HeroScreen.tsx)
+   Décoratif, donc réservé au pointeur fin et coupé si l'utilisateur demande
+   moins d'animation. Le transform est posé sur le conteneur : les 12 cartes
+   filles ne sont jamais recalculées, seul le compositeur travaille.
+   -------------------------------------------------------------------------- */
+.hs .mosaic{will-change:transform}
+
+@media(prefers-reduced-motion:reduce){
+  .hs .mosaic{will-change:auto}
+  .hs .scrub .line .ph{will-change:auto}}
