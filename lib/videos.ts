@@ -55,7 +55,7 @@ export function orientation(v: Video): 'Vertical' | 'Horizontal' {
  */
 export const SHOWREEL: Video = {
   id: '1214542567',
-  title: 'Ad — coach',
+  title: 'Ad · coach',
   sub: 'Spot publicitaire · vertical · FR',
   poster:
     'https://i.vimeocdn.com/video/2185499314-bc5394a1d06053aabbb6ce488160f466292b96722de85fb6a5af546eb56c2262-d_720x1280',
@@ -95,7 +95,7 @@ export const REALISATIONS: Video[] = [
   },
   {
     id: '1214552992',
-    title: 'Healing Days — Londres',
+    title: 'Healing Days · Londres',
     sub: 'Ads · MentorShow · EN',
     poster:
       'https://i.vimeocdn.com/video/2185513487-2bce720226f1461c4077afed0ef4220305e39d5d39ada4be7055a1893bd8e5a3-d_1280x720',
@@ -195,7 +195,7 @@ export const AUTRES: Video[] = [
     id: '1215301368',
     // Titre provisoire tiré de l'accroche à l'écran — le nom de fichier Vimeo
     // (« SHORT 14 (1) ») n'a rien à faire sur un portfolio.
-    title: 'Airbnb — réservations',
+    title: 'Airbnb · réservations',
     sub: 'Short · conciergerie · FR',
     poster:
       'https://i.vimeocdn.com/video/2186442010-baee096879519fb3c06736bb1ed4d445e686ac8f2a2d47af1dc6d6f3bded610b-d_720x1280',
@@ -207,7 +207,7 @@ export const AUTRES: Video[] = [
   {
     id: '1215301369',
     // Idem : nom de fichier « SHORT 22 ». Même client, même série que ci-dessus.
-    title: 'Airbnb — loyers',
+    title: 'Airbnb · loyers',
     sub: 'Short · conciergerie · FR',
     poster:
       'https://i.vimeocdn.com/video/2186441808-e19772c345925429c2f8cc93b450298b264ef211407d6b3859796f7bbf610ad7-d_720x1280',
@@ -218,7 +218,7 @@ export const AUTRES: Video[] = [
   },
   {
     id: '1215307192',
-    title: 'Résilience — Boris Cyrulnik',
+    title: 'Résilience · Boris Cyrulnik',
     sub: 'Ads · témoignage · MentorShow · FR',
     poster:
       'https://i.vimeocdn.com/video/2186451808-e3be0d8c30c26ef02369b73beef62f9f9f89e5c1e4c05a090eb0e5975ca69222-d_1280x720',
@@ -278,7 +278,7 @@ export const AUTRES: Video[] = [
     id: '1215310337',
     // Titre raccourci depuis le nom Vimeo. Même plateau que la capsule
     // « Paul Bordas x Wilson BOTOYIYE » déjà au catalogue.
-    title: 'Paul Bordas — la réaction des proches',
+    title: 'Paul Bordas · la réaction des proches',
     sub: 'Capsule podcast · vertical · FR',
     poster:
       'https://i.vimeocdn.com/video/2186452037-67a63d324f160894fdf5a3b14c0fcd387a467ee1977d7d13e2ea4d8accfb576c-d_720x1280',
@@ -292,7 +292,7 @@ export const AUTRES: Video[] = [
     // Aucun titre exploitable : le fichier s'appelle « 10 » et l'affiche ne
     // porte aucun texte. Le numéro est conservé pour que la vidéo reste
     // repérable côté Vimeo — à renommer.
-    title: 'Capsule podcast — 10',
+    title: 'Capsule podcast · 10',
     sub: 'Capsule podcast · vertical · FR',
     poster:
       'https://i.vimeocdn.com/video/2186453008-8920ac3a5f8c6298defa470ce47b6f5d031a946c679b6f74bc568943981c87ab-d_720x1280',
@@ -316,7 +316,7 @@ export const AUTRES: Video[] = [
   {
     id: '1215325126',
     // Fichier « 12 ». Titre tiré de l'incrustation à l'écran — à confirmer.
-    title: 'E-commerce — la courbe',
+    title: 'E-commerce · la courbe',
     sub: 'Short · incrustation animée · FR',
     poster:
       'https://i.vimeocdn.com/video/2186469413-409ce10e22baf35d88e8dc60ac32ad09c75d506827a6794fc2305a43f1d23dae-d_720x1280',
@@ -329,7 +329,7 @@ export const AUTRES: Video[] = [
     id: '1215311973',
     // Idem : fichier « 02 ». Micro à la main, face caméra — à renommer, et le
     // genre reste à confirmer.
-    title: 'Capsule — 02',
+    title: 'Capsule · 02',
     sub: 'Capsule · face caméra · FR',
     poster:
       'https://i.vimeocdn.com/video/2186453540-dddc0bdd4031ff64353772995e32fab1d4ab6868ea07b5c41b1b42113b48b933-d_720x1280',

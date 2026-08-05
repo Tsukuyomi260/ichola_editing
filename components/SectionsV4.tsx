@@ -52,7 +52,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Quels sont vos délais ?',
-    a: "Comptez 48 à 72 h pour une première version d'un format court, selon la complexité du motion design. Les délais exacts sont posés dès le brief — et tenus.",
+    a: "Comptez 48 à 72 h pour une première version d'un format court, selon la complexité du motion design. Les délais exacts sont posés dès le brief, et tenus.",
   },
   {
     q: 'Quels sont vos tarifs ?',
@@ -140,7 +140,7 @@ export default function SectionsV4() {
           <span className="lp-ptk a"></span><span className="lp-ptk b"></span>
           <span className="lp-ptk c"></span><span className="lp-ptk d"></span>
           <div className="lp-phead">
-            <span>{'// '}<b>Dérushage</b> — les chiffres</span>
+            <span>{'// '}<b>Dérushage</b> · les chiffres</span>
             <span>S1 2026</span>
           </div>
           <div className="lp-sgrid">
@@ -230,7 +230,7 @@ export default function SectionsV4() {
             {/* Remplacer par de VRAIS avis (nom, rôle, entreprise réels) avant de passer SHOW_REAL_QUOTES à true */}
             <article className="lp-qcard">
               <div className="qm">«</div>
-              <p>Espace réservé à un vrai retour client — 2 à 3 phrases, spécifiques et vérifiables.</p>
+              <p>Espace réservé à un vrai retour client : 2 à 3 phrases, spécifiques et vérifiables.</p>
               <div className="who">
                 <span className="ini">PN</span>
                 <span><span className="nm">Prénom Nom</span><br /><span className="rl">Rôle · Entreprise</span></span>
@@ -238,7 +238,7 @@ export default function SectionsV4() {
             </article>
             <article className="lp-qcard">
               <div className="qm">«</div>
-              <p>Espace réservé à un vrai retour client — idéalement un profil différent (coach, immobilier, créateur).</p>
+              <p>Espace réservé à un vrai retour client : idéalement un profil différent (coach, immobilier, créateur).</p>
               <div className="who">
                 <span className="ini">PN</span>
                 <span><span className="nm">Prénom Nom</span><br /><span className="rl">Rôle · Entreprise</span></span>
@@ -246,7 +246,7 @@ export default function SectionsV4() {
             </article>
             <article className="lp-qcard">
               <div className="qm">«</div>
-              <p>Espace réservé à un vrai retour client — le plus court des trois, une phrase percutante suffit.</p>
+              <p>Espace réservé à un vrai retour client : le plus court des trois, une phrase percutante suffit.</p>
               <div className="who">
                 <span className="ini">PN</span>
                 <span><span className="nm">Prénom Nom</span><br /><span className="rl">Rôle · Entreprise</span></span>
@@ -259,7 +259,7 @@ export default function SectionsV4() {
           <div className="lp-qwait">
             <span className="lp-qlbl">{'// '}Avis clients</span>
             <h3>Les premiers retours arrivent.</h3>
-            <p>Cette section s&apos;ouvrira avec de vrais avis de vrais clients — pas des témoignages inventés. En attendant, le travail parle : regardez les réalisations.</p>
+            <p>Cette section s&apos;ouvrira avec de vrais avis de vrais clients, pas des témoignages inventés. En attendant, le travail parle : regardez les réalisations.</p>
             <div className="cta"><a className="lp-btn-g" href="#realisations">Voir les réalisations</a></div>
           </div>
         </section>

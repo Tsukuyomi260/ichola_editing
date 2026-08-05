@@ -238,14 +238,14 @@ export default function AboutScreen() {
               <li className="now" data-rv style={{ '--rvd': '0s' } as React.CSSProperties}>
                 <span className="an">2026 <i aria-hidden="true">→</i></span>
                 <div className="tx">
-                  <h3>Monteur — MentorShow</h3>
+                  <h3>Monteur · MentorShow</h3>
                   <p>Publicités bilingues FR/EN, formats verticaux.</p>
                 </div>
               </li>
               <li className="now" data-rv style={{ '--rvd': '.1s' } as React.CSSProperties}>
                 <span className="an">En parallèle</span>
                 <div className="tx">
-                  <h3>Freelance — ICHOLA EDITING</h3>
+                  <h3>Freelance · ICHOLA EDITING</h3>
                   <p>Coachs, agents immobiliers, créateurs.</p>
                 </div>
               </li>
@@ -270,7 +270,7 @@ export default function AboutScreen() {
             moyens pèsent moins que deux nombres énormes. */}
         <section className={`ap-stats ap-wrap${statsPlayed ? ' played in' : ''}`} ref={statsRef} data-rv>
           <div className="ap-phead">
-            <span>{'// '}<b>Dérushage</b> — les chiffres</span>
+            <span>{'// '}<b>Dérushage</b> · les chiffres</span>
             <span>S1 2026</span>
           </div>
           <div className="ap-sgrid">

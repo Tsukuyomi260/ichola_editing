@@ -64,7 +64,7 @@ export default function VimeoFrame({
   return (
     <div className={`vf ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="vf-poster" src={video.poster} alt={`${video.title} — ${video.sub}`} loading="eager" />
+      <img className="vf-poster" src={video.poster} alt={`${video.title} · ${video.sub}`} loading="eager" />
       {etat === 'lecteur' && (
         <iframe
           className="vf-player"

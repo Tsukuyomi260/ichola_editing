@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   title: {
     // `default` sert l'accueil ; `template` habille automatiquement les autres
     // pages, qui n'ont donc qu'à déclarer leur propre titre court.
-    default: 'ICHOLA EDITING — Monteur vidéo & motion designer vertical',
-    template: `%s — ${SITE_NAME}`,
+    default: 'ICHOLA EDITING · Monteur vidéo & motion designer vertical',
+    template: `%s · ${SITE_NAME}`,
   },
   description: DESCRIPTION,
   applicationName: SITE_NAME,
@@ -39,12 +39,12 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: 'ICHOLA EDITING — Monteur vidéo & motion designer vertical',
+    title: 'ICHOLA EDITING · Monteur vidéo & motion designer vertical',
     description: DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ICHOLA EDITING — Monteur vidéo & motion designer vertical',
+    title: 'ICHOLA EDITING · Monteur vidéo & motion designer vertical',
     description: DESCRIPTION,
   },
   robots: {

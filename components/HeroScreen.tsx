@@ -193,7 +193,7 @@ export default function HeroScreen() {
                 type="button"
                 className="reel"
                 onClick={() => setLecture(SHOWREEL)}
-                aria-label={`Agrandir avec le son : ${SHOWREEL.title} — ${SHOWREEL.sub}`}
+                aria-label={`Agrandir avec le son : ${SHOWREEL.title} · ${SHOWREEL.sub}`}
               >
                 <VimeoFrame video={SHOWREEL} />
                 <div className="rveil" aria-hidden="true"></div>

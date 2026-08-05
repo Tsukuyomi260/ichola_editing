@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: 'profile',
     locale: 'fr_FR',
     url: '/a-propos',
-    title: 'À propos — ICHOLA EDITING',
+    title: 'À propos · ICHOLA EDITING',
     description: DESCRIPTION,
   },
 };

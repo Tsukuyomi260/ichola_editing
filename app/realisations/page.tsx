@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'fr_FR',
     url: '/realisations',
-    title: 'Réalisations — ICHOLA EDITING',
+    title: 'Réalisations · ICHOLA EDITING',
     description: DESCRIPTION,
   },
 };

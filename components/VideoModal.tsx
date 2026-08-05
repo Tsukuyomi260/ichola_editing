@@ -70,7 +70,7 @@ export default function VideoModal({
       className="vm open"
       role="dialog"
       aria-modal="true"
-      aria-label={`${video.title} — ${video.sub}`}
+      aria-label={`${video.title} · ${video.sub}`}
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}

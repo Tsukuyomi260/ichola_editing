@@ -40,7 +40,7 @@ export default function WorkCard({
       data-rv
       style={{ '--rvd': `${i * 0.08}s` } as React.CSSProperties}
       onClick={() => onOpen(v)}
-      aria-label={`Agrandir avec le son : ${v.title} — ${v.sub}`}
+      aria-label={`Agrandir avec le son : ${v.title} · ${v.sub}`}
     >
       <VimeoFrame video={v} active={visible} />
       <div className="veilw" aria-hidden="true"></div>
