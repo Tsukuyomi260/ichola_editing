@@ -19,16 +19,14 @@ import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 
 export default function AboutScreen() {
   const [docked, setDocked] = useState(false);
-  const [animate, setAnimate] = useState(false);
   const [statsPlayed, setStatsPlayed] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
 
-  /* Marqueur vert du titre : animé au chargement, sauf reduced-motion */
-  useEffect(() => {
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setAnimate(true);
-  }, []);
+  /* Le marqueur vert du titre est désormais minuté en CSS (voir .ap-mk::before) :
+     plus d'état React pour le déclencher, donc plus de dérive entre le trait et
+     la cascade d'entrée quand l'hydratation tarde. */
 
   /* Dock du header : fixé en bas quand le hero n'est plus visible */
   useEffect(() => {
@@ -100,7 +98,7 @@ export default function AboutScreen() {
     <>
       <ScrollProgress />
 
-      <div className={`ap${animate ? ' ap-animate' : ''}`} ref={rootRef}>
+      <div className="ap" ref={rootRef}>
         {/* ============ HERO CLAIR ============ */}
         <ScreenHeader active="apropos" docked={docked} light />
 
@@ -277,13 +275,14 @@ export default function AboutScreen() {
                 <div className="n"><em>+</em><span data-count="250">0</span></div>
                 <div className="l">vidéos livrées</div>
                 <div className="m">9:16 · 4:5 · 16:9</div>
-                <div className="bar" style={{ '--w': '86%' } as React.CSSProperties}><i></i></div>
+                {/* Sans unité : la barre est mise à l'échelle (scaleX), pas redimensionnée. */}
+                <div className="bar" style={{ '--w': '.86' } as React.CSSProperties}><i></i></div>
               </div>
               <div className="ap-stat">
                 <div className="n"><span data-count="207">0</span><em>&nbsp;M</em></div>
                 <div className="l">de vues générées avec l&apos;équipe MentorShow</div>
                 <div className="m">Cumul S1 2026</div>
-                <div className="bar" style={{ '--w': '72%' } as React.CSSProperties}><i></i></div>
+                <div className="bar" style={{ '--w': '.72' } as React.CSSProperties}><i></i></div>
               </div>
               <div className="ap-stat">
                 <div className="n"><span data-count="3">0</span></div>
@@ -293,7 +292,7 @@ export default function AboutScreen() {
                   <span className="tool" role="listitem" title="Adobe After Effects"><AfterEffectsLogo /></span>
                   <span className="tool" role="listitem" title="CapCut"><CapCutLogo /></span>
                 </div>
-                <div className="bar" style={{ '--w': '100%' } as React.CSSProperties}><i></i></div>
+                <div className="bar" style={{ '--w': '1' } as React.CSSProperties}><i></i></div>
               </div>
             </div>
           </div>
