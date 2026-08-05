@@ -813,8 +813,13 @@ img{max-width:100%;display:block}
 .ap-bio-txt p{color:var(--ink-2);font-size:16.5px;line-height:1.7;margin-bottom:16px;max-width:560px}
 .ap-bio-txt p b{color:var(--ink);font-weight:600}
 .ap-bio-txt p:last-child{margin-bottom:0}
-.ap-pull{border-left:2px solid var(--accent);padding:2px 0 2px 20px;margin-top:6px}
-.ap-pull p{font-family:var(--font-display);font-weight:600;font-size:19px;line-height:1.45;color:var(--ink)}
+/* La citation est la meilleure ligne de la page — c'est la seule chose que les
+   panneaux en dessous ne peuvent pas dire. Elle était à 19px, noyée en fin de
+   bloc, à peine plus grosse que le corps de texte (16,5px) : elle se lisait
+   comme un quatrième paragraphe. Elle devient le point d'arrivée de la bio. */
+.ap-pull{border-left:3px solid var(--accent);padding:6px 0 6px 26px;margin-top:30px}
+.ap-pull p{font-family:var(--font-display);font-weight:600;font-size:clamp(22px,2.5vw,31px);
+  line-height:1.28;letter-spacing:-.02em;color:var(--ink);max-width:520px}
 
 /* --- TIMELINE DE MONTAGE (section signature) --- */
 .ap-tl{padding:78px 24px 20px}
@@ -828,21 +833,30 @@ img{max-width:100%;display:block}
 .ap-clip .tc{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 
 /* --- Panneau chiffres --- */
-.ap-stats{padding:62px 24px 20px}
+/* Les chiffres ne sont plus dans une boîte. La page empilait quatre panneaux
+   bordés à la suite ; en retirer un rend l'air à la composition, et surtout ça
+   libère l'échelle : le chiffre porte lui-même, comme « montage. » sur l'accueil
+   et « parlons. » plus bas. Deux colonnes au lieu de trois — deux nombres
+   énormes pèsent plus que trois nombres moyens.
+   Le plafond reste sous celui de « parlons. » (176px) : le CTA doit rester la
+   voix la plus forte de la page. */
+.ap-stats{padding:104px 24px 48px}
 .ap-panel{position:relative;border:1px solid var(--line);border-radius:22px;background:var(--surface);padding:30px 34px 34px}
 .ap-phead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:26px}
 .ap-phead span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .ap-phead span b{color:var(--green-deep);font-weight:500}
-.ap-sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.ap-stat{position:relative;padding-right:28px}
-.ap-stat + .ap-stat{border-left:1px dashed var(--line);padding-left:28px}
-.ap-stat .n{font-family:var(--font-display);font-weight:700;font-size:clamp(40px,4.8vw,58px);line-height:1;
-  letter-spacing:-.02em;color:var(--ink)}
+.ap-stats .ap-phead{padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:44px}
+.ap-sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px}
+.ap-stat{position:relative}
+.ap-stat + .ap-stat{border-left:1px dashed var(--line);padding-left:56px}
+/* Tracking négatif : à cette taille les lettres se lisent trop espacées. */
+.ap-stat .n{font-family:var(--font-display);font-weight:700;font-size:clamp(58px,9.5vw,142px);line-height:.92;
+  letter-spacing:-.04em;color:var(--ink)}
 .ap-stat .n em{font-style:normal;color:var(--accent)}
-.ap-stat .l{margin-top:10px;color:var(--ink-2);font-size:15px;max-width:230px}
-.ap-stat .m{margin-top:8px;font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;
+.ap-stat .l{margin-top:18px;color:var(--ink);font-size:17.5px;line-height:1.45;max-width:330px;font-weight:500}
+.ap-stat .m{margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;
   text-transform:uppercase}
-.ap-stat .bar{margin-top:14px;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.ap-stat .bar{margin-top:24px;height:4px;background:var(--line);border-radius:3px;overflow:hidden}
 /* `scaleX` et non `width` : animer `width` refait passer la barre par layout
    ET paint à chaque image ; une mise à l'échelle tient sur le compositeur.
    `--w` est donc un nombre sans unité (.86), plus un pourcentage. */
@@ -850,12 +864,8 @@ img{max-width:100%;display:block}
   transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease-out)}
 .ap-stats.played .ap-stat .bar i{transform:scaleX(var(--w))}
 
-/* Marques logiciels du panneau chiffres de /a-propos (mêmes règles que .lp-tools) */
-.ap-tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
-.ap-tools .tool{display:grid;place-items:center;width:40px;height:40px;border-radius:9px;overflow:hidden;
-  transition:box-shadow .22s var(--ease)}
-.ap-tools .tool:hover{box-shadow:0 0 0 2px var(--accent)}
-.ap-tools .tool svg{display:block;width:100%;height:100%}
+/* (.ap-tools retiré avec le chiffre « 3 logiciels » : les marques ne vivent
+   plus que dans la ligne « Outils » de la fiche technique, en .ap-tchip.) */
 
 /* --- CTA « parlons. » --- */
 .ap-cta{padding:18px;margin-top:56px}
@@ -912,9 +922,12 @@ img{max-width:100%;display:block}
 /* --- Responsive --- */
 @media(max-width:960px){
   .ap-bio-grid{grid-template-columns:1fr;gap:26px}
-  .ap-sgrid{grid-template-columns:1fr;gap:22px}
-  .ap-stat + .ap-stat{border-left:none;border-top:1px dashed var(--line);padding-left:0;padding-top:22px}
+  /* Une colonne : à cette largeur deux nombres de cette taille ne tiennent pas
+     côte à côte. Le filet passe à l'horizontale entre les deux. */
+  .ap-sgrid{grid-template-columns:1fr;gap:40px}
+  .ap-stat + .ap-stat{border-left:none;border-top:1px dashed var(--line);padding-left:0;padding-top:40px}
   .ap-stat{padding-right:0}
+  .ap-stats{padding:76px 24px 32px}
   .ap-fgrid{grid-template-columns:1fr;gap:26px}}
 @media(max-width:760px){
   .ap-fr h2{font-size:clamp(56px,17vw,110px)}}
@@ -1643,7 +1656,6 @@ button.lp-wk{padding:0;font:inherit;text-align:left;border:none;-webkit-appearan
 .ap-h1 .l:nth-child(1){animation:apRise .52s var(--ease-out) .08s backwards}
 .ap-h1 .l:nth-child(2){animation:apRise .52s var(--ease-out) .14s backwards}
 .ap-bio-txt > p:nth-of-type(1){animation:apRise .5s var(--ease-out) .22s backwards}
-.ap-bio-txt > p:nth-of-type(2){animation:apRise .5s var(--ease-out) .27s backwards}
-.ap-bio-txt > p:nth-of-type(3){animation:apRise .5s var(--ease-out) .32s backwards}
-.ap-pull{animation:apRise .5s var(--ease-out) .37s backwards}
+.ap-bio-txt > p:nth-of-type(2){animation:apRise .5s var(--ease-out) .28s backwards}
+.ap-pull{animation:apRise .5s var(--ease-out) .36s backwards}
 .ap-hcta{animation:apRise .5s var(--ease-out) .43s backwards}

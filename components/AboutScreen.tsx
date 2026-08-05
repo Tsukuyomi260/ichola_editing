@@ -131,17 +131,16 @@ export default function AboutScreen() {
                   <span className="l"><span className="ap-mk">ichola</span>.</span>
                 </h1>
 
+                {/* Deux paragraphes, plus trois : le poste chez MentorShow et le
+                    freelance étaient repris mot pour mot par le parcours juste en
+                    dessous, et « +250 vidéos » par le panneau chiffres. La bio ne
+                    garde que ce qu'aucun panneau ne peut porter — la position et
+                    le pourquoi — et la citation devient le point d'arrivée. */}
                 <div className="ap-bio-txt">
                   <p>
-                    Je suis monteur vidéo et motion designer. J&apos;ai livré <b>plus de 250 vidéos</b>, en
-                    grande majorité au format vertical, pour des créateurs, des coachs et des plateformes
-                    de formation en France et à l&apos;international.
-                  </p>
-                  <p>
-                    Aujourd&apos;hui, je monte les publicités de <b>MentorShow</b> au sein d&apos;une équipe
-                    de monteurs, plateforme française de masterclass, en français et en anglais. En
-                    parallèle, je travaille en freelance pour des coachs, des agents immobiliers et des
-                    créateurs de contenu.
+                    Je suis monteur vidéo et motion designer. Je travaille surtout le format vertical,
+                    pour des créateurs, des coachs et des plateformes de formation, en France et à
+                    l&apos;international.
                   </p>
                   <p>
                     Avant cela, j&apos;ai créé de zéro un studio de production photo et vidéo : les locaux,
@@ -149,7 +148,7 @@ export default function AboutScreen() {
                   </p>
                   <div className="ap-pull">
                     <p>
-                      Cette double expérience — production et post-production — change la façon dont
+                      Cette double expérience, production et post-production, change la façon dont
                       j&apos;aborde un projet.
                     </p>
                   </div>
@@ -262,38 +261,31 @@ export default function AboutScreen() {
         </section>
 
         {/* ============ CHIFFRES ============ */}
+        {/* Plus de panneau bordé : la page en empilait quatre à la suite, et le
+            chiffre le plus fort du portfolio — 207 millions de vues — était rendu
+            à 58px dans une boîte polie. Les chiffres portent maintenant l'échelle
+            eux-mêmes, comme « montage. » et « parlons. » ailleurs sur le site.
+            Le troisième chiffre (« 3 logiciels ») a sauté : il répétait à
+            l'identique la ligne « Outils » de la fiche technique, et trois nombres
+            moyens pèsent moins que deux nombres énormes. */}
         <section className={`ap-stats ap-wrap${statsPlayed ? ' played in' : ''}`} ref={statsRef} data-rv>
-          <div className="ap-panel">
-            <span className="ap-ptk a"></span><span className="ap-ptk b"></span>
-            <span className="ap-ptk c"></span><span className="ap-ptk d"></span>
-            <div className="ap-phead">
-              <span>{'// '}<b>Dérushage</b> — les chiffres</span>
-              <span>S1 2026</span>
+          <div className="ap-phead">
+            <span>{'// '}<b>Dérushage</b> — les chiffres</span>
+            <span>S1 2026</span>
+          </div>
+          <div className="ap-sgrid">
+            <div className="ap-stat">
+              <div className="n"><em>+</em><span data-count="250">0</span></div>
+              <div className="l">vidéos livrées</div>
+              <div className="m">9:16 · 4:5 · 16:9</div>
+              {/* Sans unité : la barre est mise à l'échelle (scaleX), pas redimensionnée. */}
+              <div className="bar" style={{ '--w': '.86' } as React.CSSProperties}><i></i></div>
             </div>
-            <div className="ap-sgrid">
-              <div className="ap-stat">
-                <div className="n"><em>+</em><span data-count="250">0</span></div>
-                <div className="l">vidéos livrées</div>
-                <div className="m">9:16 · 4:5 · 16:9</div>
-                {/* Sans unité : la barre est mise à l'échelle (scaleX), pas redimensionnée. */}
-                <div className="bar" style={{ '--w': '.86' } as React.CSSProperties}><i></i></div>
-              </div>
-              <div className="ap-stat">
-                <div className="n"><span data-count="207">0</span><em>&nbsp;M</em></div>
-                <div className="l">de vues générées avec l&apos;équipe MentorShow</div>
-                <div className="m">Cumul S1 2026</div>
-                <div className="bar" style={{ '--w': '.72' } as React.CSSProperties}><i></i></div>
-              </div>
-              <div className="ap-stat">
-                <div className="n"><span data-count="3">0</span></div>
-                <div className="l">logiciels utilisés au quotidien</div>
-                <div className="ap-tools" role="list">
-                  <span className="tool" role="listitem" title="Adobe Premiere Pro"><PremiereProLogo /></span>
-                  <span className="tool" role="listitem" title="Adobe After Effects"><AfterEffectsLogo /></span>
-                  <span className="tool" role="listitem" title="CapCut"><CapCutLogo /></span>
-                </div>
-                <div className="bar" style={{ '--w': '1' } as React.CSSProperties}><i></i></div>
-              </div>
+            <div className="ap-stat">
+              <div className="n"><span data-count="207">0</span><em>&nbsp;M</em></div>
+              <div className="l">de vues générées avec l&apos;équipe MentorShow</div>
+              <div className="m">Cumul S1 2026</div>
+              <div className="bar" style={{ '--w': '.72' } as React.CSSProperties}><i></i></div>
             </div>
           </div>
         </section>
