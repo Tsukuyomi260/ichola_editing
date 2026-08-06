@@ -847,16 +847,24 @@ img{max-width:100%;display:block}
 .ap-phead span b{color:var(--green-deep);font-weight:500}
 .ap-stats .ap-phead{padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:44px}
 .ap-sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px}
-.ap-stat{position:relative}
+/* Colonne flex pour que le filet puisse être poussé en bas : voir .bar. */
+.ap-stat{position:relative;display:flex;flex-direction:column}
 .ap-stat + .ap-stat{border-left:1px dashed var(--line);padding-left:56px}
 /* Tracking négatif : à cette taille les lettres se lisent trop espacées. */
 .ap-stat .n{font-family:var(--font-display);font-weight:700;font-size:clamp(58px,9.5vw,142px);line-height:.92;
   letter-spacing:-.04em;color:var(--ink)}
 .ap-stat .n em{font-style:normal;color:var(--accent)}
 .ap-stat .l{margin-top:18px;color:var(--ink);font-size:17.5px;line-height:1.45;max-width:330px;font-weight:500}
-.ap-stat .m{margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;
-  text-transform:uppercase}
-.ap-stat .bar{margin-top:24px;height:4px;background:var(--line);border-radius:3px;overflow:hidden}
+.ap-stat .m{margin-top:10px;margin-bottom:24px;font-family:var(--font-mono);font-size:11px;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase}
+/* `margin-top:auto` colle le filet au bas de la colonne, et les colonnes de la
+   grille font la même hauteur : les deux filets s'alignent donc toujours, quel
+   que soit le nombre de lignes du libellé. Avec une marge fixe, « de vues
+   générées avec l'équipe MentorShow » (deux lignes) décalait son filet d'une
+   hauteur de ligne par rapport à « vidéos livrées » (une seule).
+   Le `margin-bottom` de .m garantit l'écart minimal quand il ne reste pas
+   d'espace à distribuer. */
+.ap-stat .bar{margin-top:auto;height:4px;background:var(--line);border-radius:3px;overflow:hidden}
 /* `scaleX` et non `width` : animer `width` refait passer la barre par layout
    ET paint à chaque image ; une mise à l'échelle tient sur le compositeur.
    `--w` est donc un nombre sans unité (.86), plus un pourcentage. */
