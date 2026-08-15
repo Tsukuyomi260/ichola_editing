@@ -133,7 +133,7 @@ export default function AboutScreen() {
 
                 {/* Deux paragraphes, plus trois : le poste chez MentorShow et le
                     freelance étaient repris mot pour mot par le parcours juste en
-                    dessous, et « +250 vidéos » par le panneau chiffres. La bio ne
+                    dessous, et « +999 vidéos » par le panneau chiffres. La bio ne
                     garde que ce qu'aucun panneau ne peut porter — la position et
                     le pourquoi — et la citation devient le point d'arrivée. */}
                 <div className="ap-bio-txt">
@@ -271,7 +271,7 @@ export default function AboutScreen() {
         <section className={`ap-stats ap-wrap${statsPlayed ? ' played in' : ''}`} ref={statsRef} data-rv>
           <div className="ap-sgrid">
             <div className="ap-stat">
-              <div className="n"><em>+</em><span data-count="250">0</span></div>
+              <div className="n"><em>+</em><span data-count="999">0</span></div>
               <div className="l">vidéos livrées</div>
               <div className="m">9:16 · 4:5 · 16:9</div>
               {/* Sans unité : la barre est mise à l'échelle (scaleX), pas redimensionnée. */}

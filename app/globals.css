@@ -420,7 +420,13 @@ img{max-width:100%;display:block}
 .lp-linkr:hover .lp-rc svg{transform:translateX(2px)}
 
 /* --- 01 · Chiffres : panneau de dérushage --- */
-.lp-stats{padding:64px 24px 26px}
+/* Air autour du panneau de chiffres. Attention, chaque écart visible est une
+   SOMME de deux marges voisines, pas une seule valeur :
+     au-dessus = 18px (padding de .hs .frame-wrap, sous le cadre du hero) + 26px
+     en dessous = 22px (ci-dessous) + 22px (padding-top de .lp-works)
+   Les deux tombent donc à 44px, pour que le panneau respire pareil des deux
+   côtés. Modifier une seule des quatre valeurs déséquilibre l'ensemble. */
+.lp-stats{padding:26px 24px 22px}
 /* Padding égal sur les quatre côtés : les 30px du haut étaient plus serrés que
    les 34px du bas parce qu'un en-tête mono y était posé. Sans lui, le panneau
    ne contient plus que la grille, qui n'a aucune raison d'être décentrée. */
@@ -457,7 +463,8 @@ img{max-width:100%;display:block}
 .lp-stats.played .lp-stat .bar i{width:var(--w)}
 
 /* --- 02 · Dernières réalisations --- */
-.lp-works{padding:74px 24px 30px}
+/* Le padding-top complète celui du bas de .lp-stats — voir le calcul là-bas. */
+.lp-works{padding:22px 24px 30px}
 .lp-whead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:30px}
 .lp-wr1{display:grid;grid-template-columns:1fr 1fr 2fr;gap:16px;align-items:start}
 .lp-wr2{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
