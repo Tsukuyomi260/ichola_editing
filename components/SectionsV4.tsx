@@ -139,10 +139,6 @@ export default function SectionsV4() {
         <div className="lp-panel">
           <span className="lp-ptk a"></span><span className="lp-ptk b"></span>
           <span className="lp-ptk c"></span><span className="lp-ptk d"></span>
-          <div className="lp-phead">
-            <span>{'// '}<b>Dérushage</b> · les chiffres</span>
-            <span>S1 2026</span>
-          </div>
           <div className="lp-sgrid">
             <div className="lp-stat">
               <div className="n"><em>+</em><span data-count="250">0</span></div>

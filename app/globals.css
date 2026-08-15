@@ -421,15 +421,15 @@ img{max-width:100%;display:block}
 
 /* --- 01 · Chiffres : panneau de dérushage --- */
 .lp-stats{padding:64px 24px 26px}
-.lp-panel{position:relative;border:1px solid var(--line);border-radius:22px;background:var(--surface);padding:30px 34px 34px}
+/* Padding égal sur les quatre côtés : les 30px du haut étaient plus serrés que
+   les 34px du bas parce qu'un en-tête mono y était posé. Sans lui, le panneau
+   ne contient plus que la grille, qui n'a aucune raison d'être décentrée. */
+.lp-panel{position:relative;border:1px solid var(--line);border-radius:22px;background:var(--surface);padding:34px}
 .lp-ptk{position:absolute;width:14px;height:14px;border:2px solid #CFD8CF}
 .lp-ptk.a{top:10px;left:10px;border-right:none;border-bottom:none;border-radius:5px 0 0 0}
 .lp-ptk.b{top:10px;right:10px;border-left:none;border-bottom:none;border-radius:0 5px 0 0}
 .lp-ptk.c{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 5px}
 .lp-ptk.d{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 5px 0}
-.lp-phead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:26px}
-.lp-phead span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.lp-phead span b{color:var(--green-deep);font-weight:500}
 /* Gouttières symétriques : le filet pointillé tombe au milieu des 56px qui
    séparent deux colonnes (28px de padding de part et d'autre) au lieu d'être
    collé à celle de droite. La marge négative rattrape le padding des colonnes
@@ -842,10 +842,6 @@ img{max-width:100%;display:block}
    voix la plus forte de la page. */
 .ap-stats{padding:104px 24px 48px}
 .ap-panel{position:relative;border:1px solid var(--line);border-radius:22px;background:var(--surface);padding:30px 34px 34px}
-.ap-phead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:26px}
-.ap-phead span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.ap-phead span b{color:var(--green-deep);font-weight:500}
-.ap-stats .ap-phead{padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:44px}
 .ap-sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px}
 /* Colonne flex pour que le filet puisse être poussé en bas : voir .bar. */
 .ap-stat{position:relative;display:flex;flex-direction:column}

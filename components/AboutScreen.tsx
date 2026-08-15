@@ -269,10 +269,6 @@ export default function AboutScreen() {
             l'identique la ligne « Outils » de la fiche technique, et trois nombres
             moyens pèsent moins que deux nombres énormes. */}
         <section className={`ap-stats ap-wrap${statsPlayed ? ' played in' : ''}`} ref={statsRef} data-rv>
-          <div className="ap-phead">
-            <span>{'// '}<b>Dérushage</b> · les chiffres</span>
-            <span>S1 2026</span>
-          </div>
           <div className="ap-sgrid">
             <div className="ap-stat">
               <div className="n"><em>+</em><span data-count="250">0</span></div>
