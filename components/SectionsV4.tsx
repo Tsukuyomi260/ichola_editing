@@ -171,8 +171,10 @@ export default function SectionsV4() {
         <div className="lp-whead">
           <div>
             <span className="lp-eb"><i></i>Sélection</span>
-            <h2 className="lp-title">Dernières réalisations<em>.</em></h2>
-            <p className="lp-sub">Un aperçu. Tout le reste est sur la page Réalisations.</p>
+            {/* « Quelques » et non « Dernières » : la grille est un choix de
+                formats, pas un classement par date — « dernières » laisserait
+                croire que c'est tout ce qui est sorti récemment. */}
+            <h2 className="lp-title">Quelques réalisations<em>.</em></h2>
           </div>
           <a className="lp-btn-g" href="/realisations">Voir toutes mes réalisations</a>
         </div>

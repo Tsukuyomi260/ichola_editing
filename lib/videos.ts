@@ -66,7 +66,7 @@ export const SHOWREEL: Video = {
 };
 
 /**
- * Grille « Dernières réalisations ».
+ * Grille « Quelques réalisations » de l'accueil.
  * Les titres et sous-titres viennent des noms de fichiers Vimeo et du contenu
  * réel des vidéos — rien n'est inventé.
  */
