@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { PremiereProLogo, AfterEffectsLogo, CapCutLogo } from './ToolLogos';
 import VideoModal from './VideoModal';
 import WorkCard from './WorkCard';
@@ -44,6 +44,35 @@ function ouvrirWhatsApp(e: React.FormEvent<HTMLFormElement>) {
 }
 
 const SHOW_REAL_QUOTES = false;
+
+/**
+ * Clients du bandeau défilant, dans l'ordre d'affichage.
+ *
+ * La liste est rendue DEUX FOIS de suite : l'animation translate la piste de
+ * -50 %, donc la seconde copie arrive exactement là où était la première et la
+ * boucle ne se voit pas. Ne pas casser ce doublage.
+ *
+ * En ajouter ou en retirer allonge la piste et change donc la VITESSE de
+ * défilement, la durée de l'animation étant fixe : penser à réajuster
+ * `animation:lpTick <durée>` sur .lp-ttrack (voir le commentaire là-bas).
+ */
+const CLIENTS = [
+  'ENSET Studio',
+  'Amina Dembaba',
+  'MentorShow',
+  'Chancio Eudes Hounkpatin (Clips Maker)',
+  'Marie Menaha',
+  'Web Crafter Agency (Agence Marketing Digital)',
+  'Marion De Souza',
+  'Cyril',
+  'David Laroche',
+  'Major Mouvement',
+  'Ashley Judd',
+  'Freespace',
+  "M'Po EXPLAIN",
+  'Maison Christelle Thomas',
+  'Play to Earn (France)',
+];
 
 const FAQ_ITEMS = [
   {
@@ -170,7 +199,7 @@ export default function SectionsV4() {
       <section className="lp-works lp-wrap" id="realisations" data-rv>
         <div className="lp-whead">
           <div>
-            <span className="lp-eb"><i></i>Sélection</span>
+            <span className="lp-eb">Sélection</span>
             {/* « Quelques » et non « Dernières » : la grille est un choix de
                 formats, pas un classement par date — « dernières » laisserait
                 croire que c'est tout ce qui est sorti récemment. */}
@@ -201,16 +230,16 @@ export default function SectionsV4() {
 
       {/* ============ 03 — CLIENTS : ticker ============ */}
       <section className="lp-clients" data-rv>
-        <span className="lp-eb"><i></i>Ils m&apos;ont fait confiance</span>
+        <span className="lp-eb">Ils m&apos;ont fait confiance</span>
         <div className="lp-ticker" aria-hidden="true">
           <div className="lp-ttrack">
             {[0, 1].map((k) => (
               <div className="it" key={k}>
-                <span className="nm">MentorShow</span><span className="sep"></span>
-                <span className="nm">Studio 4</span><span className="sep"></span>
-                <span className="nm">Immo-Prod</span><span className="sep"></span>
-                <span className="nm">CoachLab</span><span className="sep"></span>
-                <span className="nm">Verticale</span><span className="sep"></span>
+                {CLIENTS.map((nom) => (
+                  <Fragment key={nom}>
+                    <span className="nm">{nom}</span><span className="sep"></span>
+                  </Fragment>
+                ))}
               </div>
             ))}
           </div>
@@ -221,7 +250,7 @@ export default function SectionsV4() {
       {SHOW_REAL_QUOTES ? (
         <section className="lp-quotes lp-wrap" data-rv>
           <div className="lp-chead">
-            <span className="lp-eb"><i></i>Retours clients</span>
+            <span className="lp-eb">Retours clients</span>
             <h2 className="lp-title">Ce qu&apos;ils en disent<em>.</em></h2>
           </div>
           <div className="lp-qgrid">
@@ -266,7 +295,7 @@ export default function SectionsV4() {
       {/* ============ 05 — FAQ ============ */}
       <section className="lp-faq lp-wrap" id="faq" data-rv>
         <div className="lp-chead">
-          <span className="lp-eb"><i></i>Questions fréquentes</span>
+          <span className="lp-eb">Questions fréquentes</span>
           <h2 className="lp-title">Tout ce qu&apos;on me demande souvent<em>.</em></h2>
           <p className="lp-sub">Si votre question n&apos;y est pas, écrivez-moi, je réponds vite.</p>
         </div>
@@ -293,7 +322,7 @@ export default function SectionsV4() {
       {/* ============ 06 — CONTACT ============ */}
       <section className="lp-contact" id="contact" data-rv>
         <div className="lp-wrap">
-          <span className="lp-eb"><i></i>Contact</span>
+          <span className="lp-eb">Contact</span>
           <h2 className="lp-title">Parlons de votre projet<em>.</em></h2>
           <div className="lp-cgrid">
             <form className="lp-cform" onSubmit={ouvrirWhatsApp}>
@@ -339,7 +368,7 @@ export default function SectionsV4() {
           <div className="cgrain"></div>
           <span className="tk a"></span><span className="tk b"></span>
           <span className="tk c"></span><span className="tk d"></span>
-          <span className="lp-eb"><i></i>Prochaine étape</span>
+          <span className="lp-eb">Prochaine étape</span>
           <h2>parlons<em>.</em></h2>
           <p className="lede">Premier échange <b>gratuit et sans engagement</b>. Vous me racontez votre projet, je vous dis comment je le monterais.</p>
           <div className="btns">

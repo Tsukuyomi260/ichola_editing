@@ -394,9 +394,10 @@ img{max-width:100%;display:block}
 .lp [data-rv].in{opacity:1;transform:none}
 
 /* --- Système de titres (rime avec le hero) --- */
-.lp-eb{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;font-weight:500;
+/* Plus de tiret vert devant le libellé : le `gap` et `align-items` ne servent
+   donc plus qu'à un seul enfant, mais restent inoffensifs. */
+.lp-eb{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:13.5px;font-weight:500;
   letter-spacing:.14em;text-transform:uppercase;color:var(--green-deep)}
-.lp-eb i{width:22px;height:2px;background:var(--accent);border-radius:2px}
 .lp-title{font-family:var(--font-display);font-weight:700;font-size:clamp(34px,4.6vw,54px);
   letter-spacing:-.02em;line-height:1.04;margin-top:14px;color:var(--ink)}
 .lp-title em{font-style:normal;color:var(--accent)}
@@ -493,7 +494,12 @@ img{max-width:100%;display:block}
 /* --- 03 · Clients : ticker --- */
 .lp-clients{padding:64px 0 10px;text-align:center}
 .lp-ticker{margin-top:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:20px 0}
-.lp-ttrack{display:flex;align-items:center;gap:56px;width:max-content;animation:lpTick 30s linear infinite}
+/* La durée fixe la VITESSE, pas le rythme : l'animation parcourt toujours la
+   moitié de la piste dans ce temps, donc une piste plus longue défile plus vite
+   à durée égale. On est passé de 5 noms courts à 15 noms souvent longs, soit
+   une piste ~4x plus large : 30s devenaient illisibles, d'où 120s. Réajuster
+   proportionnellement à chaque ajout de client (liste CLIENTS, SectionsV4). */
+.lp-ttrack{display:flex;align-items:center;gap:56px;width:max-content;animation:lpTick 120s linear infinite}
 .lp-ttrack .it{display:flex;align-items:center;gap:56px}
 .lp-ttrack .nm{font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--ink-2);white-space:nowrap}
 .lp-ttrack .sep{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
